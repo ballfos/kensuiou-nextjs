@@ -1,4 +1,5 @@
 'use client'
+import { tChartData, tChartConfig, tRawChartConfig } from "./ChartWithDetailsTS";
 
 // 懸垂の自己記録を取得できるなら、その合計回数、平均回数、目標達成率、前週比などを含められると良い?
 import {
@@ -18,30 +19,25 @@ import {
 } from '@/components/ui/chart'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
-// データのラベルとその値 (nameはラベル、それ以外はそれぞれのグラフの値)
-const data = [
-  { name: '6/8', counts: 40, mine: 50 },
-  { name: '6/9', counts: 35, mine: 49 },
-  { name: '6/10', counts: 44, mine: 39 },
-  { name: '6/11', counts: 42, mine: 43 },
-  { name: '6/12', counts: 50, mine: 44 },
-  { name: '6/13', counts: 41, mine: 56 },
-  { name: '6/14', counts: 51, mine: 58 },
-]
+export default function BarGraph(rawChartData: tRawChartConfig) {
 
-// グラフの軸ラベルと色 (複数設定可能)
-const chartConfig = {
-  counts: {
-    label: '平均',
-    color: '#4f46e5',
-  },
-  mine: {
-    label: '自分',
-    color: '#ff0000'
-  }
-}
+  // chartConfig を作る
+  const chartConfig: tChartConfig = Object.fromEntries(
+    Object.entries(rawChartData.datasets).map(([key, { label, color }]) => [
+      key,
+      { label, color }
+    ])
+  )
 
-export default function BarGraph() {
+  // chartData を作る
+  const chartData = rawChartData.labels.map((label, index) => {
+    const entry: tChartData = { name: label }
+    for (const [key, { values }] of Object.entries(rawChartData.datasets)) {
+      entry[key] = values[index]
+    }
+    return entry
+  })
+
   return (
     <Card className="w-full max-w-3xl mx-auto mt-6">
       {/* グラフのヘッダー */}
@@ -53,7 +49,7 @@ export default function BarGraph() {
         {/* グラフコンポーネント configにグラフの軸ラベルと色情報を渡す */}
         <ChartContainer config={chartConfig}>
           {/* グラフの種類を決める(BarChartやLineChartなど) */}
-          <BarChart data={data}>
+          <BarChart data={chartData}>
             {/* グラフのラベルを決める (chartConfigのラベルキーを設定する) */}
             <XAxis dataKey="name" stroke="#8884d8" />
             <YAxis />
