@@ -1,5 +1,6 @@
 'use client'
 
+// 懸垂の自己記録を取得できるなら、その合計回数、平均回数、目標達成率、前週比などを含められると良い?
 import {
   BarChart,
   Bar,
@@ -19,30 +20,33 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 // データのラベルとその値 (nameはラベル、それ以外はそれぞれのグラフの値)
 const data = [
-  { name: 'Jan', sales: 400, lastyear: 300 },
-  { name: 'Feb', sales: 300, lastyear: 500 },
-  { name: 'Mar', sales: 500, lastyear: 400 },
-  { name: 'Apr', sales: 200, lastyear: 400 },
+  { name: '6/8', counts: 40, mine: 50 },
+  { name: '6/9', counts: 35, mine: 49 },
+  { name: '6/10', counts: 44, mine: 39 },
+  { name: '6/11', counts: 42, mine: 43 },
+  { name: '6/12', counts: 50, mine: 44 },
+  { name: '6/13', counts: 41, mine: 56 },
+  { name: '6/14', counts: 51, mine: 58 },
 ]
 
 // グラフの軸ラベルと色 (複数設定可能)
 const chartConfig = {
-  sales: {
-    label: '売上',
-    color: '#4f46e5', // Indigo-600
+  counts: {
+    label: '平均',
+    color: '#4f46e5',
   },
-  lastyear: {
-    label: '前年',
-    color: '#10b981',
+  mine: {
+    label: '自分',
+    color: '#ff0000'
   }
 }
 
-export default function BarSample() {
+export default function BarGraph() {
   return (
     <Card className="w-full max-w-3xl mx-auto mt-6">
       {/* グラフのヘッダー */}
       <CardHeader> 
-        <CardTitle>月別売上</CardTitle>
+        <CardTitle>1週間の記録(合計)</CardTitle>
       </CardHeader>
       {/* グラフ表示領域(すなわちbody)であることを明記するためのラッパー */}
       <CardContent>
@@ -57,8 +61,8 @@ export default function BarSample() {
             <ChartLegend content={(props: LegendProps) => <ChartLegendContent {...props} />} />
             {/* 上のchartConfigのキーをdataKeyに入れる 
                 fillに指定するのはchartConfigのカラー属性で、--color-〇〇キーとする */}
-            <Bar dataKey="sales" fill="var(--color-sales)" />
-            <Bar dataKey="lastyear" fill="var(--color-lastyear)" />
+            <Bar dataKey="counts" fill="var(--color-counts)" />
+            <Bar dataKey="mine" fill="var(--color-mine)" />
           </BarChart>
         </ChartContainer>
       </CardContent>

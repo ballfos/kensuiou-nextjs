@@ -1,10 +1,10 @@
-import Image from "next/image";
-import BarSample from "@/components/bar";
+import ResultWindow from "@/components/resultWindow";
 
 export default function Home() {
   return (
-    <div className="">
-      <BarSample />
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+      <ResultWindow />
+      <ResultWindow />
     </div>
   );
 }
