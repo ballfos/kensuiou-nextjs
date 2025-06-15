@@ -142,8 +142,10 @@
   :root, :host {
     --color-orange-300: oklch(83.7% .128 66.29);
     --color-orange-700: oklch(55.3% .195 38.402);
+    --color-yellow-600: oklch(68.1% .162 75.834);
     --color-gray-400: oklch(70.7% .022 261.325);
     --color-gray-500: oklch(55.1% .027 264.364);
+    --color-black: #000;
     --spacing: .25rem;
     --container-3xl: 48rem;
     --text-xs: .75rem;
@@ -378,6 +380,10 @@
     grid-row-start: 1;
   }
 
+  .m-auto {
+    margin: auto;
+  }
+
   .mx-4 {
     margin-inline: calc(var(--spacing) * 4);
   }
@@ -416,6 +422,14 @@
 
   .h-fit {
     height: fit-content;
+  }
+
+  .h-full {
+    height: 100%;
+  }
+
+  .h-screen {
+    height: 100vh;
   }
 
   .w-0 {
@@ -585,12 +599,20 @@
     background-color: var(--background);
   }
 
+  .bg-black {
+    background-color: var(--color-black);
+  }
+
   .bg-card {
     background-color: var(--card);
   }
 
   .bg-transparent {
     background-color: #0000;
+  }
+
+  .bg-yellow-600 {
+    background-color: var(--color-yellow-600);
   }
 
   .px-2\.5 {
