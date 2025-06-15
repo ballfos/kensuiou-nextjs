@@ -5,7 +5,7 @@ export default function Home() {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
       <ChartWithDetails />
       <ChartWithDetails />
-      <img src="chinups.GIF" alt="Now Loading..."/>
+      <img src="chinups.gif" alt="Now Loading..."/>
     </div>
   );
 }
