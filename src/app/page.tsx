@@ -6,17 +6,17 @@ import { headers } from 'next/headers';
 export default async function Home() {
     // このデータをapi経由でデータベースに接続して取得する
     // ローカルホスト名をheaders関数で取得する
-    const headersList = await headers()
-    const host = headersList.get('host')
-    const protocol = headersList.get('x-forwarded-proto') || 'http'
-    const absoluteUrl = `${protocol}://${host}`
+    const headersList = await headers();
+    const host = headersList.get('host');
+    const protocol = headersList.get('x-forwarded-proto') || 'http';
+    const absoluteUrl = `${protocol}://${host}`;
 
     const res = await fetch(`${absoluteUrl}/api/data`, {
       cache: 'no-store'
     });  
     
     if (!res.ok) {
-      return (<>データを正常に取得できませんでした</>)
+      return (<>データを正常に取得できませんでした、、、</>);
     }
 
     const data: tData[] = await res.json();

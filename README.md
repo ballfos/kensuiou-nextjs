@@ -1,8 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+これは懸垂アプリのフロントエンドとバックエンドを担うプログラムです。
 
 ## Getting Started
 
-First, run the development server:
+テスト環境を試すなら下のコマンドでプログラムを開始します。
 
 ```bash
 npm run dev
@@ -14,11 +14,16 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+テスト環境の動作は [http://localhost:3000](http://localhost:3000) で確認可能.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+layout.tsxは、その配下のページのレイアウト、page.tsxはページのデザインを作ります。
+loading.tsxはページ読み込み時に表示されるコンテンツです。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## このプログラムで現在できていること
+ロード画面、グラフとランキングの表示、apiファイルの設置(外部のデータベースに接続することは未だできていない。)
+
+## 将来可能にしたいこと
+外部のデータベースへの接続とデータの取得、ログイン機能(個人の成績を表示したい。)
 
 ## Learn More
 
