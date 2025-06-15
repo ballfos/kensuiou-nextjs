@@ -10,7 +10,13 @@ export type tChartConfig = {
     }
 }
 
+export type tData = {
+    rawChartConfig: tRawChartConfig;
+    rankings: tRanking[];
+}
+
 export type tRawChartConfig = {
+    title: string,
     datasets: {
         [key: string]: {
             label: string;
@@ -21,7 +27,7 @@ export type tRawChartConfig = {
     labels: string[];
 }
 
-export type tRankingData = {
+export type tRanking = {
     kind: string;
     content:
         {
@@ -31,7 +37,7 @@ export type tRankingData = {
         }[];
 }
 
-const rankingColors= [
+export const rankingColors= [
     "text-orange-300",
     "text-gray-500",
     "text-orange-700",

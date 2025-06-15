@@ -477,9 +477,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$c
 ;
 ;
 ;
-function BarGraph(rawChartData) {
+function BarGraph({ rawChartConfig }) {
     // chartConfig を作る
-    const chartConfig = Object.fromEntries(Object.entries(rawChartData.datasets).map(([key, { label, color }])=>[
+    const chartConfig = Object.fromEntries(Object.entries(rawChartConfig.datasets).map(([key, { label, color }])=>[
             key,
             {
                 label,
@@ -487,11 +487,11 @@ function BarGraph(rawChartData) {
             }
         ]));
     // chartData を作る
-    const chartData = rawChartData.labels.map((label, index)=>{
+    const chartData = rawChartConfig.labels.map((label, index)=>{
         const entry = {
             name: label
         };
-        for (const [key, { values }] of Object.entries(rawChartData.datasets)){
+        for (const [key, { values }] of Object.entries(rawChartConfig.datasets)){
             entry[key] = values[index];
         }
         return entry;
@@ -501,7 +501,7 @@ function BarGraph(rawChartData) {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
-                    children: "1週間の記録(合計)"
+                    children: rawChartConfig.title
                 }, void 0, false, {
                     fileName: "[project]/src/components/BarGraph.tsx",
                     lineNumber: 45,
@@ -601,29 +601,43 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/components/Details.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/ChartWithRankingsTS.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname, k: __turbopack_refresh__, m: module } = __turbopack_context__;
 {
 __turbopack_context__.s({
-    "default": (()=>Details)
+    "rankingColors": (()=>rankingColors)
+});
+const rankingColors = [
+    "text-orange-300",
+    "text-gray-500",
+    "text-orange-700",
+    "text-gray-400"
+];
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/src/components/Rankings.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { g: global, __dirname, k: __turbopack_refresh__, m: module } = __turbopack_context__;
+{
+__turbopack_context__.s({
+    "default": (()=>Ranking)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next@15.3.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ChartWithRankingsTS$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ChartWithRankingsTS.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next@15.3.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 ;
-function Details({ rankingData }) {
+;
+function Ranking({ rankings }) {
     _s();
     const [selectedIndex, setSelectedIndex] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
-    const rankingLength = rankingData.length;
-    const rankingColors = [
-        "text-orange-300",
-        "text-gray-500",
-        "text-orange-700",
-        "text-gray-400"
-    ];
+    const rankingLength = rankings.length;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "flex items-center",
         children: [
@@ -638,24 +652,24 @@ function Details({ rankingData }) {
                 className: "text-lg font-mono w-fit",
                 children: "◀︎"
             }, void 0, false, {
-                fileName: "[project]/src/components/Details.tsx",
-                lineNumber: 18,
+                fileName: "[project]/src/components/Rankings.tsx",
+                lineNumber: 11,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex-grow h-fit text-center space-y-2",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        children: rankingData[selectedIndex].kind
+                        children: rankings[selectedIndex].kind
                     }, void 0, false, {
-                        fileName: "[project]/src/components/Details.tsx",
-                        lineNumber: 30,
+                        fileName: "[project]/src/components/Rankings.tsx",
+                        lineNumber: 23,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                        children: rankingData[selectedIndex].content.map((rd, rdIndex)=>{
+                        children: rankings[selectedIndex].content.map((rd, rdIndex)=>{
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                className: rdIndex <= 2 ? rankingColors[rdIndex] : rankingColors[3],
+                                className: rdIndex <= 2 ? __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ChartWithRankingsTS$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["rankingColors"][rdIndex] : __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ChartWithRankingsTS$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["rankingColors"][3],
                                 children: [
                                     rdIndex + 1,
                                     "位: ",
@@ -667,20 +681,20 @@ function Details({ rankingData }) {
                                     ")"
                                 ]
                             }, rdIndex, true, {
-                                fileName: "[project]/src/components/Details.tsx",
-                                lineNumber: 34,
+                                fileName: "[project]/src/components/Rankings.tsx",
+                                lineNumber: 27,
                                 columnNumber: 29
                             }, this);
                         })
                     }, void 0, false, {
-                        fileName: "[project]/src/components/Details.tsx",
-                        lineNumber: 31,
+                        fileName: "[project]/src/components/Rankings.tsx",
+                        lineNumber: 24,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
-                fileName: "[project]/src/components/Details.tsx",
-                lineNumber: 29,
+                fileName: "[project]/src/components/Rankings.tsx",
+                lineNumber: 22,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -694,158 +708,72 @@ function Details({ rankingData }) {
                 className: "text-lg font-mono w-fit",
                 children: "▶︎"
             }, void 0, false, {
-                fileName: "[project]/src/components/Details.tsx",
-                lineNumber: 41,
+                fileName: "[project]/src/components/Rankings.tsx",
+                lineNumber: 34,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/components/Details.tsx",
-        lineNumber: 17,
+        fileName: "[project]/src/components/Rankings.tsx",
+        lineNumber: 10,
         columnNumber: 9
     }, this);
 }
-_s(Details, "G8fEPHHi9+P2oI7WxiQDc3s4+J4=");
-_c = Details;
+_s(Ranking, "G8fEPHHi9+P2oI7WxiQDc3s4+J4=");
+_c = Ranking;
 var _c;
-__turbopack_context__.k.register(_c, "Details");
+__turbopack_context__.k.register(_c, "Ranking");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/components/ChartWithDetails.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/ChartWithRanking.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname, k: __turbopack_refresh__, m: module } = __turbopack_context__;
 {
 __turbopack_context__.s({
-    "default": (()=>ChartWithDetails)
+    "default": (()=>ChartWithRankings)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next@15.3.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BarGraph$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/BarGraph.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Details$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/Details.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Rankings$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/Rankings.tsx [app-client] (ecmascript)");
 'use client';
 ;
 ;
 ;
-function ChartWithDetails() {
-    // データのラベルとその値 (nameはラベル、それ以外はそれぞれのグラフの値)
-    const data = {
-        rawChartData: {
-            datasets: {
-                counts: {
-                    label: '平均',
-                    color: '#4f46e5',
-                    values: [
-                        40,
-                        35,
-                        44,
-                        42,
-                        50,
-                        41,
-                        51
-                    ]
-                },
-                mine: {
-                    label: '自分',
-                    color: '#ff0000',
-                    values: [
-                        50,
-                        49,
-                        39,
-                        43,
-                        44,
-                        56,
-                        58
-                    ]
-                }
-            },
-            labels: [
-                '6/8',
-                '6/9',
-                '6/10',
-                '6/11',
-                '6/12',
-                '6/13',
-                '6/14'
-            ]
-        },
-        details: {
-            rankingData: [
-                {
-                    "kind": "合計回数(1日)ランキング",
-                    "content": [
-                        {
-                            "name": "マッチョ君",
-                            "counts": 105,
-                            "time": "6/12"
-                        },
-                        {
-                            "name": "ケン・スイ",
-                            "counts": 103,
-                            "time": "6/14"
-                        },
-                        {
-                            "name": "富士狩",
-                            "counts": 102,
-                            "time": "6/11"
-                        }
-                    ]
-                },
-                {
-                    "kind": "最大連続回数",
-                    "content": [
-                        {
-                            "name": "珍亞歩",
-                            "counts": 32,
-                            "time": "6/10"
-                        },
-                        {
-                            "name": "ケン・スイ",
-                            "counts": 27,
-                            "time": "6/11"
-                        },
-                        {
-                            "name": "マッチョ君",
-                            "counts": 25,
-                            "time": "6/12"
-                        }
-                    ]
-                }
-            ]
-        }
-    };
+function ChartWithRankings({ data }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "mx-4",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BarGraph$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                ...data.rawChartData
+                rawChartConfig: data.rawChartConfig
             }, void 0, false, {
-                fileName: "[project]/src/components/ChartWithDetails.tsx",
-                lineNumber: 74,
+                fileName: "[project]/src/components/ChartWithRanking.tsx",
+                lineNumber: 11,
                 columnNumber: 13
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Details$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                rankingData: data.details.rankingData
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$3_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Rankings$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                rankings: data.rankings
             }, void 0, false, {
-                fileName: "[project]/src/components/ChartWithDetails.tsx",
-                lineNumber: 75,
+                fileName: "[project]/src/components/ChartWithRanking.tsx",
+                lineNumber: 12,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/components/ChartWithDetails.tsx",
-        lineNumber: 73,
+        fileName: "[project]/src/components/ChartWithRanking.tsx",
+        lineNumber: 10,
         columnNumber: 9
     }, this);
 }
-_c = ChartWithDetails;
+_c = ChartWithRankings;
 var _c;
-__turbopack_context__.k.register(_c, "ChartWithDetails");
+__turbopack_context__.k.register(_c, "ChartWithRankings");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
 }]);
 
-//# sourceMappingURL=src_27dd9068._.js.map
+//# sourceMappingURL=src_fa4b818f._.js.map
