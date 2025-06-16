@@ -669,12 +669,6 @@
   }
 
   @media (width >= 48rem) {
-    .md\:w-1\/2 {
-      width: 50%;
-    }
-  }
-
-  @media (width >= 48rem) {
     .md\:w-2\/3 {
       width: 66.6667%;
     }
