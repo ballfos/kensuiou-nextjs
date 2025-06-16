@@ -30,15 +30,12 @@ export default async function Home({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-stretch">
+      <div className="space-y-2">
         {data.map((d, index) => (
           <DayWeekAllChartWithRanking key={index} data={d} />
         ))}
-        {/* {data.map((d, dIndex) => (
-                    <ChartWithRankings key={dIndex} data={d}/>
-                ))} */}
       </div>
-      <footer className="fixed md:w-128 w-fit right-2 top-2 space-x-4 border-yellow-600 border-2 p-2 rounded">
+      <div className="fixed w-fit right-2 top-2 space-x-4 border-yellow-600 border-2 p-2 rounded">
         <Link
           href="/"
           className={`no-underline p-2 text-2xl rounded ${
@@ -59,7 +56,7 @@ export default async function Home({
         >
           ワイド
         </Link>
-      </footer>
+      </div>
     </>
   );
 }

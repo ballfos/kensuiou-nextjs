@@ -51,7 +51,7 @@ export default function BarGraph({rawChartConfig}: {rawChartConfig: tRawChartCon
           {/* グラフの種類を決める(BarChartやLineChartなど) */}
           <BarChart data={chartData}>
             {/* グラフのラベルを決める (chartConfigのラベルキーを設定する) */}
-            <XAxis dataKey="name" stroke="#8884d8" />
+            <XAxis dataKey="name" stroke="#8884d8"/>
             <YAxis />
             <ChartTooltip content={<ChartTooltipContent />} />
             <ChartLegend content={(props) => <ChartLegendContent {...props} />} />

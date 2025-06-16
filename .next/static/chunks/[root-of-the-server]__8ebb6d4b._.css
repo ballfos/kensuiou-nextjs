@@ -147,6 +147,7 @@
     --color-yellow-600: oklch(68.1% .162 75.834);
     --color-gray-400: oklch(70.7% .022 261.325);
     --color-gray-500: oklch(55.1% .027 264.364);
+    --color-black: #000;
     --color-white: #fff;
     --spacing: .25rem;
     --container-3xl: 48rem;
@@ -158,6 +159,8 @@
     --text-lg--line-height: calc(1.75 / 1.125);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: 1.875rem;
+    --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
     --font-weight-medium: 500;
@@ -645,6 +648,10 @@
     background-color: var(--background);
   }
 
+  .bg-black {
+    background-color: var(--color-black);
+  }
+
   .bg-card {
     background-color: var(--card);
   }
@@ -689,10 +696,6 @@
     padding-bottom: calc(var(--spacing) * 3);
   }
 
-  .pl-25 {
-    padding-left: calc(var(--spacing) * 25);
-  }
-
   .text-center {
     text-align: center;
   }
@@ -708,6 +711,11 @@
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
+  }
+
+  .text-3xl {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
   }
 
   .text-4xl {
@@ -821,18 +829,6 @@
   @media (width >= 48rem) {
     .md\:w-2\/3 {
       width: 66.6667%;
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:w-128 {
-      width: calc(var(--spacing) * 128);
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:grid-cols-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 

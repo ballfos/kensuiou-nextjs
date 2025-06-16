@@ -1,12 +1,11 @@
 import { tRanking, rankingColors } from "./ChartWithRankingsTS";
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function Ranking({ rankings }: { rankings: tRanking[] }) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const rankingLength = rankings.length;
 
   return (
-    <strong>
       <div className="flex items-center">
         <button
           onClick={() =>
@@ -20,18 +19,12 @@ export default function Ranking({ rankings }: { rankings: tRanking[] }) {
         </button>
         <div className="flex-grow h-fit text-center space-y-2">
           <p>{rankings[selectedIndex].kind}</p>
-          <div className="text-left ">
-            <ul>
+          <div>
+            <ul className="w-fit text-left mx-auto">
               {rankings[selectedIndex].content
-                .slice(0, 3)
                 .map((rd, rdIndex) => {
                   return (
-                    <li
-                      key={rdIndex}
-                      className={
-                        rdIndex <= 2 ? rankingColors[rdIndex] : rankingColors[3]
-                      }
-                    >
+                    <li key={rdIndex} className={`${rdIndex <= 2 ? rankingColors[rdIndex] : rankingColors[3]}`}>
                       {rdIndex + 1}位: {rd.name} {rd.counts}回
                     </li>
                   );
@@ -50,6 +43,5 @@ export default function Ranking({ rankings }: { rankings: tRanking[] }) {
           ▶︎
         </button>
       </div>
-    </strong>
   );
 }
