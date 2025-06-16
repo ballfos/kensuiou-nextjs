@@ -725,12 +725,15 @@
   @media (width >= 48rem) {
     .md\:w-2\/3 {
       width: 66.6667%;
+<<<<<<< HEAD
     }
   }
 
   @media (width >= 48rem) {
     .md\:w-128 {
       width: calc(var(--spacing) * 128);
+=======
+>>>>>>> 70a6fe668505280b20276c0a7664db2b75e72842
     }
   }
 

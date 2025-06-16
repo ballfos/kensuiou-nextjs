@@ -1,5 +1,12 @@
 {
   "app": {
+<<<<<<< HEAD
+=======
+    "[project]/src/app/graph/page": [
+      "static/media/or3nQ6H_1_WfwkMZI_qYFrcdmhHkjko-s.p.be19f591.woff2",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2"
+    ],
+>>>>>>> 70a6fe668505280b20276c0a7664db2b75e72842
     "[project]/src/app/page": [
       "static/media/or3nQ6H_1_WfwkMZI_qYFrcdmhHkjko-s.p.be19f591.woff2",
       "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2"
