@@ -29,7 +29,7 @@ export default function RootLayout({
                 {/* ロゴはまた後で決める */}
                 <h1 className="text-4xl text-yellow-500 font-bold m-2"><Link href="/">KENSUIOU</Link></h1>
                 {children}
-                <footer className="flex justify-between md:w-2/3 bg-yellow-600 my-2 mx-auto p-2">
+                <footer className="fixed right-0 left-0 bottom-0 flex justify-between md:w-2/3 bg-yellow-600 my-2 mx-auto p-2">
                     <Link className="no-underline text-white text-2xl" href="/">ランキング</Link>
                     <Link className="no-underline text-white text-2xl" href="/graph">グラフ</Link>
                     <Link className="no-underline text-white text-2xl" href="/members">個人</Link>

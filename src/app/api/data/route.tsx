@@ -1,128 +1,128 @@
-import { tData } from "@/components/ChartWithRankingsTS";
+import { tData } from "@/components/BarGraphWithRankingTS";
 
 export async function GET(req: Request) {
   // ここで外部のデータベースに接続してデータを取得する
   const data: tData[] = [
     {
-      category: "max",
+      period: "Day",
       records: [
         {
-          period: "day",
-          title: "最大値 - 1日の記録",
-          rawChartConfig: {
-            title: "最大値 - 1日の記録",
-            datasets: {},
-            labels: ["6/8", "6/9", "6/10", "6/11", "6/12", "6/13", "6/14"],
-          },
-          rankings: [
-            {
-              kind: "合計回数ランキング",
-              content: [
-                { name: "マッチョ君", counts: 120, time: "6/12" },
-                { name: "ケン・スイ", counts: 115, time: "6/14" },
-                { name: "富士狩", counts: 110, time: "6/11" },
-              ],
+          type: "合計",
+          barChartConfig: {
+            counts: {
+              color: "#facc15"
             },
+          },
+          barChartData: [
+            {name: "力 餅", counts: 50},
+            {name: "犬 水", counts: 50},
+            {name: "腕 太", counts: 50},
           ],
         },
         {
-          period: "week",
-          title: "最大値 - 1週間の記録",
-          rawChartConfig: {
-            title: "最大値 - 1週間の記録",
-            datasets: {},
-            labels: ["5/18~5/24", "5/25~5/31", "6/1~6/7", "6/8~6/14"],
-          },
-          rankings: [
-            {
-              kind: "合計回数ランキング",
-              content: [
-                { name: "マッチョ君", counts: 430, time: "6/1~6/7" },
-                { name: "ケン・スイ", counts: 403, time: "6/8~6/14" },
-                { name: "たいし", counts: 395, time: "5/25~5/31" },
-              ],
+          type: "最大回数",
+          barChartConfig: {
+            counts: {
+              color: "#facc15"
             },
-          ],
-        },
-        {
-          period: "all",
-          title: "最大値 - 全期間の記録",
-          rawChartConfig: {
-            title: "最大値 - 全期間の記録",
-            datasets: {},
-            labels: ["1月", "2月", "3月", "4月"],
           },
-          rankings: [
-            {
-              kind: "合計回数ランキング",
-              content: [
-                { name: "マッチョ君", counts: 1200, time: "3月" },
-                { name: "ケン・スイ", counts: 1150, time: "4月" },
-                { name: "たいし", counts: 1100, time: "2月" },
-              ],
-            },
+          barChartData: [
+            {name: "犬 水", counts: 22},
+            {name: "力 餅", counts: 20},
+            {name: "後 李羅", counts: 19},
           ],
         },
       ],
     },
     {
-      category: "sum",
+      period: "Week",
       records: [
         {
-          period: "day",
-          title: "合計値 - 1日の記録",
-          rawChartConfig: {
-            title: "合計値 - 1日の記録",
-            datasets: {},
-            labels: ["6/8", "6/9", "6/10", "6/11", "6/12", "6/13", "6/14"],
-          },
-          rankings: [
-            {
-              kind: "合計回数ランキング",
-              content: [
-                { name: "マッチョ君", counts: 600, time: "6/12" },
-                { name: "ケン・スイ", counts: 580, time: "6/14" },
-                { name: "富士狩", counts: 570, time: "6/11" },
-              ],
+          type: "合計",
+          barChartConfig: {
+            counts: {
+              color: "#facc15"
             },
+          },
+          barChartData: [
+            {name: "強 我凄", counts: 320},
+            {name: "珍 亞布", counts: 310},
+            {name: "腕 太", counts: 298},
           ],
         },
         {
-          period: "week",
-          title: "合計値 - 1週間の記録",
-          rawChartConfig: {
-            title: "合計値 - 1週間の記録",
-            datasets: {},
-            labels: ["5/18~5/24", "5/25~5/31", "6/1~6/7", "6/8~6/14"],
-          },
-          rankings: [
-            {
-              kind: "合計回数ランキング",
-              content: [
-                { name: "マッチョ君", counts: 1800, time: "6/1~6/7" },
-                { name: "ケン・スイ", counts: 1700, time: "6/8~6/14" },
-                { name: "たいし", counts: 1600, time: "5/25~5/31" },
-              ],
+          type: "最大回数",
+          barChartConfig: {
+            counts: {
+              color: "#facc15"
             },
+          },
+          barChartData: [
+            {name: "強 我凄", counts: 28},
+            {name: "大豪院 邪鬼", counts: 20},
+            {name: "魔金李", counts: 19},
+          ],
+        },
+      ],
+    },
+    {
+      period: "Month",
+      records: [
+        {
+          type: "合計",
+          barChartConfig: {
+            counts: {
+              color: "#facc15"
+            },
+          },
+          barChartData: [
+            {name: "我 強凄", counts: 1279},
+            {name: "急現 御免", counts: 1180},
+            {name: "万年 三位", counts: 1158},
           ],
         },
         {
-          period: "all",
-          title: "合計値 - 全期間の記録",
-          rawChartConfig: {
-            title: "合計値 - 全期間の記録",
-            datasets: {},
-            labels: ["1月", "2月", "3月", "4月"],
-          },
-          rankings: [
-            {
-              kind: "合計回数ランキング",
-              content: [
-                { name: "マッチョ君", counts: 5000, time: "3月" },
-                { name: "ケン・スイ", counts: 4800, time: "4月" },
-                { name: "たいし", counts: 4700, time: "2月" },
-              ],
+          type: "最大回数",
+          barChartConfig: {
+            counts: {
+              color: "#facc15"
             },
+          },
+          barChartData: [
+            {name: "連 強", counts: 40},
+            {name: "後 少C", counts: 33},
+            {name: "万年 三位", counts: 30},
+          ],
+        },
+      ],
+    },
+    {
+      period: "Total",
+      records: [
+        {
+          type: "合計",
+          barChartConfig: {
+            counts: {
+              color: "#facc15"
+            },
+          },
+          barChartData: [
+            {name: "最強⭐︎最強", counts: 2520},
+            {name: "珍 亞布", counts: 2473},
+            {name: "万年 三位", counts: 2398},
+          ],
+        },
+        {
+          type: "最大回数",
+          barChartConfig: {
+            counts: {
+              color: "#facc15"
+            },
+          },
+          barChartData: [
+            {name: "連 強", counts: 40},
+            {name: "万年 二位", counts: 39},
+            {name: "母母母ー母・母ー母母", counts: 35},
           ],
         },
       ],
