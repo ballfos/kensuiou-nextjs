@@ -16,7 +16,7 @@ export default function Ranking({ rankings } : {rankings: tRanking[]}) {
                     else{
                         return prevSI-1
                     }
-                })} className="text-lg font-mono w-fit">
+                })} className="text-lg font-mono">
                 ◀︎
             </button>
             <div className="flex-grow h-fit text-center space-y-2">
@@ -39,7 +39,7 @@ export default function Ranking({ rankings } : {rankings: tRanking[]}) {
                     else{
                         return prevSI+1
                     }
-                })} className="text-lg font-mono w-fit">
+                })} className="text-lg font-mono">
                 ▶︎
             </button>
         </div>

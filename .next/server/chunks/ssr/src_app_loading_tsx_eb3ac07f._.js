@@ -5,6 +5,8 @@ module.exports = {
 
 var { g: global, __dirname } = __turbopack_context__;
 {
+// 'use client'
+// import { useEffect, useState } from 'react';
 __turbopack_context__.s({
     "default": (()=>HomeLoading)
 });
@@ -22,14 +24,14 @@ function HomeLoading() {
                 height: 128
             }, void 0, false, {
                 fileName: "[project]/src/app/loading.tsx",
-                lineNumber: 4,
+                lineNumber: 8,
                 columnNumber: 13
             }, this),
             "Now Loading..."
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/loading.tsx",
-        lineNumber: 3,
+        lineNumber: 7,
         columnNumber: 9
     }, this);
 }

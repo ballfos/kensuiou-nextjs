@@ -48,10 +48,9 @@
   :root, :host {
     --color-orange-300: oklch(83.7% .128 66.29);
     --color-orange-700: oklch(55.3% .195 38.402);
-    --color-yellow-600: oklch(68.1% .162 75.834);
+    --color-yellow-500: oklch(79.5% .184 86.047);
     --color-gray-400: oklch(70.7% .022 261.325);
     --color-gray-500: oklch(55.1% .027 264.364);
-    --color-black: #000;
     --spacing: .25rem;
     --container-3xl: 48rem;
     --text-xs: .75rem;
@@ -60,8 +59,11 @@
     --text-sm--line-height: calc(1.25 / .875);
     --text-lg: 1.125rem;
     --text-lg--line-height: calc(1.75 / 1.125);
+    --text-4xl: 2.25rem;
+    --text-4xl--line-height: calc(2.5 / 2.25);
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
+    --font-weight-bold: 700;
     --aspect-video: 16 / 9;
     --default-font-family: var(--font-geist-sans);
     --default-mono-font-family: var(--font-geist-mono);
@@ -286,8 +288,8 @@
     grid-row-start: 1;
   }
 
-  .m-auto {
-    margin: auto;
+  .m-2 {
+    margin: calc(var(--spacing) * 2);
   }
 
   .mx-4 {
@@ -352,10 +354,6 @@
 
   .w-2\.5 {
     width: calc(var(--spacing) * 2.5);
-  }
-
-  .w-fit {
-    width: fit-content;
   }
 
   .w-full {
@@ -505,20 +503,12 @@
     background-color: var(--background);
   }
 
-  .bg-black {
-    background-color: var(--color-black);
-  }
-
   .bg-card {
     background-color: var(--card);
   }
 
   .bg-transparent {
     background-color: #0000;
-  }
-
-  .bg-yellow-600 {
-    background-color: var(--color-yellow-600);
   }
 
   .px-2\.5 {
@@ -553,6 +543,11 @@
     font-family: var(--font-geist-mono);
   }
 
+  .text-4xl {
+    font-size: var(--text-4xl);
+    line-height: var(--tw-leading, var(--text-4xl--line-height));
+  }
+
   .text-lg {
     font-size: var(--text-lg);
     line-height: var(--tw-leading, var(--text-lg--line-height));
@@ -571,6 +566,11 @@
   .leading-none {
     --tw-leading: 1;
     line-height: 1;
+  }
+
+  .font-bold {
+    --tw-font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
   }
 
   .font-medium {
@@ -609,6 +609,10 @@
 
   .text-orange-700 {
     color: var(--color-orange-700);
+  }
+
+  .text-yellow-500 {
+    color: var(--color-yellow-500);
   }
 
   .tabular-nums {
