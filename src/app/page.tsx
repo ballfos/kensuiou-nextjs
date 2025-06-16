@@ -30,7 +30,7 @@ export default async function Home({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-stretch">
         {data.map((d, index) => (
           <DayWeekAllChartWithRanking key={index} data={d} />
         ))}
