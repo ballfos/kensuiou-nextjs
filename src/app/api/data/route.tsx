@@ -1,173 +1,139 @@
 import { tData } from "@/components/ChartWithRankingsTS";
 
 export async function GET(req: Request) {
-    // ここで外部のデータベースに接続してデータを取得する
-    const data: tData[] = [
+  // ここで外部のデータベースに接続してデータを取得する
+  const data: tData[] = [
+    {
+      category: "max",
+      records: [
         {
-            rawChartConfig: {
-                title: "1日の記録(合計)",
-                datasets: {
-                    counts: {
-                    label: '平均',
-                    color: '#4f46e5',
-                    values: [40, 35, 44, 42, 50, 41, 51]
-                    },
-                    mine: {
-                    label: '自分',
-                    color: '#ff0000',
-                    values: [50, 49, 39, 43, 44, 56, 58]
-                    }
-                },
-                labels: ['6/8', '6/9', '6/10', '6/11', '6/12', '6/13', '6/14']
+          period: "day",
+          title: "最大値 - 1日の記録",
+          rawChartConfig: {
+            title: "最大値 - 1日の記録",
+            datasets: {},
+            labels: ["6/8", "6/9", "6/10", "6/11", "6/12", "6/13", "6/14"],
+          },
+          rankings: [
+            {
+              kind: "合計回数ランキング",
+              content: [
+                { name: "マッチョ君", counts: 120, time: "6/12" },
+                { name: "ケン・スイ", counts: 115, time: "6/14" },
+                { name: "富士狩", counts: 110, time: "6/11" },
+              ],
             },
-            rankings: [
-                {
-                    "kind": "合計回数ランキング",
-                    "content": [
-                        {
-                            "name": "マッチョ君",
-                            "counts": 105,
-                            "time": "6/12"
-                        },
-                        {
-                            "name": "ケン・スイ",
-                            "counts": 103,
-                            "time": "6/14"
-                        },
-                        {
-                            "name": "富士狩",
-                            "counts": 102,
-                            "time": "6/11"
-                        },
-                        {
-                            "name": "マジュニア",
-                            "counts": 100,
-                            "time": "6/8"
-                        },
-                        {
-                            "name": "キャキャロット",
-                            "counts": 98,
-                            "time": "6/11"
-                        }
-                    ]
-                },
-                {
-                    "kind": "最大連続回数",
-                    "content": [
-                        {
-                            "name": "珍亞歩",
-                            "counts": 32,
-                            "time": "6/10"
-                        },
-                        {
-                            "name": "ケン・スイ",
-                            "counts": 27,
-                            "time": "6/11"
-                        },
-                        {
-                            "name": "マッチョ君",
-                            "counts": 25,
-                            "time": "6/12"
-                        },
-                        {
-                            "name": "ウェーイ",
-                            "counts": 24,
-                            "time": "6/11"
-                        },
-                        {
-                            "name": "懸垂キング(自称)",
-                            "counts": 22,
-                            "time": "6/13"
-                        }
-                    ]
-                }
-            ],
+          ],
         },
         {
-            rawChartConfig: {
-                title: "1週間の記録(合計)",
-                datasets: {
-                    counts: {
-                    label: '平均',
-                    color: '#4f46e5',
-                    values: [303, 295, 306, 300]
-                    },
-                    mine: {
-                    label: '自分',
-                    color: '#ff0000',
-                    values: [330, 320, 301, 298]
-                    }
-                },
-                labels: ['5/18~5/24', '5/25~5/31', '6/1~6/7', '6/8~6/14']
+          period: "week",
+          title: "最大値 - 1週間の記録",
+          rawChartConfig: {
+            title: "最大値 - 1週間の記録",
+            datasets: {},
+            labels: ["5/18~5/24", "5/25~5/31", "6/1~6/7", "6/8~6/14"],
+          },
+          rankings: [
+            {
+              kind: "合計回数ランキング",
+              content: [
+                { name: "マッチョ君", counts: 430, time: "6/1~6/7" },
+                { name: "ケン・スイ", counts: 403, time: "6/8~6/14" },
+                { name: "たいし", counts: 395, time: "5/25~5/31" },
+              ],
             },
-            rankings: [
-                {
-                    "kind": "合計回数ランキング",
-                    "content": [
-                        {
-                            "name": "マッチョ君",
-                            "counts": 430,
-                            "time": "6/1~6/7"
-                        },
-                        {
-                            "name": "ケン・スイ",
-                            "counts": 403,
-                            "time": "6/8~6/14"
-                        },
-                        {
-                            "name": "たいし",
-                            "counts": 395,
-                            "time": "5/25~5/31"
-                        },
-                        {
-                            "name": "豪傑",
-                            "counts": 384,
-                            "time": "5/18~5/24"
-                        },
-                        {
-                            "name": "マッチョ君",
-                            "counts": 378,
-                            "time": "6/1~5/7"
-                        }
-                    ]
-                },
-                {
-                    "kind": "最大連続回数",
-                    "content": [
-                        {
-                            "name": "マッチョ君",
-                            "counts": 38,
-                            "time": "6/1~6/7"
-                        },
-                        {
-                            "name": "珍亞歩",
-                            "counts": 32,
-                            "time": "6/8~6/14"
-                        },
-                        {
-                            "name": "ケン・スイ",
-                            "counts": 27,
-                            "time": "6/8~6/14"
-                        },
-                        {
-                            "name": "ケン・スイ",
-                            "counts": 27,
-                            "time": "6/8~6/14"
-                        },
-                        {
-                            "name": "マッチョ君",
-                            "counts": 25,
-                            "time": "6/8~6/14"
-                        }
-                    ]
-                }
-            ],
-        }
-    ];
+          ],
+        },
+        {
+          period: "all",
+          title: "最大値 - 全期間の記録",
+          rawChartConfig: {
+            title: "最大値 - 全期間の記録",
+            datasets: {},
+            labels: ["1月", "2月", "3月", "4月"],
+          },
+          rankings: [
+            {
+              kind: "合計回数ランキング",
+              content: [
+                { name: "マッチョ君", counts: 1200, time: "3月" },
+                { name: "ケン・スイ", counts: 1150, time: "4月" },
+                { name: "たいし", counts: 1100, time: "2月" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      category: "sum",
+      records: [
+        {
+          period: "day",
+          title: "合計値 - 1日の記録",
+          rawChartConfig: {
+            title: "合計値 - 1日の記録",
+            datasets: {},
+            labels: ["6/8", "6/9", "6/10", "6/11", "6/12", "6/13", "6/14"],
+          },
+          rankings: [
+            {
+              kind: "合計回数ランキング",
+              content: [
+                { name: "マッチョ君", counts: 600, time: "6/12" },
+                { name: "ケン・スイ", counts: 580, time: "6/14" },
+                { name: "富士狩", counts: 570, time: "6/11" },
+              ],
+            },
+          ],
+        },
+        {
+          period: "week",
+          title: "合計値 - 1週間の記録",
+          rawChartConfig: {
+            title: "合計値 - 1週間の記録",
+            datasets: {},
+            labels: ["5/18~5/24", "5/25~5/31", "6/1~6/7", "6/8~6/14"],
+          },
+          rankings: [
+            {
+              kind: "合計回数ランキング",
+              content: [
+                { name: "マッチョ君", counts: 1800, time: "6/1~6/7" },
+                { name: "ケン・スイ", counts: 1700, time: "6/8~6/14" },
+                { name: "たいし", counts: 1600, time: "5/25~5/31" },
+              ],
+            },
+          ],
+        },
+        {
+          period: "all",
+          title: "合計値 - 全期間の記録",
+          rawChartConfig: {
+            title: "合計値 - 全期間の記録",
+            datasets: {},
+            labels: ["1月", "2月", "3月", "4月"],
+          },
+          rankings: [
+            {
+              kind: "合計回数ランキング",
+              content: [
+                { name: "マッチョ君", counts: 5000, time: "3月" },
+                { name: "ケン・スイ", counts: 4800, time: "4月" },
+                { name: "たいし", counts: 4700, time: "2月" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
-    try {
-        return new Response(JSON.stringify(data), { status: 200 });
-    } catch {
-        return new Response(JSON.stringify('Error fetching genres'), { status: 500 });
-    }
+  try {
+    return new Response(JSON.stringify(data), { status: 200 });
+  } catch {
+    return new Response(JSON.stringify("Error fetching genres"), {
+      status: 500,
+    });
+  }
 }
