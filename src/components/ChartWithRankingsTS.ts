@@ -11,9 +11,17 @@ export type tChartConfig = {
 }
 
 export type tData = {
+
+    category: string;
+    records: tRecord[];
+}
+
+export type tRecord = {
+    period: string;
+    title: string;
     rawChartConfig: tRawChartConfig;
     rankings: tRanking[];
-}
+};
 
 export type tRawChartConfig = {
     title: string,

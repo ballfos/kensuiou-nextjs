@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import BarGraph from '@/components/BarGraph';
-import Rankings from '@/components/Rankings';
-import { tData } from '@/components/ChartWithRankingsTS';
+import BarGraph from "@/components/BarGraph";
+import Rankings from "@/components/Rankings";
+import { tRecord } from "@/components/ChartWithRankingsTS";
 
-export default function ChartWithRankings({data}: {data: tData}) {
-
-    return (
-        <div className="mx-4 h-full">
-            <Rankings rankings={data.rankings}/>
-            <BarGraph rawChartConfig={data.rawChartConfig}/>
-        </div>
-    )
+export default function ChartWithRankings({ record }: { record: tRecord }) {
+  return (
+    <div className="mx-4 h-full">
+      <Rankings rankings={record.rankings} />
+      <BarGraph rawChartConfig={record.rawChartConfig} />
+    </div>
+  );
 }
