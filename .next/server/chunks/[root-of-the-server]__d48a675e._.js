@@ -115,6 +115,16 @@ async function GET(req) {
                             "name": "富士狩",
                             "counts": 102,
                             "time": "6/11"
+                        },
+                        {
+                            "name": "マジュニア",
+                            "counts": 100,
+                            "time": "6/8"
+                        },
+                        {
+                            "name": "キャキャロット",
+                            "counts": 98,
+                            "time": "6/11"
                         }
                     ]
                 },
@@ -135,6 +145,16 @@ async function GET(req) {
                             "name": "マッチョ君",
                             "counts": 25,
                             "time": "6/12"
+                        },
+                        {
+                            "name": "ウェーイ",
+                            "counts": 24,
+                            "time": "6/11"
+                        },
+                        {
+                            "name": "懸垂キング(自称)",
+                            "counts": 22,
+                            "time": "6/13"
                         }
                     ]
                 }
