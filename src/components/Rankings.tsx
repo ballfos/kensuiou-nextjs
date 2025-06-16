@@ -7,41 +7,32 @@ export default function Ranking({ rankings } : {rankings: tRanking[]}) {
     const rankingLength = rankings.length;
 
     return (
-        <div className="flex items-center">
+        <strong><div className="flex items-center">
             <button onClick={() => 
                 setSelectedIndex((prevSI) => {
-                    if(prevSI === 0){
-                        return rankingLength-1;
-                    } 
-                    else{
-                        return prevSI-1
-                    }
+                    return (prevSI - 1) % rankingLength;
                 })} className="text-lg font-mono">
                 ◀︎
             </button>
             <div className="flex-grow h-fit text-center space-y-2">
                 <p>{rankings[selectedIndex].kind}</p>
+                <div className="text-left pl-25">
                 <ul>
-                    {rankings[selectedIndex].content.map((rd, rdIndex) => {
+                    {rankings[selectedIndex].content.slice(0, 3).map((rd, rdIndex) => {
                         return (
                             <li key={rdIndex} className={rdIndex <= 2 ? rankingColors[rdIndex] : rankingColors[3]}>
-                                {rdIndex+1}位: {rd.name} {rd.counts}回 ({rd.time})
+                                {rdIndex+1}位: {rd.name} {rd.counts}回
                             </li>
                         )
                     })}
-                </ul>
+                </ul></div>
             </div>
             <button onClick={() => 
                 setSelectedIndex((prevSI) => {
-                    if(prevSI === rankingLength-1){
-                        return 0;
-                    } 
-                    else{
-                        return prevSI+1
-                    }
+                    return (prevSI + 1) % rankingLength;
                 })} className="text-lg font-mono">
                 ▶︎
             </button>
-        </div>
+        </div></strong>
     )
 }
