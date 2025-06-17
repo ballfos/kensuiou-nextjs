@@ -46,8 +46,10 @@ export default function BarGraph({barChartConfig, barChartData}: {barChartConfig
           {/* グラフの種類を決める(BarChartやLineChartなど) */}
           <BarChart data={barChartData}>
             {/* グラフのラベルを決める (chartConfigのラベルキーを設定する) */}
-            <XAxis dataKey="name" stroke="#8884d8"/>
-            <YAxis />
+            <XAxis dataKey="name" stroke="#8884d8"
+              tick={{fill: "#000000", fontWeight: 600, fontSize: 18}}/>
+            <YAxis 
+              tick={{fill: "#000000", fontWeight: 600, fontSize: 18}}/>
             <ChartTooltip content={<ChartTooltipContent />} />
             {/* 上のchartConfigのキーをdataKeyに入れる 
                 fillに指定するのはchartConfigのカラー属性で、--color-〇〇キーとする */}
