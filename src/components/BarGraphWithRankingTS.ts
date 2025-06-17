@@ -13,14 +13,21 @@ export type tBarChartData = {
 // }
 
 // 棒グラフとランキング用のデータ
+
 export type tData = {
     sholder: string; 
-    period: string; // ここにperiodを設定する
-    records: tRecord[]; // この配列はグラフとランキングを格納する
+    periods: tPeriodData[]; // periodの配列を持つように変更
+}
+
+
+export type tPeriodData = {
+    period: string;
+    records: tRecord[];
 }
 
 export type tRecord = {
-    type: string;
+    type: string; // "Max" または "Sum" のいずれか
+    
 
     barChartData: tBarChartData[];
 };

@@ -1,7 +1,11 @@
 import ChartWithRanking from "@/components/ChartWithRanking";
-import { tData } from "@/components/BarGraphWithRankingTS";
+import { tPeriodData } from "@/components/BarGraphWithRankingTS";
 
-export default async function ChartWithRankings({ data }: { data: tData }) {
+export default async function ChartWithRankings({
+  data,
+}: {
+  data: tPeriodData;
+}) {
   return (
     <div>
       <p className="text-3xl text-center font-bold">{data.period}</p>

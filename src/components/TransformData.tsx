@@ -1,31 +1,26 @@
+import type { ChartConfig } from "@/components/ui/chart";
 import {
   tData,
   RawMemberData,
+  tPeriodData,
   tRecord,
 } from "@/components/BarGraphWithRankingTS";
-import type { ChartConfig } from "@/components/ui/chart";
-// rawdataを新しいtData[]形式に変換する関数
-// rawdataを新しいtData[]形式に変換する関数
+
 export function transformData(rawData: RawMemberData[]): tData[] {
-  const periods = [
+  const periodInfo = [
     { name: "Day", prefix: "today" },
     { name: "Week", prefix: "this_week" },
     { name: "Total", prefix: "total" },
   ];
 
-  // ✅ gripのループを外側のレベルに移動
-  const grips = ["narrow", "wide"];
-  const types = ["max", "sum"];
+  const gripInfo = ["narrow", "wide"];
+  const typeInfo = ["max", "sum"];
 
-  // ✅ 新しいtDataオブジェクトを格納する配列を準備
-  const transformedData: tData[] = [];
-
-  // periodとgripで二重ループを回す
-  for (const period of periods) {
-    for (const grip of grips) {
-      // ✅ このtDataオブジェクトの records 配列を作成する
-      // ループは "max", "sum" だけで良い
-      const records: tRecord[] = types.map((type) => {
+  // ✅ 外側のループをgrip("narrow", "wide")にする
+  const transformedData: tData[] = gripInfo.map((grip) => {
+    // ✅ 内側のループでperiods配列を作成する
+    const periods: tPeriodData[] = periodInfo.map((period) => {
+      const records: tRecord[] = typeInfo.map((type) => {
         const dataKey =
           `${period.prefix}_${grip}_${type}_counts` as keyof RawMemberData;
 
@@ -38,7 +33,6 @@ export function transformData(rawData: RawMemberData[]): tData[] {
         };
 
         const record: tRecord = {
-          // ✅ typeは "Max" または "Sum" だけで良い
           type: `${type.charAt(0).toUpperCase() + type.slice(1)}`,
 
           barChartData: rawData
@@ -51,14 +45,19 @@ export function transformData(rawData: RawMemberData[]): tData[] {
         return record;
       });
 
-      // ✅ sholder, period, records を持つ新しい tData オブジェクトを作成してプッシュする
-      transformedData.push({
-        sholder: grip.charAt(0).toUpperCase() + grip.slice(1), // "Narrow" or "Wide"
+      // periodごとのオブジェクトを返す
+      return {
         period: period.name,
         records: records,
-      });
-    }
-  }
+      };
+    });
+
+    // ✅ sholderを最上位に持つオブジェクトを返す
+    return {
+      sholder: grip.charAt(0).toUpperCase() + grip.slice(1),
+      periods: periods,
+    };
+  });
 
   return transformedData;
 }

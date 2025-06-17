@@ -1,4 +1,4 @@
-import { tData } from "@/components/BarGraphWithRankingTS";
+import { tData, tPeriodData } from "@/components/BarGraphWithRankingTS";
 import ChartWithRankings from "@/components/ChartWithRankings";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -34,7 +34,13 @@ export default async function Home({
 
   //   const data: tData[] = await res.json();
 
-  const selectedData = data.find((d) => d.period === period);
+  // 1. gripに基づいてsholderデータを選択
+  const sholderData = data.find((d) => d.sholder === grip);
+  // 2. sholderデータの中から、periodに基づいて表示するデータを選択
+  const selectedPeriodData = sholderData?.periods.find(
+    (p) => p.period === period
+  );
+  const periodLinks = ["Day", "Week", "Total"];
   //   return (
   //     <div>
   //       <h1>Data from PostgreSQL</h1>
@@ -46,17 +52,17 @@ export default async function Home({
     <>
       <div className="flex justify-center space-x-2 mb-4">
         <div className="border-yellow-600 border-2 p-2 rounded w-fit">
-          {data.map((d, pindex) => (
+          {periodLinks.map((p, pindex) => (
             <Link
               key={pindex}
-              href={`/?period=${d.period}&grip=${grip}`}
+              href={`/?period=${p}&grip=${grip}`}
               className={`no-underline p-2 text-2xl rounded ${
-                period === d.period
+                period === p // アクティブなリンクの判定
                   ? "bg-yellow-600 text-white"
                   : "bg-white text-yellow-600"
               }`}
             >
-              {d.period}
+              {p} {/* リンクのテキスト */}
             </Link>
           ))}
         </div>
@@ -84,8 +90,8 @@ export default async function Home({
         </div>
       </div>
       <div className="space-y-2">
-        {selectedData ? (
-          <ChartWithRankings data={selectedData} />
+        {selectedPeriodData ? (
+          <ChartWithRankings data={selectedPeriodData} />
         ) : (
           <p className="text-center">表示できるデータがありません!!</p>
         )}
