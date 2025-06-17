@@ -73,11 +73,11 @@ async function GET(req) {
                         },
                         {
                             name: "犬 水",
-                            counts: 50
+                            counts: 48
                         },
                         {
                             name: "腕 太",
-                            counts: 50
+                            counts: 44
                         }
                     ]
                 },

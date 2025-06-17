@@ -1,6 +1,5 @@
-import ChartWithRankings from "@/components/ChartWithRanking";
 import { tData } from "@/components/BarGraphWithRankingTS";
-import DayWeekAllChartWithRanking from "@/components/DayWeekAllChartWithRanking";
+import ChartWithRankings from "@/components/ChartWithRankings";
 import { headers } from "next/headers";
 import Link from "next/link";
 
@@ -9,7 +8,7 @@ export default async function Home({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
-  const grip = (await searchParams).grip === "wide" ? "wide" : "narrow";
+  const grip = (await searchParams).grip || "Narrow";
   const period = (await searchParams).period || "Day";
 
   // このデータをapi経由でデータベースに接続して取得する
@@ -33,13 +32,7 @@ export default async function Home({
 
   return (
     <>
-      <div className="space-y-2">
-          {selectedData ?
-              <DayWeekAllChartWithRanking data={selectedData} /> : 
-              <p className="text-center">表示できるデータがありません!!</p>
-          }
-      </div>
-      <div className="fixed right-2 top-2 space-y-4 flex flex-col items-end">
+      <div className="flex justify-center space-x-2 mb-4">
           <div className="border-yellow-600 border-2 p-2 rounded w-fit">
               {data.map((d, pindex) => (
                 <Link key={pindex} href={`/?period=${d.period}&grip=${grip}`} className={`no-underline p-2 text-2xl rounded ${period === d.period ? "bg-yellow-600 text-white" : "bg-white text-yellow-600"}`}>
@@ -48,13 +41,19 @@ export default async function Home({
               ))}
           </div>
           <div className="border-yellow-600 border-2 p-2 rounded w-fit">
-              <Link href={`/?period=${period}&grip=narrow`} className={`no-underline p-2 text-2xl rounded ${grip === "narrow" ? "bg-yellow-600 text-white" : "bg-white text-yellow-600"}`}>
+              <Link href={`/?period=${period}&grip=Narrow`} className={`no-underline p-2 text-2xl rounded ${grip === "Narrow" ? "bg-yellow-600 text-white" : "bg-white text-yellow-600"}`}>
                 Narrow
               </Link>
-              <Link href={`/?period=${period}&grip=wide`} className={`no-underline p-2 text-2xl rounded ${grip === "wide" ? "bg-yellow-600 text-white" : "bg-white text-yellow-600"}`}>
+              <Link href={`/?period=${period}&grip=Wide`} className={`no-underline p-2 text-2xl rounded ${grip === "Wide" ? "bg-yellow-600 text-white" : "bg-white text-yellow-600"}`}>
                 Wide
               </Link>
           </div>
+      </div>
+      <div className="space-y-2">
+          {selectedData ?
+              <ChartWithRankings data={selectedData} /> : 
+              <p className="text-center">表示できるデータがありません!!</p>
+          }
       </div>
     </>
   );

@@ -15,8 +15,8 @@ export async function GET(req: Request) {
           },
           barChartData: [
             {name: "力 餅", counts: 50},
-            {name: "犬 水", counts: 50},
-            {name: "腕 太", counts: 50},
+            {name: "犬 水", counts: 48},
+            {name: "腕 太", counts: 44},
           ],
         },
         {

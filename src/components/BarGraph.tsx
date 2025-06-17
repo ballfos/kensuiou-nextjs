@@ -21,6 +21,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function BarGraph({barChartConfig, barChartData}: {barChartConfig: tBarChartConfig, barChartData: tBarChartData[]}) {
 
+  const maxValue = Math.max(...barChartData.map((d) => d.counts));
+
+  const CustomImageLabel = (props: any) => {
+    const { x, y, width, height, value } = props;
+
+    if (value !== maxValue) return null;
+
+    return (
+      <image x={x+(width/2)-48} y={y+(height/2)-48} width={96} height={96} href="choi_king.PNG"/>
+    );
+  };
+
   return (
     <Card className="w-full max-w-3xl mx-auto mt-6">
       {/* グラフのヘッダー */}
@@ -39,7 +51,7 @@ export default function BarGraph({barChartConfig, barChartData}: {barChartConfig
             <ChartTooltip content={<ChartTooltipContent />} />
             {/* 上のchartConfigのキーをdataKeyに入れる 
                 fillに指定するのはchartConfigのカラー属性で、--color-〇〇キーとする */}
-            <Bar dataKey="counts" fill="var(--color-counts)" />
+            <Bar dataKey="counts" fill="var(--color-counts)" label={<CustomImageLabel />} />
           </BarChart>
         </ChartContainer>
       </CardContent>
