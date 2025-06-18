@@ -12,7 +12,7 @@ const pool = new Pool({
 });
 
 // データを取得する関数
-export async function getDataFromDB(query: string, params: any[] = []): Promise<RawMemberData[]> {
+export async function getDataFromDB(query: string, params: any[] = []) {
   try {
     const client = await pool.connect();
     const result = await client.query(query, params);
