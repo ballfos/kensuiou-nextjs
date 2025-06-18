@@ -1,4 +1,4 @@
-import { tData, tPeriodData } from "@/lib/TypeDeclarations";
+import { tData } from "@/lib/TypeDeclarations";
 import ChartWithRankings from "@/components/ChartWithRankings";
 import Link from "next/link";
 import { getDataFromDB } from "@/lib/db";

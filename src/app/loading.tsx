@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import Image from "next/image";
 
 export default function HomeLoading() {
     // #region 画面のチラつき対策 (ロード画面は読み込み時間が長い場合のみ表示する)
@@ -19,7 +20,7 @@ export default function HomeLoading() {
 
     return (
         <div className="flex flex-col justify-center items-center h-screen" aria-label="Now Loading...">
-            <img src="chinups.gif" alt="Now Loading..." width={128} height={128} />
+            <Image width={32} height={32} src="/chinups.gif" alt="Now Loading..." unoptimized />
             Now Loading...
         </div>
     );
