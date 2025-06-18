@@ -1,6 +1,6 @@
 // lib/db.ts
 import { Pool } from 'pg';
-import { RawMemberData } from '@/components/TypeDeclarations';
+import { RawMemberData } from '@/lib/TypeDeclarations';
 
 // PostgreSQL接続設定
 const pool = new Pool({
