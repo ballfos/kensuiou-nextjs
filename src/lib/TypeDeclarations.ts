@@ -1,6 +1,6 @@
 // 棒グラフとランキング用のデータ
 export type tBarChartData = {
-    // id?: string; // プレイヤーの情報をリンクづけるためにあるid
+    id?: string; // プレイヤーの情報をリンクづけるためにあるid
     name: string;
     counts: number;
 }

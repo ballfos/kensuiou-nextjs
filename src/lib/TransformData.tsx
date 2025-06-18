@@ -23,6 +23,7 @@ export function transformData(rawData: RawMemberData[]): tData[] {
 
                     barChartData: rawData
                         .map((member) => ({
+                          id: member.member_id,
                           name: member.nickname,
                           counts: member[dataKey] as number,
                         }))
