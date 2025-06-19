@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/chart";
 
 // このコンポーネントは "Max" または "Sum" のレコードを一つ受け取ります
-export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
+export default function LineGraph({ lineRecord }: { lineRecord: tLineRecord }) {
   // 1. データからメンバーのキー（ニックネーム）を動的に取得
   const memberKeys =
     lineRecord.lineChartData.length > 0
@@ -67,7 +67,12 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
               margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
             >
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} />
+              <XAxis
+                dataKey="name"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+              />
               <YAxis />
               <ChartTooltip
                 cursor={false}
@@ -79,7 +84,7 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
                   dataKey={userID}
                   stroke={`var(--color-${userID})`}
                   strokeWidth={2}
-                  dot={true} // 点も表示するように変更
+                  dot={false} // 点も表示するように変更
                 />
               ))}
             </LineChart>

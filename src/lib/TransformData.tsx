@@ -66,29 +66,23 @@ function formatDate(date: Date): string {
 }
 
 export function transformToLineChartData(
-  // 補足: rawDataの型は、新しいデータ形式に合わせて更新されたものと仮定します
   rawData: any[],
   shoulder: "Narrow" | "Wide"
 ): tLineData[] {
-  // 全てのメンバーのユニークなニックネームを取得
   const allMembers = [...new Set(rawData.map((d) => d.nickname))];
-  const shoulderKey = shoulder.toLowerCase(); // "narrow" または "wide"
+  const shoulderKey = shoulder.toLowerCase();
 
-  // ▼▼▼ ここから修正 ▼▼▼
-  // 処理したいデータの種類を定義
   const typeInfo = [
-    { key: "cumulative_max", label: "Max" },
-    { key: "cumulative_sum", label: "Sum" },
+    { key: "cumulative_max", label: "Cumulative Max" },
+    { key: "cumulative_sum", label: "Cumulative Sum" },
   ];
 
-  // typeInfoを元に、"Max"と"Sum"の各グラフデータを生成
   const finalRecords: tLineRecord[] = typeInfo.map((type) => {
-    const weeklyData = new Map<string, tLineChartData>();
-    // "max_narrow_counts" や "sum_narrow_counts" のようなキー名を動的に作成
+    // ▼▼▼ Mapの構造を変更し、ソート用の日付も保持するようにします ▼▼▼
+    const weeklyData = new Map<string, { data: tLineChartData; date: Date }>();
     const dataKey = `${shoulderKey}_${type.key}_counts`;
 
     for (const record of rawData) {
-      // 対象のデータが存在しない場合はスキップ
       if (record[dataKey] === undefined) continue;
 
       const weekStart = new Date(record.week_start_date);
@@ -103,29 +97,20 @@ export function transformToLineChartData(
         allMembers.forEach((member) => {
           newPoint[member] = 0;
         });
-        weeklyData.set(weekLabel, newPoint);
+        // ソート用の日付(weekStart)も一緒に保存します
+        weeklyData.set(weekLabel, { data: newPoint, date: weekStart });
       }
 
-      const point = weeklyData.get(weekLabel)!;
-      // 同じ週に同じメンバーのデータが複数ある場合も考慮して加算
+      const point = weeklyData.get(weekLabel)!.data;
       point[record.nickname] = (point[record.nickname] as number) + value;
     }
 
-    const sortedWeeklyLineData = Array.from(weeklyData.values()).sort(
-      (a, b) => {
-        const dateA = new Date(
-          new Date().getFullYear(),
-          parseInt(a.name.split("~")[0].split("/")[0]) - 1,
-          parseInt(a.name.split("~")[0].split("/")[1])
-        );
-        const dateB = new Date(
-          new Date().getFullYear(),
-          parseInt(b.name.split("~")[0].split("/")[0]) - 1,
-          parseInt(b.name.split("~")[0].split("/")[1])
-        );
-        return dateA.getTime() - dateB.getTime();
-      }
-    );
+    // ▼▼▼ ソート処理を修正しました ▼▼▼
+    const sortedWeeklyLineData = Array.from(weeklyData.values())
+      // 保存した date を使って正しくソートします
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      // ソート後にグラフ用のデータ(data)だけを抽出します
+      .map((item) => item.data);
 
     return {
       type: type.label,
@@ -133,11 +118,9 @@ export function transformToLineChartData(
     };
   });
 
-  // --- 最終的なデータ構造の組み立て ---
   const result: tLineData[] = [
     {
       period: "Week",
-      // データが存在するレコードのみをフィルタリングして格納
       records: finalRecords.filter((r) => r.lineChartData.length > 0),
     },
   ];
