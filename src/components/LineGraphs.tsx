@@ -1,7 +1,7 @@
 // ファイルパス: components/LineGraphs.tsx
 
 // ✅ 新しい LineChartCard をインポート
-import LineChartCard from "@/components/ui/LineChartCard";
+import LineGraph from "@/components/LineGraph";
 import { tLineData } from "@/lib/TypeDeclarations";
 
 export default async function LineGraphs({
@@ -15,7 +15,7 @@ export default async function LineGraphs({
       <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-2">
         {lineData.records.map((r, index) => (
           // ✅ ここで直接 LineChartCard を呼び出す
-          <LineChartCard key={index} lineRecord={r} />
+          <LineGraph key={index} lineRecord={r} />
         ))}
       </div>
     </div>

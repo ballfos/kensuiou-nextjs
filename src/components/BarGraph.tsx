@@ -2,7 +2,7 @@
 import { tBarChartConfig, tBarChartData } from "@/lib/TypeDeclarations";
 
 // 懸垂の自己記録を取得できるなら、その合計回数、平均回数、目標達成率、前週比などを含められると良い?
-import { BarChart, Bar, XAxis, YAxis, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Cell, LabelList } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -57,11 +57,19 @@ export default function BarGraph({ barChartData }: { barChartData: tBarChartData
                         <ChartTooltip content={<ChartTooltipContent />} />
                         {/* 上のchartConfigのキーをdataKeyに入れる 
                             fillに指定するのはchartConfigのカラー属性で、--color-〇〇キーとする */}
-                        <Bar dataKey="counts" fill="var(--color-counts)" label={<CustomImageLabel />}>
+                        <Bar dataKey="counts">
                             {barChartData.map((entry, index) => (
-                                <Cell key={`cell-${index}`}
-                                fill={entry.id === "bf8432fc-f4c3-48ec-8268-bbd26786fea1" ? "#ef4444" : "var(--color-counts)"} />
+                                <Cell
+                                key={`cell-${index}`}
+                                fill={
+                                    entry.id ===  "bf8432fc-f4c3-48ec-8268-bbd26786fea1" ? "#ef4444" : "var(--color-counts)"
+                                }
+                                />
                             ))}
+                            <LabelList
+                                dataKey="counts"
+                                content={<CustomImageLabel />}
+                            />
                         </Bar>
                     </BarChart>
                 </ChartContainer>

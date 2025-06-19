@@ -1,6 +1,5 @@
 // lib/db.ts
 import { Pool } from 'pg';
-import { RawMemberData } from '@/lib/TypeDeclarations';
 
 // PostgreSQL接続設定
 const pool = new Pool({
@@ -12,7 +11,7 @@ const pool = new Pool({
 });
 
 // データを取得する関数
-export async function getDataFromDB(query: string, params: any[] = []) {
+export async function getDataFromDB(query: string, params: any[] = [])  {
   try {
     const client = await pool.connect();
     const result = await client.query(query, params);

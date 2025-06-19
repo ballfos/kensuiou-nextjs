@@ -1,7 +1,4 @@
-import ChartWithRankings from "@/components/ChartWithRanking";
-import BarGraph from "@/components/BarGraph";
-// import { tData } from "@/components/ChartWithRankingsTS";
-import { tLineData, LineRawMemberData } from "@/lib/TypeDeclarations";
+import { LineRawMemberData } from "@/lib/TypeDeclarations";
 import LineGraphs from "@/components/LineGraphs";
 import Link from "next/link";
 import { getDataFromDB } from "@/lib/db";

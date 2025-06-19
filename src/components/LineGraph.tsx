@@ -29,11 +29,7 @@ import {
 } from "@/components/ui/chart";
 
 // このコンポーネントは "Max" または "Sum" のレコードを一つ受け取ります
-export default function LineChartCard({
-  lineRecord,
-}: {
-  lineRecord: tLineRecord;
-}) {
+export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
   // 1. データからメンバーのキー（ニックネーム）を動的に取得
   const memberKeys =
     lineRecord.lineChartData.length > 0
@@ -57,6 +53,7 @@ export default function LineChartCard({
       color: colorPalette[index % colorPalette.length],
     };
     return config;
+    // ここはtChartConfigにするべきか?
   }, {} as ChartConfig); // shadcn/uiのChartConfig型を使用
 
   return (
