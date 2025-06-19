@@ -49,21 +49,6 @@ export default async function Home({
     <>
       <div className="flex justify-center space-x-2 mb-4">
         <div className="border-yellow-600 border-2 p-2 rounded w-fit">
-          {periodLinks.map((p, pindex) => (
-            <Link
-              key={pindex}
-              href={`/graph?period=${p}&shoulder=${shoulder}`}
-              className={`no-underline p-2 text-2xl rounded ${
-                period === p
-                  ? "bg-yellow-600 text-white"
-                  : "bg-white text-yellow-600"
-              }`}
-            >
-              {p} {/* リンクのテキスト */}
-            </Link>
-          ))}
-        </div>
-        <div className="border-yellow-600 border-2 p-2 rounded w-fit">
           {shoulderLinks.map((s, sindex) => (
             <Link
               key={sindex}
