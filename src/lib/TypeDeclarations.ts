@@ -110,7 +110,7 @@ export type LineRawMemberData ={
     week_start_date:string;
     max_narrow_counts: number;
     max_wide_counts: number;
-    narrw_cumulative_sum_counts: number;
+    narrow_cumulative_sum_counts: number;
     narrow_cumulative_max_counts: number;
     wide_cumulative_sum_counts: number;
     wide_cumulative_max_counts: number;

@@ -6,6 +6,7 @@ import {
   tLineChartData,
   tPeriodData,
   tRecord,
+  tLineRecord,
 } from "@/lib/TypeDeclarations";
 
 export function transformData(rawData: RawMemberData[]): tData[] {
@@ -65,68 +66,81 @@ function formatDate(date: Date): string {
 }
 
 export function transformToLineChartData(
-  rawData: LineRawMemberData[],
+  // 補足: rawDataの型は、新しいデータ形式に合わせて更新されたものと仮定します
+  rawData: any[],
   shoulder: "Narrow" | "Wide"
 ): tLineData[] {
   // 全てのメンバーのユニークなニックネームを取得
   const allMembers = [...new Set(rawData.map((d) => d.nickname))];
+  const shoulderKey = shoulder.toLowerCase(); // "narrow" または "wide"
 
-  // --- 週次 (Week) データの生成 ---
-  const weeklyData = new Map<string, tLineChartData>();
+  // ▼▼▼ ここから修正 ▼▼▼
+  // 処理したいデータの種類を定義
+  const typeInfo = [
+    { key: "cumulative_max", label: "Max" },
+    { key: "cumulative_sum", label: "Sum" },
+  ];
 
-  for (const record of rawData) {
-    const weekStart = new Date(record.week_start_date);
-    const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 6);
+  // typeInfoを元に、"Max"と"Sum"の各グラフデータを生成
+  const finalRecords: tLineRecord[] = typeInfo.map((type) => {
+    const weeklyData = new Map<string, tLineChartData>();
+    // "max_narrow_counts" や "sum_narrow_counts" のようなキー名を動的に作成
+    const dataKey = `${shoulderKey}_${type.key}_counts`;
 
-    const weekLabel = `${formatDate(weekStart)}~${formatDate(weekEnd)}`;
+    for (const record of rawData) {
+      // 対象のデータが存在しない場合はスキップ
+      if (record[dataKey] === undefined) continue;
 
-    const value =
-      shoulder === "Narrow" ? record.max_narrow_counts : record.max_wide_counts;
+      const weekStart = new Date(record.week_start_date);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+      const weekLabel = `${formatDate(weekStart)}~${formatDate(weekEnd)}`;
 
-    if (!weeklyData.has(weekLabel)) {
-      // 新しい週のデータポイントを作成し、全メンバーを0で初期化
-      const newPoint: tLineChartData = { name: weekLabel };
-      allMembers.forEach((member) => {
-        newPoint[member] = 0;
-      });
-      weeklyData.set(weekLabel, newPoint);
+      const value = Number(record[dataKey]);
+
+      if (!weeklyData.has(weekLabel)) {
+        const newPoint: tLineChartData = { name: weekLabel };
+        allMembers.forEach((member) => {
+          newPoint[member] = 0;
+        });
+        weeklyData.set(weekLabel, newPoint);
+      }
+
+      const point = weeklyData.get(weekLabel)!;
+      // 同じ週に同じメンバーのデータが複数ある場合も考慮して加算
+      point[record.nickname] = (point[record.nickname] as number) + value;
     }
 
-    // 該当メンバーの値を更新
-    const point = weeklyData.get(weekLabel)!;
-    // 同じ週に同じメンバーのデータが複数ある場合も考慮して加算
-    point[record.nickname] = (point[record.nickname] as number) + value;
-  }
+    const sortedWeeklyLineData = Array.from(weeklyData.values()).sort(
+      (a, b) => {
+        const dateA = new Date(
+          new Date().getFullYear(),
+          parseInt(a.name.split("~")[0].split("/")[0]) - 1,
+          parseInt(a.name.split("~")[0].split("/")[1])
+        );
+        const dateB = new Date(
+          new Date().getFullYear(),
+          parseInt(b.name.split("~")[0].split("/")[0]) - 1,
+          parseInt(b.name.split("~")[0].split("/")[1])
+        );
+        return dateA.getTime() - dateB.getTime();
+      }
+    );
 
-  // Mapから配列に変換し、週の開始日でソート
-  const sortedWeeklyLineData = Array.from(weeklyData.values()).sort((a, b) => {
-    // "6/8~6/14" の "6/8" の部分をパースして比較
-    const dateA = new Date(
-      new Date().getFullYear(),
-      parseInt(a.name.split("~")[0].split("/")[0]) - 1,
-      parseInt(a.name.split("~")[0].split("/")[1])
-    );
-    const dateB = new Date(
-      new Date().getFullYear(),
-      parseInt(b.name.split("~")[0].split("/")[0]) - 1,
-      parseInt(b.name.split("~")[0].split("/")[1])
-    );
-    return dateA.getTime() - dateB.getTime();
+    return {
+      type: type.label,
+      lineChartData: sortedWeeklyLineData,
+    };
   });
 
   // --- 最終的なデータ構造の組み立て ---
   const result: tLineData[] = [
     {
       period: "Week",
-      records: [
-        { type: "Max", lineChartData: sortedWeeklyLineData },
-        // 注意: 元データに合計値がないため、Sumは空配列になります
-        { type: "Sum", lineChartData: [] },
-      ],
+      // データが存在するレコードのみをフィルタリングして格納
+      records: finalRecords.filter((r) => r.lineChartData.length > 0),
     },
   ];
 
-  // 週次データのみを格納した配列を返す
   return result;
 }

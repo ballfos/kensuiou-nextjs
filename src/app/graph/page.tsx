@@ -9,7 +9,9 @@ export default async function Home({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
-  const shoulder = ((await searchParams).shoulder || "Narrow") as "Narrow" | "Wide";
+  const shoulder = ((await searchParams).shoulder || "Narrow") as
+    | "Narrow"
+    | "Wide";
   const period = (await searchParams).period || "Week";
   const query = "SELECT * FROM weekly_aggregate_view";
   const rawdata: LineRawMemberData[] = await getDataFromDB(query);
@@ -44,7 +46,7 @@ export default async function Home({
 
   const shoulderLinks = ["Narrow", "Wide"];
   const periodLinks = ["Day", "Week", "Total"];
-  //   return <span>{JSON.stringify(data)}</span>;
+  //   return <span>{JSON.stringify(rawdata)}</span>;
   return (
     <>
       <div className="flex justify-center space-x-2 mb-4">
