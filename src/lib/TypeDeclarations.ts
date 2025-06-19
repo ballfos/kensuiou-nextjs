@@ -72,7 +72,7 @@ export type tOnesPeriodData = {
     // 個人の棒グラフは一日ごとも連続回数もランキングの時のものを流用
     chartsRecords: tRecord[];
     // 累計回数も流用
-    lineRecord: tLineRecord;
+    lineRecord: tLineRecord[];
     // あと何を載せるか考えよう!! (それぞれのデータに関するランキングを表示する)
     rankingList?: tOnesRankingList;
 }

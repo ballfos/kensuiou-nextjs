@@ -72,12 +72,7 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
               margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
             >
               <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="name"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-              />
+              <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} />
               <YAxis />
               <ChartTooltip
                 cursor={false}
@@ -87,7 +82,6 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
                 <Line
                   key={userID}
                   dataKey={userID}
-                  // 4. strokeの指定方法（これは前回の修正で正しくなっています）
                   stroke={`var(--color-${userID})`}
                   strokeWidth={2}
                   dot={true} // 点も表示するように変更

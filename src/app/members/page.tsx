@@ -7,6 +7,215 @@ export default async function Home({searchParams}: {searchParams: { [key: string
     const shoulder = (await searchParams).shoulder || "Narrow";
     const period = (await searchParams).period || "Day";
 
+    // const data: tOnesDataByUser[] = [
+    //     {
+    //         id: "a1234",
+    //         name: "ダミー君",
+    //         onesData: [
+    //             {
+    //             shoulder: "Narrow",
+    //             periods: [
+    //                 {
+    //                 period: "Day",
+    //                 chartsRecords: [
+    //                     {
+    //                     type: "最大回数",
+    //                     barChartData: [
+    //                         { id: "user-1", name: "6/10", counts: 22 },
+    //                         { id: "user-2", name: "6/11", counts: 20 },
+    //                         { id: "user-3", name: "6/12", counts: 19 }
+    //                     ]
+    //                     },
+    //                     {
+    //                     type: "合計",
+    //                     barChartData: [
+    //                         { id: "user-2", name: "6/10", counts: 50 },
+    //                         { id: "user-1", name: "6/11", counts: 48 },
+    //                         { id: "user-4", name: "6/12", counts: 44 }
+    //                     ]
+    //                     }
+    //                 ],
+    //                 lineRecord: {
+    //                     type: "累計回数",
+    //                     lineChartData: [
+    //                     { name: "6/10", a1234: 15 },
+    //                     { name: "6/11", a1234: 33 },
+    //                     { name: "6/12", a1234: 45 },
+    //                     ]
+    //                 },
+    //                 rankingList: {
+    //                     date: ["6/10", "6/11", "6/12"],
+    //                     rankings: [
+    //                     {
+    //                         name: "回数",
+    //                         ranks: [2, 1, 1]
+    //                     },
+    //                     {
+    //                         name: "連続回数",
+    //                         ranks: [1, 2, 2]
+    //                     },
+    //                     {
+    //                         name: "累計",
+    //                         ranks: [3, 3, 3]
+    //                     }
+    //                     ]
+    //                 }
+    //                 },
+    //                 {
+    //                 period: "Week",
+    //                 chartsRecords: [
+    //                     {
+    //                     type: "最大回数",
+    //                     barChartData: [
+    //                         { id: "user-5", name: "5/25-5/31", counts: 28 },
+    //                         { id: "user-6", name: "6/1-6/7", counts: 20 },
+    //                         { id: "user-7", name: "6/8-6/12", counts: 19 }
+    //                     ]
+    //                     },
+    //                     {
+    //                     type: "合計",
+    //                     barChartData: [
+    //                         { id: "user-5", name: "5/25-5/31", counts: 320 },
+    //                         { id: "user-8", name: "6/1-6/7", counts: 310 },
+    //                         { id: "user-4", name: "6/8-6/12", counts: 298 }
+    //                     ]
+    //                     }
+    //                 ],
+    //                 lineRecord: {
+    //                     type: "累計回数",
+    //                     lineChartData: [
+    //                     { name: "5/25-5/31", a1234: 50 },
+    //                     { name: "6/1-6/7", a1234: 100 },
+    //                     { name: "6/8-6/12", a1234: 150 },
+    //                     ]
+    //                 },
+    //                 rankingList: {
+    //                     date: ["5/25-5/31", "6/1-6/7", "6/8-6/12"],
+    //                     rankings: [
+    //                     {
+    //                         name: "回数",
+    //                         ranks: [1, 1, 1]
+    //                     },
+    //                     {
+    //                         name: "連続回数",
+    //                         ranks: [2, 2, 2]
+    //                     },
+    //                     {
+    //                         name: "累計",
+    //                         ranks: [3, 3, 3]
+    //                     }
+    //                     ]
+    //                 }
+    //                 }
+    //             ]
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         id: "a1238",
+    //         name: "デミグラス君",
+    //         onesData: [
+    //             {
+    //             shoulder: "Narrow",
+    //             periods: [
+    //                 {
+    //                 period: "Day",
+    //                 chartsRecords: [
+    //                     {
+    //                     type: "最大回数",
+    //                     barChartData: [
+    //                         { id: "user-1", name: "6/10", counts: 19 },
+    //                         { id: "user-2", name: "6/11", counts: 17 },
+    //                         { id: "user-3", name: "6/12", counts: 18 }
+    //                     ]
+    //                     },
+    //                     {
+    //                     type: "合計",
+    //                     barChartData: [
+    //                         { id: "user-2", name: "6/10", counts: 19 },
+    //                         { id: "user-1", name: "6/11", counts: 17 },
+    //                         { id: "user-4", name: "6/12", counts: 17 }
+    //                     ]
+    //                     }
+    //                 ],
+    //                 lineRecord: {
+    //                     type: "累計回数",
+    //                     lineChartData: [
+    //                     { name: "6/10", a1238: 50 },
+    //                     { name: "6/11", a1238: 67 },
+    //                     { name: "6/12", a1238: 102 },
+    //                     ]
+    //                 },
+    //                 rankingList: {
+    //                     date: ["6/10", "6/11", "6/12"],
+    //                     rankings: [
+    //                     {
+    //                         name: "回数",
+    //                         ranks: [2, 1, 1]
+    //                     },
+    //                     {
+    //                         name: "連続回数",
+    //                         ranks: [1, 2, 2]
+    //                     },
+    //                     {
+    //                         name: "累計",
+    //                         ranks: [3, 3, 3]
+    //                     }
+    //                     ]
+    //                 }
+    //                 },
+    //                 {
+    //                 period: "Week",
+    //                 chartsRecords: [
+    //                     {
+    //                     type: "最大回数",
+    //                     barChartData: [
+    //                         { id: "user-5", name: "5/25-5/31", counts: 22 },
+    //                         { id: "user-6", name: "6/1-6/7", counts: 20 },
+    //                         { id: "user-7", name: "6/8-6/12", counts: 19 }
+    //                     ]
+    //                     },
+    //                     {
+    //                     type: "合計",
+    //                     barChartData: [
+    //                         { id: "user-5", name: "5/25-5/31", counts: 320 },
+    //                         { id: "user-8", name: "6/1-6/7", counts: 310 },
+    //                         { id: "user-4", name: "6/8-6/12", counts: 298 }
+    //                     ]
+    //                     }
+    //                 ],
+    //                 lineRecord: {
+    //                     type: "累計回数",
+    //                     lineChartData: [
+    //                     { name: "5/25-5/31", a1238: 420 },
+    //                     { name: "6/1-6/7", a1238: 730 },
+    //                     { name: "6/8-6/12", a1238: 1028 },
+    //                     ]
+    //                 },
+    //                 rankingList: {
+    //                     date: ["5/25-5/31", "6/1-6/7", "6/8-6/12"],
+    //                     rankings: [
+    //                     {
+    //                         name: "回数",
+    //                         ranks: [1, 2, 1]
+    //                     },
+    //                     {
+    //                         name: "連続回数",
+    //                         ranks: [2, 3, 2]
+    //                     },
+    //                     {
+    //                         name: "累計",
+    //                         ranks: [3, 2, 1]
+    //                     }
+    //                     ]
+    //                 }
+    //                 }
+    //             ]
+    //             }
+    //         ]
+    //     },
+    // ];
+
     const data: tOnesDataByUser[] = [
         {
             id: "a1234",
@@ -35,31 +244,41 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                         ]
                         }
                     ],
-                    lineRecord: {
-                        type: "累計回数",
-                        lineChartData: [
-                        { name: "6/10", a1234: 15 },
-                        { name: "6/11", a1234: 33 },
-                        { name: "6/12", a1234: 45 },
-                        ]
-                    },
-                    rankingList: {
-                        date: ["6/10", "6/11", "6/12"],
-                        rankings: [
+                    lineRecord: [
                         {
-                            name: "回数",
-                            ranks: [2, 1, 1]
+                            type: "累計回数",
+                            lineChartData: [
+                            { name: "6/10", a1234: 15 },
+                            { name: "6/11", a1234: 33 },
+                            { name: "6/12", a1234: 45 },
+                            ]
                         },
                         {
-                            name: "連続回数",
-                            ranks: [1, 2, 2]
+                            type: "連続回数",
+                            lineChartData: [
+                            { name: "6/10", a1234: 15 },
+                            { name: "6/11", a1234: 18 },
+                            { name: "6/12", a1234: 18 },
+                            ]
                         },
-                        {
-                            name: "累計",
-                            ranks: [3, 3, 3]
-                        }
-                        ]
-                    }
+                    ],
+                    // rankingList: {
+                    //     date: ["6/10", "6/11", "6/12"],
+                    //     rankings: [
+                    //     {
+                    //         name: "回数",
+                    //         ranks: [2, 1, 1]
+                    //     },
+                    //     {
+                    //         name: "連続回数",
+                    //         ranks: [1, 2, 2]
+                    //     },
+                    //     {
+                    //         name: "累計",
+                    //         ranks: [3, 3, 3]
+                    //     }
+                    //     ]
+                    // }
                     },
                     {
                     period: "Week",
@@ -81,31 +300,41 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                         ]
                         }
                     ],
-                    lineRecord: {
-                        type: "累計回数",
-                        lineChartData: [
-                        { name: "5/25-5/31", a1234: 50 },
-                        { name: "6/1-6/7", a1234: 100 },
-                        { name: "6/8-6/12", a1234: 150 },
-                        ]
-                    },
-                    rankingList: {
-                        date: ["5/25-5/31", "6/1-6/7", "6/8-6/12"],
-                        rankings: [
+                    lineRecord: [
                         {
-                            name: "回数",
-                            ranks: [1, 1, 1]
+                            type: "累計回数",
+                            lineChartData: [
+                            { name: "5/25-5/31", a1234: 50 },
+                            { name: "6/1-6/7", a1234: 100 },
+                            { name: "6/8-6/12", a1234: 150 },
+                            ]
                         },
                         {
-                            name: "連続回数",
-                            ranks: [2, 2, 2]
+                            type: "連続回数",
+                            lineChartData: [
+                            { name: "5/25-5/31", a1234: 12 },
+                            { name: "6/1-6/7", a1234: 13 },
+                            { name: "6/8-6/12", a1234: 18 },
+                            ]
                         },
-                        {
-                            name: "累計",
-                            ranks: [3, 3, 3]
-                        }
-                        ]
-                    }
+                    ],
+                    // rankingList: {
+                    //     date: ["5/25-5/31", "6/1-6/7", "6/8-6/12"],
+                    //     rankings: [
+                    //     {
+                    //         name: "回数",
+                    //         ranks: [1, 1, 1]
+                    //     },
+                    //     {
+                    //         name: "連続回数",
+                    //         ranks: [2, 2, 2]
+                    //     },
+                    //     {
+                    //         name: "累計",
+                    //         ranks: [3, 3, 3]
+                    //     }
+                    //     ]
+                    // }
                     }
                 ]
                 }
@@ -138,31 +367,41 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                         ]
                         }
                     ],
-                    lineRecord: {
-                        type: "累計回数",
-                        lineChartData: [
-                        { name: "6/10", a1238: 50 },
-                        { name: "6/11", a1238: 67 },
-                        { name: "6/12", a1238: 102 },
-                        ]
-                    },
-                    rankingList: {
-                        date: ["6/10", "6/11", "6/12"],
-                        rankings: [
+                    lineRecord: [
                         {
-                            name: "回数",
-                            ranks: [2, 1, 1]
+                            type: "累計回数",
+                            lineChartData: [
+                            { name: "6/10", a1238: 50 },
+                            { name: "6/11", a1238: 67 },
+                            { name: "6/12", a1238: 102 },
+                            ]
                         },
                         {
-                            name: "連続回数",
-                            ranks: [1, 2, 2]
-                        },
-                        {
-                            name: "累計",
-                            ranks: [3, 3, 3]
-                        }
-                        ]
-                    }
+                            type: "連続回数",
+                            lineChartData: [
+                            { name: "6/10", a1238: 19 },
+                            { name: "6/11", a1238: 19 },
+                            { name: "6/12", a1238: 19 },
+                            ]
+                        },     
+                    ],
+                    // rankingList: {
+                    //     date: ["6/10", "6/11", "6/12"],
+                    //     rankings: [
+                    //     {
+                    //         name: "回数",
+                    //         ranks: [2, 1, 1]
+                    //     },
+                    //     {
+                    //         name: "連続回数",
+                    //         ranks: [1, 2, 2]
+                    //     },
+                    //     {
+                    //         name: "累計",
+                    //         ranks: [3, 3, 3]
+                    //     }
+                    //     ]
+                    // }
                     },
                     {
                     period: "Week",
@@ -184,31 +423,41 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                         ]
                         }
                     ],
-                    lineRecord: {
-                        type: "累計回数",
-                        lineChartData: [
-                        { name: "5/25-5/31", a1238: 420 },
-                        { name: "6/1-6/7", a1238: 730 },
-                        { name: "6/8-6/12", a1238: 1028 },
-                        ]
-                    },
-                    rankingList: {
-                        date: ["5/25-5/31", "6/1-6/7", "6/8-6/12"],
-                        rankings: [
+                    lineRecord: [
                         {
-                            name: "回数",
-                            ranks: [1, 2, 1]
+                            type: "累計回数",
+                            lineChartData: [
+                            { name: "5/25-5/31", a1238: 420 },
+                            { name: "6/1-6/7", a1238: 730 },
+                            { name: "6/8-6/12", a1238: 1028 },
+                            ]
                         },
                         {
-                            name: "連続回数",
-                            ranks: [2, 3, 2]
-                        },
-                        {
-                            name: "累計",
-                            ranks: [3, 2, 1]
+                            type: "連続回数",
+                            lineChartData: [
+                            { name: "5/25-5/31", a1238: 16 },
+                            { name: "6/1-6/7", a1238: 18 },
+                            { name: "6/8-6/12", a1238: 19 },
+                            ]
                         }
-                        ]
-                    }
+                    ],
+                    // rankingList: {
+                    //     date: ["5/25-5/31", "6/1-6/7", "6/8-6/12"],
+                    //     rankings: [
+                    //     {
+                    //         name: "回数",
+                    //         ranks: [1, 2, 1]
+                    //     },
+                    //     {
+                    //         name: "連続回数",
+                    //         ranks: [2, 3, 2]
+                    //     },
+                    //     {
+                    //         name: "累計",
+                    //         ranks: [3, 2, 1]
+                    //     }
+                    //     ]
+                    // }
                     }
                 ]
                 }
