@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/chart";
 
 // このコンポーネントは "Max" または "Sum" のレコードを一つ受け取ります
-export default function LineGraph({ lineRecord }: { lineRecord: tLineRecord }) {
+export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
   // 1. データからメンバーのキー（ニックネーム）を動的に取得
   const memberKeys =
     lineRecord.lineChartData.length > 0
@@ -57,7 +57,7 @@ export default function LineGraph({ lineRecord }: { lineRecord: tLineRecord }) {
   }, {} as ChartConfig); // shadcn/uiのChartConfig型を使用
 
   return (
-    <Card>
+    <Card className="w-full max-w-3xl mx-auto mt-6">
       <CardHeader>
         {/* カードのタイトルとして"Max"や"Sum"を表示 */}
         <CardTitle>推移グラフ - {lineRecord.type}</CardTitle>
@@ -83,12 +83,12 @@ export default function LineGraph({ lineRecord }: { lineRecord: tLineRecord }) {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}
               />
-              {Object.entries(chartConfig).map(([userID, config]) => (
+              {Object.entries(chartConfig).map(([userID]) => (
                 <Line
                   key={userID}
                   dataKey={userID}
                   // 4. strokeの指定方法（これは前回の修正で正しくなっています）
-                  stroke={config.color} // chartConfigの色を直接利用
+                  stroke={`var(--color-${userID})`}
                   strokeWidth={2}
                   dot={true} // 点も表示するように変更
                 />
@@ -105,7 +105,7 @@ export default function LineGraph({ lineRecord }: { lineRecord: tLineRecord }) {
               <Link href={`/user/${key}`} className="flex items-center gap-1.5">
                 <span
                   className="w-2.5 h-2.5 rounded-full"
-                  style={{ backgroundColor: config.color }}
+                  style={{ backgroundColor: `var(${config.color})` }}
                 ></span>
                 <span className="font-medium">{config.label}</span>
               </Link>

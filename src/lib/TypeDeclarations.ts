@@ -54,6 +54,14 @@ export type tLineChartConfig = {
 }
 
 // 最近の順位表を作る
+// ユーザーごとのデータ
+export type tOnesDataByUser = {
+    id: string;
+    name: string;
+    onesData: tOnesData[];
+}
+
+// 個人データの中身
 export type tOnesData = {
     shoulder: string; 
     periods: tOnesPeriodData[]; // periodの配列を持つように変更
