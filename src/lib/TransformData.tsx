@@ -73,7 +73,8 @@ export function transformToLineChartData(
   const shoulderKey = shoulder.toLowerCase();
 
   const typeInfo = [
-    { key: "cumulative_max", label: "Cumulative Max" },
+    { key: "max", label: "Max" },
+
     { key: "cumulative_sum", label: "Cumulative Sum" },
   ];
 
