@@ -4,6 +4,7 @@
 import { tLineRecord, tLineChartConfig } from "@/lib/TypeDeclarations";
 import Link from "next/link";
 import { TrendingUp } from "lucide-react";
+import { schemeTableau10 } from "d3-scale-chromatic";
 import {
   LineChart,
   Line,
@@ -37,13 +38,7 @@ export default function LineGraph({ lineRecord }: { lineRecord: tLineRecord }) {
       : [];
 
   // 2. カラーパレットを定義（参考コードの形式に合わせる）
-  const colorPalette = [
-    "var(--chart-1)",
-    "var(--chart-2)",
-    "var(--chart-3)",
-    "var(--chart-4)",
-    "var(--chart-5)",
-  ];
+  const colorPalette = schemeTableau10;
 
   // 3. メンバー情報をもとに、chartConfigを動的に生成
   const chartConfig = memberKeys.reduce((config, memberKey, index) => {
