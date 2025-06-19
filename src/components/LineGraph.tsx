@@ -1,10 +1,10 @@
 // ファイルパス: components/LineChartCard.tsx
 "use client";
 
-import { tLineRecord, tLineChartConfig } from "@/lib/TypeDeclarations";
+import { tLineRecord } from "@/lib/TypeDeclarations";
 import Link from "next/link";
 import { TrendingUp } from "lucide-react";
-import { schemeTableau10 } from "d3-scale-chromatic";
+
 import {
   LineChart,
   Line,
@@ -31,39 +31,21 @@ import {
 
 // このコンポーネントは "Max" または "Sum" のレコードを一つ受け取ります
 export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
-  // 1. データからメンバーのキー（ニックネーム）を動的に取得
-  const memberKeys =
-    lineRecord.lineChartData.length > 0
-      ? Object.keys(lineRecord.lineChartData[0]).filter((key) => key !== "name")
-      : [];
 
-  // 2. カラーパレットを定義（参考コードの形式に合わせる）
-  const colorPalette = schemeTableau10;
-
-  // 3. メンバー情報をもとに、chartConfigを動的に生成
-  const chartConfig = memberKeys.reduce((config, memberKey, index) => {
-    config[memberKey] = {
-      label: memberKey,
-      // 参考コードに合わせてCSS変数を直接割り当てる
-      color: colorPalette[index % colorPalette.length],
-    };
-    return config;
-    // ここはtChartConfigにするべきか?
-  }, {} as ChartConfig); // shadcn/uiのChartConfig型を使用
-
+  const { type, lineChartConfig, lineChartData } = lineRecord;
   return (
     <Card className="w-full max-w-3xl mx-auto mt-6">
       <CardHeader>
         {/* カードのタイトルとして"Max"や"Sum"を表示 */}
-        <CardTitle>推移グラフ - {lineRecord.type}</CardTitle>
+        <CardTitle>推移グラフ - {type}</CardTitle>
         <CardDescription>週間ごとの最大回数の推移</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={lineChartConfig}>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart
               accessibilityLayer
-              data={lineRecord.lineChartData}
+              data={lineChartData}
               margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
             >
               <CartesianGrid vertical={false} />
@@ -73,7 +55,7 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}
               />
-              {Object.entries(chartConfig).map(([userID]) => (
+              {Object.entries(lineChartConfig).map(([userID]) => (
                 <Line
                   key={userID}
                   dataKey={userID}
@@ -89,7 +71,7 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
       <CardFooter>
         {/* 凡例をここに表示（独自実装の凡例） */}
         <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 w-full">
-          {Object.entries(chartConfig).map(([key, config]) => (
+          {Object.entries(lineChartConfig).map(([key, config]) => (
             <li key={key} className="flex items-center text-sm">
               <Link href={`/user/${key}`} className="flex items-center gap-1.5">
                 <span

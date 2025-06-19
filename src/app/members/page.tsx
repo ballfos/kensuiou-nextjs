@@ -247,6 +247,12 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                     lineRecord: [
                         {
                             type: "累計回数",
+                            lineChartConfig: {
+                                a1234: {
+                                    label: "ゴイゴイスー",
+                                    color: "#facc15"
+                                }
+                            },
                             lineChartData: [
                             { name: "6/10", a1234: 15 },
                             { name: "6/11", a1234: 33 },
@@ -255,6 +261,12 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                         },
                         {
                             type: "連続回数",
+                            lineChartConfig: {
+                                a1234: {
+                                    label: "ゴイゴイスー",
+                                    color: "#facc15"
+                                }
+                            },
                             lineChartData: [
                             { name: "6/10", a1234: 15 },
                             { name: "6/11", a1234: 18 },
@@ -303,6 +315,12 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                     lineRecord: [
                         {
                             type: "累計回数",
+                            lineChartConfig: {
+                                a1234: {
+                                    label: "ゴイゴイスー",
+                                    color: "#facc15"
+                                }
+                            },
                             lineChartData: [
                             { name: "5/25-5/31", a1234: 50 },
                             { name: "6/1-6/7", a1234: 100 },
@@ -311,6 +329,12 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                         },
                         {
                             type: "連続回数",
+                            lineChartConfig: {
+                                a1234: {
+                                    label: "ゴイゴイスー",
+                                    color: "#facc15"
+                                }
+                            },
                             lineChartData: [
                             { name: "5/25-5/31", a1234: 12 },
                             { name: "6/1-6/7", a1234: 13 },
@@ -370,6 +394,12 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                     lineRecord: [
                         {
                             type: "累計回数",
+                            lineChartConfig: {
+                                a1238: {
+                                    label: "デミグラス君",
+                                    color: "#0000ff"
+                                }
+                            },
                             lineChartData: [
                             { name: "6/10", a1238: 50 },
                             { name: "6/11", a1238: 67 },
@@ -378,6 +408,12 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                         },
                         {
                             type: "連続回数",
+                            lineChartConfig: {
+                                a1238: {
+                                    label: "デミグラス君",
+                                    color: "#0000ff"
+                                }
+                            },
                             lineChartData: [
                             { name: "6/10", a1238: 19 },
                             { name: "6/11", a1238: 19 },
@@ -426,6 +462,12 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                     lineRecord: [
                         {
                             type: "累計回数",
+                            lineChartConfig: {
+                                a1238: {
+                                    label: "デミグラス君",
+                                    color: "#0000ff"
+                                }
+                            },
                             lineChartData: [
                             { name: "5/25-5/31", a1238: 420 },
                             { name: "6/1-6/7", a1238: 730 },
@@ -434,6 +476,12 @@ export default async function Home({searchParams}: {searchParams: { [key: string
                         },
                         {
                             type: "連続回数",
+                            lineChartConfig: {
+                                a1238: {
+                                    label: "デミグラス君",
+                                    color: "#0000ff"
+                                }
+                            },
                             lineChartData: [
                             { name: "5/25-5/31", a1238: 16 },
                             { name: "6/1-6/7", a1238: 18 },

@@ -164,7 +164,6 @@ export function transformToLineChartData(
 
         return {
             type: type.label,
-            lineChartConfig: lineChartConfig,
             lineChartData: sortedWeeklyLineData,
         };
     });
@@ -173,6 +172,7 @@ export function transformToLineChartData(
     const result: tLineData[] = [
         {
             period: "Week",
+            lineChartConfig: lineChartConfig,
             // データが存在するレコードのみをフィルタリングして格納
             records: finalRecords.filter((r) => r.lineChartData.length > 0),
         },

@@ -14,9 +14,11 @@ export default function BarGraph({ barChartData }: { barChartData: tBarChartData
 
         if (value !== maxValue || maxValue === 0) return null;
 
+        const imageSize = width >= 96 ? 96 : 48;
+
         return (
-            <image x={x + width / 2 - 48} y={y + height / 2 - 48}
-                width={96} height={96} href="choi_king.PNG" />
+            <image x={x + width / 2 - imageSize / 2} y={y + height / 2 - imageSize / 2}
+                width={imageSize} height={imageSize} href="choi_king.PNG" />
         );
     };
 

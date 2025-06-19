@@ -35,6 +35,7 @@ export type tLineData = {
 
 export type tLineRecord = {
     type: string; // ここにmaxかsumのラベルを設定する
+    lineChartConfig: tLineChartConfig;
     lineChartData: tLineChartData[];
 };
 
@@ -104,7 +105,7 @@ export type RawMemberData = {
     total_wide_max_counts: number;
 };
 
-export type LineRawMemberData ={
+export type LineRawMemberData = {
     member_id: string;
     nickname: string;
     week_start_date:string;
@@ -114,8 +115,8 @@ export type LineRawMemberData ={
     narrow_cumulative_max_counts: number;
     wide_cumulative_sum_counts: number;
     wide_cumulative_max_counts: number;
-
 }
+
 export const rankingColors= [
     "text-orange-300",
     "text-gray-500",
