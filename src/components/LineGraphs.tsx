@@ -10,8 +10,8 @@ export default async function LineGraphs({
 }) {
   return (
     <div>
-      <p className="text-3xl text-center font-bold mb-6">{lineData.period}</p>
-      <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-2">
+      {/* <p className="text-3xl text-center font-bold mb-6">{lineData.period}</p> */}
+      <div className="grid h-full grid-cols-1 gap-6 ">
         {lineData.records.map((r, index) => (
           <LineGraph key={index} lineRecord={r} />
         ))}

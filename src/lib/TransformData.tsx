@@ -75,6 +75,7 @@ export function transformToLineChartData(
   const typeInfo = [
     { key: "max", label: "Max" },
 
+    // { key: "cumulative_max", label: "Cumulative Max" },
     { key: "cumulative_sum", label: "Cumulative Sum" },
   ];
 
