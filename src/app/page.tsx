@@ -1,4 +1,4 @@
-import { tData } from "@/lib/TypeDeclarations";
+import { tData, RawMemberData } from "@/lib/TypeDeclarations";
 import ChartWithRankings from "@/components/ChartWithRankings";
 import Link from "next/link";
 import { getDataFromDB } from "@/lib/db";
@@ -13,7 +13,7 @@ export default async function Home({
   const period = (await searchParams).period || "Day";
 
   const query = "SELECT * FROM aggregate_view";
-  const rawdata = await getDataFromDB(query);
+  const rawdata: RawMemberData[] = await getDataFromDB(query);
 
   // const rawdata = [
   //   {

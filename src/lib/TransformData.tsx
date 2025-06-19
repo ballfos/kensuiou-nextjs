@@ -33,7 +33,7 @@ export function transformData(rawData: RawMemberData[]): tData[] {
             .map((member) => ({
               id: member.member_id,
               name: member.nickname,
-              counts: member[dataKey] as number,
+              counts: Number(member[dataKey]),
             }))
             .sort((a, b) => b.counts - a.counts),
         };
