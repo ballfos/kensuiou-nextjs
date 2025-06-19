@@ -11,7 +11,7 @@ export default async function Home({
 }) {
   const shoulder = ((await searchParams).shoulder || "Narrow") as "Narrow" | "Wide";
   const period = (await searchParams).period || "Week";
-  const query = "SELECT * FROM transition_max_view";
+  const query = "SELECT * FROM weekly_aggregate_view";
   const rawdata: LineRawMemberData[] = await getDataFromDB(query);
   const data = transformToLineChartData(rawdata, shoulder);
   //   const data: tLineData[] = [
