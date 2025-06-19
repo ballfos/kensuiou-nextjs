@@ -39,6 +39,7 @@ export type tLineRecord = {
 };
 
 export type tLineChartData = {
+    //日付
     name: string;
     // このキーにはユーザーのIDを設定する (一意性の確保、IDなので文字列になる)
     [key: string]: string | number;
@@ -51,6 +52,7 @@ export type tLineChartConfig = {
         color: string;
     }
 }
+
 
 export type RawMemberData = {
     member_id: string;
@@ -69,6 +71,13 @@ export type RawMemberData = {
     total_wide_max_counts: number;
 };
 
+export type LineRawMemberData ={
+    member_id: string;
+    nickname: string;
+    week_start_date:string;
+    max_narrow_counts: number;
+    max_wide_counts: number;
+}
 export const rankingColors= [
     "text-orange-300",
     "text-gray-500",
