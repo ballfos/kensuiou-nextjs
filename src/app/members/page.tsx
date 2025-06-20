@@ -299,6 +299,7 @@ export default async function Home({
           period={period}
         />
       </div>
+
       <div className="space-y-2">
         {periodData ? (
           <OnesCharts data={periodData} />

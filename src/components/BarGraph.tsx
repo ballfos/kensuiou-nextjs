@@ -50,22 +50,27 @@ export default function BarGraph({
   const CustomTick = (props: CustomTickProps) => {
     const { x, y, payload, index } = props;
 
+    // ラベルを回転させるためにg要素でラップし、transformを適用
     return (
-      <text
-        x={x}
-        y={y + 16}
-        textAnchor="middle"
-        fontSize={18}
-        fontWeight={600}
-        style={{
-          fill:
-            barChartData[index].id === "bf8432fc-f4c3-48ec-8268-bbd26786fea1"
-              ? "#ef4444"
-              : "#000000",
-        }} // 条件に応じて色分け
-      >
-        {payload.value}
-      </text>
+      <g transform={`translate(${x},${y})`}>
+        <text
+          x={0}
+          y={0}
+          dy={12} // Y軸方向のオフセットを調整
+          textAnchor="end" // 回転の基点をテキストの終端にする
+          fontSize={14} // フォントサイズを少し小さくすると見やすくなります
+          fontWeight={600}
+          transform="rotate(-45)" // テキストを-45度回転
+          style={{
+            fill:
+              barChartData[index].id === "bf8432fc-f4c3-48ec-8268-bbd26786fea1"
+                ? "#ef4444"
+                : "#000000",
+          }}
+        >
+          {payload.value}
+        </text>
+      </g>
     );
   };
 
@@ -77,23 +82,20 @@ export default function BarGraph({
 
   return (
     <Card className="w-full max-w-3xl mx-auto mt-6">
-      {/* グラフ表示領域(すなわちbody)であることを明記するためのラッパー */}
       <CardContent>
-        {/* グラフコンポーネント configにグラフの軸ラベルと色情報を渡す */}
         <ChartContainer config={barChartConfig}>
-          {/* グラフの種類を決める(BarChartやLineChartなど) */}
-          <BarChart data={barChartData}>
-            {/* グラフのラベルを決める (chartConfigのラベルキーを設定する) */}
+          {/* marginを追加して、回転したラベルの表示領域を確保 */}
+          <BarChart data={barChartData} margin={{ bottom: 20 }}>
             <XAxis
               dataKey="name"
               stroke="#8884d8"
               interval={0}
-              tick={CustomTick}
+              tick={<CustomTick />}
+              // 回転したラベルのために高さを指定
+              height={50}
             />
             <YAxis tick={{ fill: "#000000", fontWeight: 600, fontSize: 18 }} />
             <ChartTooltip content={<ChartTooltipContent />} />
-            {/* 上のchartConfigのキーをdataKeyに入れる 
-                            fillに指定するのはchartConfigのカラー属性で、--color-〇〇キーとする */}
             <Bar dataKey="counts">
               {barChartData.map((entry, index) => (
                 <Cell
