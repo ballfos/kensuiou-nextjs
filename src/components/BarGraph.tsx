@@ -90,7 +90,7 @@ export default function BarGraph({
   };
 
   return (
-    <Card className="w-full max-w-3xl mx-auto mt-6">
+    <Card className="w-full max-w-6xl mx-auto mt-6">
       <CardContent>
         <ChartContainer config={barChartConfig}>
           {/* marginを追加して、回転したラベルの表示領域を確保 */}

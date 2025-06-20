@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,23 +27,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased pb-40`}
       >
         {/* ロゴはまた後で決める */}
-        <h1 className="text-4xl text-yellow-500 font-bold m-2 ">
+        <h1 className="text-7xl text-yellow-500 font-bold m-2">
           <Link href="/">KENSUIOU</Link>
         </h1>
         {children}
-        <footer className="fixed right-0 left-0 bottom-0 flex justify-between md:w-2/3 bg-yellow-600 mx-auto p-2">
-          <Link className="no-underline text-white text-2xl" href="/">
-            ランキング
-          </Link>
-          <Link className="no-underline text-white text-2xl" href="/graph">
-            グラフ
-          </Link>
-          <Link className="no-underline text-white text-2xl" href="/members">
-            個人
-          </Link>
+        <footer className="fixed bottom-0 w-full bg-yellow-600 p-2">
+          <div className="flex justify-between md:w-2/3 mx-auto">
+            <Link className="no-underline text-white text-3xl flex flex-col items-center" href="/">
+              <Image width={96} height={96} src="/ranking.png" alt="" />
+              ランキング
+            </Link>
+            <Link className="no-underline text-white text-3xl flex flex-col items-center" href="/graph">
+              <Image width={96} height={96} src="/graph.png" alt="" />
+              グラフ
+            </Link>
+            <Link className="no-underline text-white text-3xl flex flex-col items-center" href="/members">
+              <Image width={96} height={96} src="/documents.png" alt="" />
+              個人
+            </Link>
+          </div>
         </footer>
       </body>
     </html>

@@ -1,6 +1,7 @@
 import { LineRawMemberData } from "@/lib/TypeDeclarations";
 import OnesCharts from "@/components/OnesCharts";
 import UserSelector from "@/components/UserSelector";
+import DateRangeFilter from "@/components/DateRangeFilter"
 import Link from "next/link";
 import { getDataFromDB } from "@/lib/db";
 import { transformLineDataToOnesData } from "@/lib/TransformData";
@@ -10,11 +11,13 @@ export default async function Home({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const shoulder = (await searchParams).shoulder || "Narrow";
-  const period = (await searchParams).period || "Day";
+  const period = (await searchParams).period || "Week";
+  const limit = (await searchParams).limit || "8";
 
   const query_line = "SELECT * FROM weekly_aggregate_view";
   const rawdata_line: LineRawMemberData[] = await getDataFromDB(query_line);
-  const data = transformLineDataToOnesData(rawdata_line);
+  const data = transformLineDataToOnesData(rawdata_line, Number(limit), period);
+
   //   const data: tOnesDataByUser[] = [
   //     {
   //       id: "a1234",
@@ -256,7 +259,7 @@ export default async function Home({
 
   const shoulderLinks = ["Narrow", "Wide"];
   const periodLinks = ["Day", "Week", "Total"];
-  //   return <span>{JSON.stringify(data)}</span>;
+  
   return (
     <>
       <div className="flex items-center justify-center space-x-2 mb-4">
@@ -299,7 +302,9 @@ export default async function Home({
           period={period}
         />
       </div>
-
+      <div className="w-fit mx-auto my-2">
+        <DateRangeFilter limit={limit} shoulder={shoulder} period={period} id={id}/>
+      </div>
       <div className="space-y-2">
         {periodData ? (
           <OnesCharts data={periodData} />

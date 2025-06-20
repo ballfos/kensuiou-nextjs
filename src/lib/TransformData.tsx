@@ -175,7 +175,9 @@ export function transformToLineChartData(
 }
 
 export const transformLineDataToOnesData = (
-  rawData: LineRawMemberData[]
+  rawData: LineRawMemberData[],
+  limit: number,
+  period: string,
 ): tOnesDataByUser[] => {
   // 1. 全ユーザーの色設定 (変更なし)
   const allUsers = Array.from(
@@ -204,6 +206,23 @@ export const transformLineDataToOnesData = (
   const result: tOnesDataByUser[] = [];
 
   // 3. ユーザーごとにループ
+  const selectedLimit: number =  (() => {
+      switch (period) {
+          case 'Day':
+              return limit;
+          case 'Week':
+              return limit * 7;
+          case 'Month':
+              return limit * 12;
+          default:
+              return 3650;
+      }
+  })();
+
+  const now = new Date();
+  const limitRange = new Date();
+  limitRange.setDate(now.getDate() - selectedLimit);
+
   for (const [userId, userRecords] of dataByUser.entries()) {
     const nickname = userRecords[0]?.nickname || "Unknown";
     const userColor = userColorMap.get(userId) || "#888888";
@@ -225,36 +244,47 @@ export const transformLineDataToOnesData = (
         );
 
         // 棒グラフ①: 週ごとの最大回数（個人の推移） (変更なし)
-        const weeklyMaxCountsData: tBarChartData[] = sortedUserRecords.map(
-          (record) => ({
-            id: record.week_start_date,
-            name: new Date(record.week_start_date).toLocaleDateString("ja-JP", {
-              month: "numeric",
-              day: "numeric",
-            }),
-            counts: Number(
-              lowerShoulderType === "narrow"
-                ? record.narrow_max_counts
-                : record.wide_max_counts
-            ),
-          })
-        );
+        const weeklyMaxCountsData: tBarChartData[] = sortedUserRecords
+          .filter((record) => new Date(record.week_start_date) >= limitRange)
+          .map((record) => {
+            const startDate = new Date(record.week_start_date);
+            const endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 6); // 週の終わり = 開始 + 6日
+
+            const name = `${startDate.getMonth() + 1}/${startDate.getDate()}~${endDate.getMonth() + 1}/${endDate.getDate()}`;
+
+            return {
+              id: record.week_start_date,
+              name,
+              counts: Number(
+                lowerShoulderType === "narrow"
+                  ? record.narrow_max_counts
+                  : record.wide_max_counts
+              ),
+            };
+          });
 
         // 棒グラフ②: 週ごとの合計回数（個人の推移） (変更なし)
-        const weeklySumCountsData: tBarChartData[] = sortedUserRecords.map(
-          (record) => ({
-            id: record.week_start_date,
-            name: new Date(record.week_start_date).toLocaleDateString("ja-JP", {
-              month: "numeric",
-              day: "numeric",
-            }),
-            counts: Number(
-              lowerShoulderType === "narrow"
-                ? record.narrow_sum_counts
-                : record.wide_sum_counts
-            ),
-          })
-        );
+        const weeklySumCountsData: tBarChartData[] = sortedUserRecords
+          .filter((record) => new Date(record.week_start_date) >= limitRange)
+          .map((record) => {
+            const startDate = new Date(record.week_start_date);
+            const endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 6);
+
+            const name = `${startDate.getMonth() + 1}/${startDate.getDate()}~${endDate.getMonth() + 1}/${endDate.getDate()}`;
+
+            return {
+              id: record.week_start_date,
+              name,
+              counts: Number(
+                lowerShoulderType === "narrow"
+                  ? record.narrow_sum_counts
+                  : record.wide_sum_counts
+              ),
+            };
+          });
+
 
         weekChartsRecords.push({
           type: "Max",
@@ -268,32 +298,44 @@ export const transformLineDataToOnesData = (
         // --- ▼▼▼ ここからが修正箇所 ▼▼▼ ---
 
         // 折れ線グラフ: 累計回数
-        const weeklyCumulativeData = sortedUserRecords.map((d) => ({
-          // 日付を "月/日" 形式にフォーマット
-          name: new Date(d.week_start_date).toLocaleDateString("ja-JP", {
-            month: "numeric",
-            day: "numeric",
-          }),
-          [userId]: Number(
-            lowerShoulderType === "narrow"
-              ? d.narrow_cumulative_sum_counts
-              : d.wide_cumulative_sum_counts
-          ),
-        }));
+        const weeklyCumulativeData = sortedUserRecords
+          .filter((d) => new Date(d.week_start_date) >= limitRange)
+          .map((d) => {
+            const startDate = new Date(d.week_start_date);
+            const endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 6);
+
+            const name = `${startDate.getMonth() + 1}/${startDate.getDate()}~${endDate.getMonth() + 1}/${endDate.getDate()}`;
+
+            return {
+              name,
+              [userId]: Number(
+                lowerShoulderType === "narrow"
+                  ? d.narrow_cumulative_sum_counts
+                  : d.wide_cumulative_sum_counts
+              ),
+            };
+          });
 
         // 折れ線グラフ: 連続回数
-        const weeklyMaxConsecutiveData = sortedUserRecords.map((d) => ({
-          // 日付を "月/日" 形式にフォーマット
-          name: new Date(d.week_start_date).toLocaleDateString("ja-JP", {
-            month: "numeric",
-            day: "numeric",
-          }),
-          [userId]: Number(
-            lowerShoulderType === "narrow"
-              ? d.narrow_cumulative_max_counts
-              : d.wide_cumulative_max_counts
-          ),
-        }));
+        const weeklyMaxConsecutiveData = sortedUserRecords
+          .filter((d) => new Date(d.week_start_date) >= limitRange)
+          .map((d) => {
+            const startDate = new Date(d.week_start_date);
+            const endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 6);
+
+            const name = `${startDate.getMonth() + 1}/${startDate.getDate()}~${endDate.getMonth() + 1}/${endDate.getDate()}`;
+
+            return {
+              name,
+              [userId]: Number(
+                lowerShoulderType === "narrow"
+                  ? d.narrow_cumulative_max_counts
+                  : d.wide_cumulative_max_counts
+              ),
+            };
+          });
 
         // --- ▲▲▲ ここまでが修正箇所 ▲▲▲ ---
 
