@@ -198,7 +198,7 @@ export const transformLineDataToOnesData = (
 
   const result: tOnesDataByUser[] = [];
 
-  // 3. ユーザーごとにループ (ここからロジックを修正)
+  // 3. ユーザーごとにループ
   for (const [userId, userRecords] of dataByUser.entries()) {
     const nickname = userRecords[0]?.nickname || "Unknown";
     const userColor = userColorMap.get(userId) || "#888888";
@@ -207,33 +207,26 @@ export const transformLineDataToOnesData = (
     for (const shoulderType of ["Narrow", "Wide"] as const) {
       const lowerShoulderType = shoulderType.toLowerCase() as "narrow" | "wide";
 
-      // --- "Day" Period のデータ生成 (変更なし) ---
       const dayChartsRecords: tRecord[] = [];
       const dayLineRecords: tLineRecord[] = [];
-      // (日次データがないため、ここは空のまま)
-
-      // --- "Week" Period のデータ生成 ---
       const weekChartsRecords: tRecord[] = [];
       const weekLineRecords: tLineRecord[] = [];
 
       if (userRecords.length > 0) {
-        // ▼▼▼ ここからが修正箇所 ▼▼▼
-
-        // ユーザーの週ごとの記録を日付順にソート
         const sortedUserRecords = [...userRecords].sort(
           (a, b) =>
             new Date(a.week_start_date).getTime() -
             new Date(b.week_start_date).getTime()
         );
 
-        // 棒グラフ①: 週ごとの最大回数（個人の推移）
+        // 棒グラフ①: 週ごとの最大回数（個人の推移） (変更なし)
         const weeklyMaxCountsData: tBarChartData[] = sortedUserRecords.map(
           (record) => ({
             id: record.week_start_date,
             name: new Date(record.week_start_date).toLocaleDateString("ja-JP", {
               month: "numeric",
               day: "numeric",
-            }), // "6/16" のような形式
+            }),
             counts: Number(
               lowerShoulderType === "narrow"
                 ? record.narrow_max_counts
@@ -242,8 +235,7 @@ export const transformLineDataToOnesData = (
           })
         );
 
-        // 棒グラフ②: 週ごとの合計回数（個人の推移）
-        // 累計(cumulative)ではなく、その週の合計(sum)を使用
+        // 棒グラフ②: 週ごとの合計回数（個人の推移） (変更なし)
         const weeklySumCountsData: tBarChartData[] = sortedUserRecords.map(
           (record) => ({
             id: record.week_start_date,
@@ -260,19 +252,23 @@ export const transformLineDataToOnesData = (
         );
 
         weekChartsRecords.push({
-          type: "最大回数",
+          type: "Max",
           barChartData: weeklyMaxCountsData,
         });
         weekChartsRecords.push({
-          type: "合計",
+          type: "Sum",
           barChartData: weeklySumCountsData,
         });
 
-        // ▲▲▲ ここまでが修正箇所 ▲▲▲
+        // --- ▼▼▼ ここからが修正箇所 ▼▼▼ ---
 
-        // --- 折れ線グラフ (ここは個人のデータなので変更なし) ---
+        // 折れ線グラフ: 累計回数
         const weeklyCumulativeData = sortedUserRecords.map((d) => ({
-          name: d.week_start_date,
+          // 日付を "月/日" 形式にフォーマット
+          name: new Date(d.week_start_date).toLocaleDateString("ja-JP", {
+            month: "numeric",
+            day: "numeric",
+          }),
           [userId]: Number(
             lowerShoulderType === "narrow"
               ? d.narrow_cumulative_sum_counts
@@ -280,14 +276,21 @@ export const transformLineDataToOnesData = (
           ),
         }));
 
+        // 折れ線グラフ: 連続回数
         const weeklyMaxConsecutiveData = sortedUserRecords.map((d) => ({
-          name: d.week_start_date,
+          // 日付を "月/日" 形式にフォーマット
+          name: new Date(d.week_start_date).toLocaleDateString("ja-JP", {
+            month: "numeric",
+            day: "numeric",
+          }),
           [userId]: Number(
             lowerShoulderType === "narrow"
               ? d.narrow_cumulative_max_counts
               : d.wide_cumulative_max_counts
           ),
         }));
+
+        // --- ▲▲▲ ここまでが修正箇所 ▲▲▲ ---
 
         weekLineRecords.push({
           type: "累計回数",
@@ -301,7 +304,6 @@ export const transformLineDataToOnesData = (
         });
       }
 
-      // データの格納 (変更なし)
       onesData.push({
         shoulder: shoulderType,
         periods: [
