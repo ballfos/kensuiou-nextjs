@@ -115,6 +115,7 @@ export type LineRawMemberData = {
     narrow_cumulative_max_counts: number;
     wide_cumulative_sum_counts: number;
     wide_cumulative_max_counts: number;
+    [key: string]: string | number ;
 }
 
 export const rankingColors= [

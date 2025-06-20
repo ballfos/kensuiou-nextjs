@@ -1,9 +1,9 @@
 import {
   tData,
   RawMemberData,
-  LineRawMemberData,
   tLineData,
   tLineChartData,
+  LineRawMemberData,
   tPeriodData,
   tRecord,
   tLineRecord,
@@ -70,95 +70,98 @@ function formatDate(date: Date): string {
 
 export function transformToLineChartData(
   // 補足: rawDataの型は、新しいデータ形式に合わせて更新されたものと仮定します
-  rawData: any[],
+  rawData: LineRawMemberData[],
   shoulder: "Narrow" | "Wide"
 ): tLineData[] {
+  console.log(rawData);
 
-    console.log(rawData);
+  // 全てのメンバーのユニークなニックネームを取得
+  const allMembers = [...new Set(rawData.map((d) => d.member_id))];
+  const shoulderKey = shoulder.toLowerCase(); // "narrow" または "wide"
 
-    // 全てのメンバーのユニークなニックネームを取得
-    const allMembers = [...new Set(rawData.map((d) => d.member_id))];
-    const shoulderKey = shoulder.toLowerCase(); // "narrow" または "wide"
+  // 1. データからメンバーのキー（ニックネーム）を動的に取得
+  const memberKeys = rawData.map((r) => ({
+    id: r.member_id,
+    label: r.nickname,
+  }));
 
-    // 1. データからメンバーのキー（ニックネーム）を動的に取得
-    const memberKeys = rawData.map((r) => ({id: r.member_id, label: r.nickname}) )
+  // 2. カラーパレットを定義（参考コードの形式に合わせる）
+  const colorPalette = schemeTableau10;
 
-    // 2. カラーパレットを定義（参考コードの形式に合わせる）
-    const colorPalette = schemeTableau10;
+  // 3. メンバー情報をもとに、chartConfigを動的に生成
+  const lineChartConfig = memberKeys.reduce((config, memberKey, index) => {
+    config[memberKey.id] = {
+      label: memberKey.label,
+      // 参考コードに合わせてCSS変数を直接割り当てる
+      color: colorPalette[index % colorPalette.length],
+    };
+    return config;
+  }, {} as tLineChartConfig);
 
-    // 3. メンバー情報をもとに、chartConfigを動的に生成
-    const lineChartConfig = memberKeys.reduce((config, memberKey, index) => {
-      config[memberKey.id] = {
-        label: memberKey.label,
-        // 参考コードに合わせてCSS変数を直接割り当てる
-        color: colorPalette[index % colorPalette.length],
-      };
-      return config;
-    }, {} as tLineChartConfig);
+  // ▼▼▼ ここから修正 ▼▼▼
+  // 処理したいデータの種類を定義
+  const typeInfo = [
+    { key: "max", label: "Max" },
+    { key: "cumulative_max", label: "Cumulative Max" },
+    { key: "cumulative_sum", label: "Cumulative Sum" },
+  ];
 
-    // ▼▼▼ ここから修正 ▼▼▼
-    // 処理したいデータの種類を定義
-    const typeInfo = [
-        { key: "max", label: "Max" },
-        { key: "cumulative_max", label: "Cumulative Max" },
-        { key: "cumulative_sum", label: "Cumulative Sum" },
-    ];
+  // typeInfoを元に、"Max"と"Sum"の各グラフデータを生成
+  const finalRecords: tLineRecord[] = typeInfo.map((type) => {
+    const weeklyData = new Map<string, { data: tLineChartData; date: Date }>();
+    // "max_narrow_counts" や "sum_narrow_counts" のようなキー名を動的に作成
+    const dataKey = `${shoulderKey}_${type.key}_counts`;
 
-    // typeInfoを元に、"Max"と"Sum"の各グラフデータを生成
-    const finalRecords: tLineRecord[] = typeInfo.map((type) => {
-        const weeklyData = new Map<string, { data: tLineChartData; date: Date }>();
-        // "max_narrow_counts" や "sum_narrow_counts" のようなキー名を動的に作成
-        const dataKey = `${shoulderKey}_${type.key}_counts`;
+    // データベースのデータを順にweeklyDataに格納していく
+    for (const record of rawData) {
+      // 対象のデータが存在しない場合はスキップ
+      if (record[dataKey] === undefined) continue;
 
-        // データベースのデータを順にweeklyDataに格納していく
-        for (const record of rawData) {
-            // 対象のデータが存在しない場合はスキップ
-            if (record[dataKey] === undefined) continue;
+      // 日付を取得する
+      const weekStart = new Date(record.week_start_date);
+      const weekEnd = new Date(weekStart);
+      // ここは今日の日付にするか週末の日付にするか、どちらが良いかを考える
+      weekEnd.setDate(weekStart.getDate() + 6);
+      const weekLabel = `${formatDate(weekStart)}~${formatDate(weekEnd)}`;
 
-            // 日付を取得する
-            const weekStart = new Date(record.week_start_date);
-            const weekEnd = new Date(weekStart);
-            // ここは今日の日付にするか週末の日付にするか、どちらが良いかを考える
-            weekEnd.setDate(weekStart.getDate() + 6);
-            const weekLabel = `${formatDate(weekStart)}~${formatDate(weekEnd)}`;
+      if (!weeklyData.has(weekLabel)) {
+        const newPoint: tLineChartData = { name: weekLabel };
+        // 後述の重複対策用に0を初期値として設定する。
+        allMembers.forEach((member) => {
+          newPoint[member] = 0;
+        });
+        weeklyData.set(weekLabel, { data: newPoint, date: weekStart });
+      }
 
-            if (!weeklyData.has(weekLabel)) {
-                const newPoint: tLineChartData = { name: weekLabel };
-                // 後述の重複対策用に0を初期値として設定する。
-                allMembers.forEach((member) => {
-                    newPoint[member] = 0;
-                });
-                weeklyData.set(weekLabel, { data: newPoint, date: weekStart });
-            }
+      const point = weeklyData.get(weekLabel)!.data;
 
-            const point = weeklyData.get(weekLabel)!.data;
-            
-            // 同じ週に同じメンバーのデータが複数ある場合も考慮して加算 (特定のメンバーの特定の日のデータが重複している場合)
-            point[record.member_id] = (point[record.member_id] as number) + Number(record[dataKey]);
-        }
+      // 同じ週に同じメンバーのデータが複数ある場合も考慮して加算 (特定のメンバーの特定の日のデータが重複している場合)
+      point[record.member_id] =
+        (point[record.member_id] as number) + Number(record[dataKey]);
+    }
 
-        // ▼▼▼ ソート処理を修正しました ▼▼▼
-        const sortedWeeklyLineData = Array.from(weeklyData.values())
-          // 保存した date を使って正しくソートします
-          .sort((a, b) => a.date.getTime() - b.date.getTime())
-          // ソート後にグラフ用のデータ(data)だけを抽出します
-          .map((item) => item.data);
+    // ▼▼▼ ソート処理を修正しました ▼▼▼
+    const sortedWeeklyLineData = Array.from(weeklyData.values())
+      // 保存した date を使って正しくソートします
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      // ソート後にグラフ用のデータ(data)だけを抽出します
+      .map((item) => item.data);
 
-        return {
-            type: type.label,
-            lineChartConfig: lineChartConfig,
-            lineChartData: sortedWeeklyLineData,
-        };
-    });
+    return {
+      type: type.label,
+      lineChartConfig: lineChartConfig,
+      lineChartData: sortedWeeklyLineData,
+    };
+  });
 
-    // --- 最終的なデータ構造の組み立て ---
-    const result: tLineData[] = [
-        {
-            period: "Week",
-            // データが存在するレコードのみをフィルタリングして格納
-            records: finalRecords.filter((r) => r.lineChartData.length > 0),
-        },
-    ];
+  // --- 最終的なデータ構造の組み立て ---
+  const result: tLineData[] = [
+    {
+      period: "Week",
+      // データが存在するレコードのみをフィルタリングして格納
+      records: finalRecords.filter((r) => r.lineChartData.length > 0),
+    },
+  ];
 
-    return result;
+  return result;
 }
