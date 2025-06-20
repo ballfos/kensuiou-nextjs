@@ -109,11 +109,16 @@ export function transformToLineChartData(
     { key: "cumulative_sum", label: "Cumulative Sum" },
   ];
 
+  const now = new Date();
+  const fourWeeksAgo = new Date();
+  fourWeeksAgo.setDate(now.getDate() - 28);
+
   // typeInfoを元に、"Max"と"Sum"の各グラフデータを生成
   const finalRecords: tLineRecord[] = typeInfo.map((type) => {
     const weeklyData = new Map<string, { data: tLineChartData; date: Date }>();
     // "max_narrow_counts" や "sum_narrow_counts" のようなキー名を動的に作成
     const dataKey = `${shoulderKey}_${type.key}_counts`;
+
 
     // データベースのデータを順にweeklyDataに格納していく
     for (const record of rawData) {
@@ -122,6 +127,9 @@ export function transformToLineChartData(
 
       // 日付を取得する
       const weekStart = new Date(record.week_start_date);
+
+      if (weekStart <= fourWeeksAgo) continue;
+      
       const weekEnd = new Date(weekStart);
       // ここは今日の日付にするか週末の日付にするか、どちらが良いかを考える
       weekEnd.setDate(weekStart.getDate() + 6);

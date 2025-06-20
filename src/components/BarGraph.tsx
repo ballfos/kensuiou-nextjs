@@ -18,18 +18,23 @@ export default function BarGraph({
   const maxValue = Math.max(...barChartData.map((d) => d.counts));
 
   interface CustomImageLabelProps {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    value: number;
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
+    value?: number;
   }
-  const CustomImageLabel = (props: CustomImageLabelProps) => {
-    const { x, y, width, height, value } = props;
+  const CustomImageLabel = ({
+    x = 0,
+    y = 0,
+    width = 0,
+    height = 0,
+    value = 0
+  }: CustomImageLabelProps) => {
 
     if (value !== maxValue || maxValue === 0) return null;
 
-    const imageSize = width >= 96 ? 96 : 48;
+    const imageSize = width * 2;
 
     return (
       <image
@@ -41,15 +46,19 @@ export default function BarGraph({
       />
     );
   };
+
   interface CustomTickProps {
-    x: number;
-    y: number;
-    payload: { value: string };
+    x?: number;
+    y?: number;
+    payload?: { value: string };
     index: number;
   }
-  const CustomTick = (props: CustomTickProps) => {
-    const { x, y, payload, index } = props;
-
+  const CustomTick = ({
+    x = 0,
+    y = 0,
+    payload = { value: "" },
+    index,
+  }: CustomTickProps ) => {
     // ラベルを回転させるためにg要素でラップし、transformを適用
     return (
       <g transform={`translate(${x},${y})`}>
@@ -63,7 +72,7 @@ export default function BarGraph({
           transform="rotate(-45)" // テキストを-45度回転
           style={{
             fill:
-              barChartData[index].id === "bf8432fc-f4c3-48ec-8268-bbd26786fea1"
+              barChartData[index]?.id === "bf8432fc-f4c3-48ec-8268-bbd26786fea1"
                 ? "#ef4444"
                 : "#000000",
           }}
@@ -90,7 +99,7 @@ export default function BarGraph({
               dataKey="name"
               stroke="#8884d8"
               interval={0}
-              tick={<CustomTick />}
+              tick={CustomTick}
               // 回転したラベルのために高さを指定
               height={50}
             />
@@ -107,7 +116,7 @@ export default function BarGraph({
                   }
                 />
               ))}
-              <LabelList dataKey="counts" content={CustomImageLabel} />
+              <LabelList dataKey="counts" content={<CustomImageLabel />} />
             </Bar>
           </BarChart>
         </ChartContainer>

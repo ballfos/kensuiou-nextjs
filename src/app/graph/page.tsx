@@ -7,7 +7,7 @@ import { transformToLineChartData } from "@/lib/TransformData";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const shoulder = ((await searchParams).shoulder || "Narrow") as
     | "Narrow"
