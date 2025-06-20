@@ -3,11 +3,11 @@ import { Pool } from 'pg';
 
 // PostgreSQL接続設定
 const pool = new Pool({
-    user: process.env.PG_USER,       // PostgreSQLのユーザー名
-    host: process.env.PG_HOST,       // ホスト名
-    database: process.env.PG_DATABASE, // データベース名
-    password: process.env.PG_PASSWORD, // パスワード
-    port: Number(process.env.PG_PORT), // ポート番号
+    user: process.env.POSTGRES_USER,       
+    host: process.env.POSTGRES_HOST,       
+    database: process.env.POSTGRES_DATABASE, 
+    password: process.env.POSTGRES_PASSWORD, 
+    port: Number(process.env.POSTGRES_PORT), 
 });
 
 // データを取得する関数
