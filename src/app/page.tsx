@@ -98,7 +98,7 @@ export default async function Home({
   //   },
   // ];
   // 生データを新しいtData[]の型に変換
-  
+
   const data: tData[] = transformData(rawdata);
 
   // 1. shoulderに基づいてshoulderデータを選択

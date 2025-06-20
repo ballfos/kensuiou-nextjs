@@ -76,8 +76,6 @@ export function transformToLineChartData(
   rawData: LineRawMemberData[],
   shoulder: "Narrow" | "Wide"
 ): tLineData[] {
-  console.log(rawData);
-
   // 全てのメンバーのユニークなニックネームを取得
   const allMembers = [...new Set(rawData.map((d) => d.member_id))];
   const shoulderKey = shoulder.toLowerCase(); // "narrow" または "wide"
@@ -119,7 +117,6 @@ export function transformToLineChartData(
     // "max_narrow_counts" や "sum_narrow_counts" のようなキー名を動的に作成
     const dataKey = `${shoulderKey}_${type.key}_counts`;
 
-
     // データベースのデータを順にweeklyDataに格納していく
     for (const record of rawData) {
       // 対象のデータが存在しない場合はスキップ
@@ -129,7 +126,7 @@ export function transformToLineChartData(
       const weekStart = new Date(record.week_start_date);
 
       if (weekStart <= fourWeeksAgo) continue;
-      
+
       const weekEnd = new Date(weekStart);
       // ここは今日の日付にするか週末の日付にするか、どちらが良いかを考える
       weekEnd.setDate(weekStart.getDate() + 6);
