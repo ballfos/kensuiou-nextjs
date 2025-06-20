@@ -74,24 +74,13 @@ export function transformToLineChartData(
   shoulder: "Narrow" | "Wide"
 ): tLineData[] {
 
-// export type LineRawMemberData = {
-//     member_id: string;
-//     nickname: string;
-//     week_start_date:string;
-//     max_narrow_counts: number;
-//     max_wide_counts: number;
-//     narrow_cumulative_sum_counts: number;
-//     narrow_cumulative_max_counts: number;
-//     wide_cumulative_sum_counts: number;
-//     wide_cumulative_max_counts: number;
-// }
+    console.log(rawData);
 
     // 全てのメンバーのユニークなニックネームを取得
     const allMembers = [...new Set(rawData.map((d) => d.member_id))];
     const shoulderKey = shoulder.toLowerCase(); // "narrow" または "wide"
 
-
-        // 1. データからメンバーのキー（ニックネーム）を動的に取得
+    // 1. データからメンバーのキー（ニックネーム）を動的に取得
     const memberKeys = rawData.map((r) => ({id: r.member_id, label: r.nickname}) )
 
     // 2. カラーパレットを定義（参考コードの形式に合わせる）
@@ -110,13 +99,14 @@ export function transformToLineChartData(
     // ▼▼▼ ここから修正 ▼▼▼
     // 処理したいデータの種類を定義
     const typeInfo = [
-        { key: "cumulative_max", label: "Max" },
-        { key: "cumulative_sum", label: "Sum" },
+        { key: "max", label: "Max" },
+        { key: "cumulative_max", label: "Cumulative Max" },
+        { key: "cumulative_sum", label: "Cumulative Sum" },
     ];
 
     // typeInfoを元に、"Max"と"Sum"の各グラフデータを生成
     const finalRecords: tLineRecord[] = typeInfo.map((type) => {
-        const weeklyData = new Map<string, tLineChartData>();
+        const weeklyData = new Map<string, { data: tLineChartData; date: Date }>();
         // "max_narrow_counts" や "sum_narrow_counts" のようなキー名を動的に作成
         const dataKey = `${shoulderKey}_${type.key}_counts`;
 
@@ -138,29 +128,21 @@ export function transformToLineChartData(
                 allMembers.forEach((member) => {
                     newPoint[member] = 0;
                 });
-                weeklyData.set(weekLabel, newPoint);
+                weeklyData.set(weekLabel, { data: newPoint, date: weekStart });
             }
 
-            const point = weeklyData.get(weekLabel)!;
+            const point = weeklyData.get(weekLabel)!.data;
+            
             // 同じ週に同じメンバーのデータが複数ある場合も考慮して加算 (特定のメンバーの特定の日のデータが重複している場合)
-            point[record.nickname] = (point[record.nickname] as number) + Number(record[dataKey]);
+            point[record.member_id] = (point[record.member_id] as number) + Number(record[dataKey]);
         }
 
-        const sortedWeeklyLineData = Array.from(weeklyData.values()).sort(
-          (a, b) => {
-            const dateA = new Date(
-              new Date().getFullYear(),
-              parseInt(a.name.split("~")[0].split("/")[0]) - 1,
-              parseInt(a.name.split("~")[0].split("/")[1])
-            );
-            const dateB = new Date(
-              new Date().getFullYear(),
-              parseInt(b.name.split("~")[0].split("/")[0]) - 1,
-              parseInt(b.name.split("~")[0].split("/")[1])
-            );
-            return dateA.getTime() - dateB.getTime();
-          }
-        );
+        // ▼▼▼ ソート処理を修正しました ▼▼▼
+        const sortedWeeklyLineData = Array.from(weeklyData.values())
+          // 保存した date を使って正しくソートします
+          .sort((a, b) => a.date.getTime() - b.date.getTime())
+          // ソート後にグラフ用のデータ(data)だけを抽出します
+          .map((item) => item.data);
 
         return {
             type: type.label,

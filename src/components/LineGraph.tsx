@@ -3,7 +3,6 @@
 
 import { tLineRecord } from "@/lib/TypeDeclarations";
 import Link from "next/link";
-import { TrendingUp } from "lucide-react";
 
 import {
   LineChart,
@@ -23,7 +22,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -34,7 +32,7 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
 
   const { type, lineChartConfig, lineChartData } = lineRecord;
   return (
-    <Card className="w-full max-w-3xl mx-auto mt-6">
+    <Card className="w-full max-w-6xl mx-auto mt-6">
       <CardHeader>
         {/* カードのタイトルとして"Max"や"Sum"を表示 */}
         <CardTitle>推移グラフ - {type}</CardTitle>
@@ -55,13 +53,13 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}
               />
-              {Object.entries(lineChartConfig).map(([userID]) => (
+              {Object.entries(lineChartConfig).map(([userID, config]) => (
                 <Line
                   key={userID}
                   dataKey={userID}
-                  stroke={`var(--color-${userID})`}
+                  stroke={config.color}
                   strokeWidth={2}
-                  dot={true} // 点も表示するように変更
+                  dot={false}
                 />
               ))}
             </LineChart>
@@ -76,7 +74,7 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
               <Link href={`/user/${key}`} className="flex items-center gap-1.5">
                 <span
                   className="w-2.5 h-2.5 rounded-full"
-                  style={{ backgroundColor: `var(${config.color})` }}
+                  style={{ backgroundColor: config.color }}
                 ></span>
                 <span className="font-medium">{config.label}</span>
               </Link>

@@ -15,7 +15,9 @@ export default async function Home({
   const period = (await searchParams).period || "Week";
   const query = "SELECT * FROM weekly_aggregate_view";
   const rawdata: LineRawMemberData[] = await getDataFromDB(query);
+
   const data = transformToLineChartData(rawdata, shoulder);
+  
   //   const data: tLineData[] = [
   //     {
   //       period: "Week",
