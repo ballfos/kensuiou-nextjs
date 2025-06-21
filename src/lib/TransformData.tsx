@@ -340,12 +340,12 @@ export const transformLineDataToOnesData = (
         // --- ▲▲▲ ここまでが修正箇所 ▲▲▲ ---
 
         weekLineRecords.push({
-          type: "累計回数",
+          type: "Cumulative Total",
           lineChartConfig: { [userId]: { label: nickname, color: userColor } },
           lineChartData: weeklyCumulativeData,
         });
         weekLineRecords.push({
-          type: "連続回数",
+          type: "Best in Max",
           lineChartConfig: { [userId]: { label: nickname, color: userColor } },
           lineChartData: weeklyMaxConsecutiveData,
         });

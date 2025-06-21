@@ -16,7 +16,6 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -35,8 +34,8 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
     <Card className="w-full max-w-6xl mx-auto mt-6">
       <CardHeader>
         {/* カードのタイトルとして"Max"や"Sum"を表示 */}
-        <CardTitle>推移グラフ - {type}</CardTitle>
-        <CardDescription>週間ごとの最大回数の推移</CardDescription>
+        <CardTitle className="text-center text-3xl">{type}</CardTitle>
+        {/* <CardDescription>週間ごとの最大回数の推移</CardDescription> */}
       </CardHeader>
       <CardContent>
         <ChartContainer config={lineChartConfig}>

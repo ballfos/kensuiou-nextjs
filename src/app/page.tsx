@@ -10,7 +10,7 @@ export default async function Home({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const shoulder = (await searchParams).shoulder || "Narrow";
-  const period = (await searchParams).period || "Day";
+  const period = (await searchParams).period || "Week";
 
   const query = "SELECT * FROM aggregate_view";
   const rawdata: RawMemberData[] = await getDataFromDB(query);
