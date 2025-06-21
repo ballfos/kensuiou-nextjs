@@ -36,7 +36,6 @@ export default function DateRangeFilter({page, limit, shoulder, period, id}: {pa
     })();
 
     const handleChange = (val: string) => {
-
         // 空文字は許可
         if (val === "") {
             setCrntLimit(val)
@@ -44,7 +43,7 @@ export default function DateRangeFilter({page, limit, shoulder, period, id}: {pa
         }
 
         // 数字のみ許可(001などは無効)
-        if (val === "0" || /^[1-9][0-9]*$/.test(val)) {
+        if (/^[1-9][0-9]*$/.test(val)) {
             setCrntLimit(val)
         }
         // それ以外の入力は無視
@@ -68,7 +67,7 @@ export default function DateRangeFilter({page, limit, shoulder, period, id}: {pa
             max={periodMinAndMax[1]}
             value={crntLimit}
             onChange={(e) => handleChange(e.target.value)}
-            className="w-16 h-12 border-yellow-600 text-yellow-600 !text-3xl
+            className="w-16 h-12 border-yellow-600 text-yellow-600 !text-3xl text-center
             [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
         <p className="text-yellow-600 text-3xl">{`${periodLabel}`}分のデータを</p>

@@ -253,26 +253,29 @@ export default async function Home({
   const shoulderData = selectedData?.onesData.find(
     (sd) => sd.shoulder === shoulder
   );
-  const periodData = shoulderData?.periods.find((d) => d.period === period);
+
+  // データの件数が0の時は「表示できるデータがりません!!」というメッセージを表示する
+  const periodData = shoulderData?.periods.find((d) => d.period === period && (d.chartsRecords.length !== 0 || d.lineRecord.length !== 0));
 
   const users = data.map((ud) => ({ id: ud.id, name: ud.name }));
   
   return (
-    <>
+    <div className="space-y-4">
       <ShoulderPeriodSwitch page="/members" shoulder={shoulder} period={period} />
-      <div className="w-fit mx-auto my-2">
+      <div className="flex items-center w-fit mx-auto gap-x-2">
         <UserSelector users={users} id={id} shoulder={shoulder} period={period} />
+        <p className="text-3xl text-yellow-600">さんの</p>
       </div>
-      <div className="w-fit mx-auto my-2">
+      <div className="w-fit mx-auto">
         <DateRangeFilter page="/members" limit={limit} shoulder={shoulder} period={period} id={id}/>
       </div>
       <div className="space-y-2">
         {periodData ? (
           <OnesCharts data={periodData} />
         ) : (
-          <p className="text-center">表示できるデータがありません!!</p>
+          <p className="text-center text-3xl">表示できるデータがありません!!</p>
         )}
       </div>
-    </>
+    </div>
   );
 }

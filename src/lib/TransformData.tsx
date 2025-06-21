@@ -72,7 +72,7 @@ function formatDate(date: Date): string {
 }
 
 // limitからデータ表示の期間を取得する
-  function calculateLimit(period: string, limit: number): number {
+function calculateLimit(period: string, limit: number): number {
   switch (period) {
     case 'Day': return limit;
     case 'Week': return limit * 7;

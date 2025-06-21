@@ -29,10 +29,11 @@ export default function Ranking({
                       width={64}
                       height={64}
                       src={medalImages[rdIndex]}
-                      alt={`${rdIndex + 1}位`}
+                      alt=""
                     />
                   }
-                  {rdIndex + 1}位<span>{rd.name}</span>
+                  <span>{rdIndex + 1}位</span>
+                  <span>{rd.name}</span>
                   <span>{rd.counts}回</span>
                 </li>
               );

@@ -16,6 +16,7 @@ export default function BarGraph({
   barChartData: tBarChartData[];
 }) {
   const maxValue = Math.max(...barChartData.map((d) => d.counts));
+  const dataNumber = barChartData.length;
 
   interface CustomImageLabelProps {
     x?: number;
@@ -32,7 +33,7 @@ export default function BarGraph({
     value = 0
   }: CustomImageLabelProps) => {
 
-    if (value !== maxValue || maxValue === 0) return null;
+    if (value !== maxValue || maxValue === 0 || dataNumber <= 1) return null;
 
     const imageSize = width * 2;
 

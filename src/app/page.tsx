@@ -115,7 +115,7 @@ export default async function Home({
         {selectedPeriodData ? (
           <ChartWithRankings data={selectedPeriodData} />
         ) : (
-          <p className="text-center">表示できるデータがありません!!</p>
+          <p className="text-center text-3xl">表示できるデータがありません!!</p>
         )}
       </div>
     </>

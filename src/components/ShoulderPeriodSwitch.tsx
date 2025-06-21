@@ -6,7 +6,7 @@ export default async function ShoulderPeriodSwitch({page, shoulder, period} : {p
 
     return (
       <div className="flex justify-center space-x-2 mb-4">
-        <div className="border-yellow-600 border-2 p-4 rounded w-fit">
+        <div className="border-yellow-600 border-2 p-4 rounded w-fit space-x-2">
           {periodLinks.map((p, pindex) => (
             <Link
               key={pindex}
@@ -21,7 +21,7 @@ export default async function ShoulderPeriodSwitch({page, shoulder, period} : {p
             </Link>
           ))}
         </div>
-        <div className="border-yellow-600 border-2 p-4 rounded w-fit ">
+        <div className="border-yellow-600 border-2 p-4 rounded w-fit space-x-2">
           {shoulderLinks.map((s, sindex) => (
             <Link
               key={sindex}
