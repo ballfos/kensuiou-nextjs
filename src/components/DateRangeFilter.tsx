@@ -55,7 +55,7 @@ export default function DateRangeFilter({page, limit, shoulder, period, id}: {pa
 
         if (["Day", "Week", "Month", "Total"].includes(period) && limitNumber >= periodMinAndMax[0] && limitNumber <= periodMinAndMax[1]) {
             router.push(
-            `/${page}?shoulder=${shoulder}&period=${period}&id=${id || ""}&limit=${crntLimit}`
+            `${page}?shoulder=${shoulder}&period=${period}&id=${id || ""}&limit=${crntLimit}`
             )
         }
   }
@@ -71,7 +71,7 @@ export default function DateRangeFilter({page, limit, shoulder, period, id}: {pa
             className="w-16 h-12 border-yellow-600 text-yellow-600 !text-3xl
             [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
-        <p className="text-yellow-600 text-3xl">{`${periodLabel}`}前までのデータを</p>
+        <p className="text-yellow-600 text-3xl">{`${periodLabel}`}分のデータを</p>
         <Button onClick={limitOnClick} className="bg-yellow-600 text-2xl p-6 border-yellow-600 border-2 hover:text-yellow-600 hover:bg-white">表示!!</Button>
     </div>
   )

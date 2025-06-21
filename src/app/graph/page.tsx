@@ -52,9 +52,9 @@ export default async function Home({
   //   return <span>{JSON.stringify(rawdata)}</span>;
   return (
     <>
-      <ShoulderPeriodSwitch page={"/graph"} shoulder={shoulder} period={period} />
+      <ShoulderPeriodSwitch page="/graph" shoulder={shoulder} period={period} />
       <div className="w-fit mx-auto my-2">
-        <DateRangeFilter page="graph" limit={limit} shoulder={shoulder} period={period}/>
+        <DateRangeFilter page="/graph" limit={limit} shoulder={shoulder} period={period}/>
       </div>
       <div className="space-y-2">
         {periodData ? (

@@ -259,12 +259,12 @@ export default async function Home({
   
   return (
     <>
-      <ShoulderPeriodSwitch page={"/members"} shoulder={shoulder} period={period} />
+      <ShoulderPeriodSwitch page="/members" shoulder={shoulder} period={period} />
       <div className="w-fit mx-auto my-2">
         <UserSelector users={users} id={id} shoulder={shoulder} period={period} />
       </div>
       <div className="w-fit mx-auto my-2">
-        <DateRangeFilter page="members" limit={limit} shoulder={shoulder} period={period} id={id}/>
+        <DateRangeFilter page="/members" limit={limit} shoulder={shoulder} period={period} id={id}/>
       </div>
       <div className="space-y-2">
         {periodData ? (

@@ -108,10 +108,9 @@ export default async function Home({
     (p) => p.period === period
   );
 
-  // return <span>{JSON.stringify(rawdata)}</span>;
   return (
     <>
-      <ShoulderPeriodSwitch page={"/"} shoulder={shoulder} period={period} />
+      <ShoulderPeriodSwitch page="/" shoulder={shoulder} period={period} />
       <div className="space-y-2 ">
         {selectedPeriodData ? (
           <ChartWithRankings data={selectedPeriodData} />
