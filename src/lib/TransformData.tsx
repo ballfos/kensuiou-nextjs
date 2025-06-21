@@ -71,10 +71,22 @@ function formatDate(date: Date): string {
   return `${month}/${day}`;
 }
 
+// limitからデータ表示の期間を取得する
+  function calculateLimit(period: string, limit: number): number {
+  switch (period) {
+    case 'Day': return limit;
+    case 'Week': return limit * 7;
+    case 'Month': return limit * 30;
+    default: return 3650;
+  }
+}
+
 export function transformToLineChartData(
   // 補足: rawDataの型は、新しいデータ形式に合わせて更新されたものと仮定します
   rawData: LineRawMemberData[],
-  shoulder: "Narrow" | "Wide"
+  shoulder: "Narrow" | "Wide",
+  limit: number,
+  period: string,
 ): tLineData[] {
   // 全てのメンバーのユニークなニックネームを取得
   const allMembers = [...new Set(rawData.map((d) => d.member_id))];
@@ -108,8 +120,8 @@ export function transformToLineChartData(
   ];
 
   const now = new Date();
-  const fourWeeksAgo = new Date();
-  fourWeeksAgo.setDate(now.getDate() - 28);
+  const limitRange = new Date();
+  limitRange.setDate(now.getDate() - calculateLimit(period, limit));
 
   // typeInfoを元に、"Max"と"Sum"の各グラフデータを生成
   const finalRecords: tLineRecord[] = typeInfo.map((type) => {
@@ -125,7 +137,7 @@ export function transformToLineChartData(
       // 日付を取得する
       const weekStart = new Date(record.week_start_date);
 
-      if (weekStart <= fourWeeksAgo) continue;
+      if (weekStart <= limitRange) continue;
 
       const weekEnd = new Date(weekStart);
       // ここは今日の日付にするか週末の日付にするか、どちらが良いかを考える
@@ -206,22 +218,10 @@ export const transformLineDataToOnesData = (
   const result: tOnesDataByUser[] = [];
 
   // 3. ユーザーごとにループ
-  const selectedLimit: number =  (() => {
-      switch (period) {
-          case 'Day':
-              return limit;
-          case 'Week':
-              return limit * 7;
-          case 'Month':
-              return limit * 12;
-          default:
-              return 3650;
-      }
-  })();
 
   const now = new Date();
   const limitRange = new Date();
-  limitRange.setDate(now.getDate() - selectedLimit);
+  limitRange.setDate(now.getDate() - calculateLimit(period, limit));
 
   for (const [userId, userRecords] of dataByUser.entries()) {
     const nickname = userRecords[0]?.nickname || "Unknown";

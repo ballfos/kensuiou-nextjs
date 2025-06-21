@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-import Image from "next/image";
+import { PiRankingLight } from "react-icons/pi";
+import { GoGraph } from "react-icons/go";
+import { FiFileText } from "react-icons/fi";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased pb-40`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased pb-30`}
       >
         {/* ロゴはまた後で決める */}
         <h1 className="text-7xl text-yellow-500 font-bold m-2">
@@ -36,16 +38,16 @@ export default function RootLayout({
         {children}
         <footer className="fixed bottom-0 w-full bg-yellow-600 p-2">
           <div className="flex justify-between md:w-2/3 mx-auto">
-            <Link className="no-underline text-white text-3xl flex flex-col items-center" href="/">
-              <Image width={96} height={96} src="/ranking.png" alt="" />
+            <Link className="no-underline text-white text-2xl flex flex-col items-center" href="/">
+              <PiRankingLight stroke="#ffffff" size="2em" />
               ランキング
             </Link>
-            <Link className="no-underline text-white text-3xl flex flex-col items-center" href="/graph">
-              <Image width={96} height={96} src="/graph.png" alt="" />
+            <Link className="no-underline text-white text-2xl flex flex-col items-center" href="/graph">
+              <GoGraph stroke="#ffffff" size="2em" />
               グラフ
             </Link>
-            <Link className="no-underline text-white text-3xl flex flex-col items-center" href="/members">
-              <Image width={96} height={96} src="/documents.png" alt="" />
+            <Link className="no-underline text-white text-2xl flex flex-col items-center" href="/members">
+              <FiFileText stroke="#ffffff" size="2em" />
               個人
             </Link>
           </div>

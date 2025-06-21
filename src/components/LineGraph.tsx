@@ -46,8 +46,8 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
               margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
             >
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} />
-              <YAxis />
+              <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} fontSize={20} />
+              <YAxis fontSize={20} />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}

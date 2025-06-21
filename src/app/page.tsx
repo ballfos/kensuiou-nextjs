@@ -1,6 +1,6 @@
 import { tData, RawMemberData } from "@/lib/TypeDeclarations";
 import ChartWithRankings from "@/components/ChartWithRankings";
-import Link from "next/link";
+import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
 import { getDataFromDB } from "@/lib/db";
 import { transformData } from "@/lib/TransformData";
 
@@ -108,44 +108,10 @@ export default async function Home({
     (p) => p.period === period
   );
 
-  const shoulderLinks = ["Narrow", "Wide"];
-  const periodLinks = ["Day", "Week", "Total"];
   // return <span>{JSON.stringify(rawdata)}</span>;
   return (
     <>
-      <div className="flex justify-center space-x-2 mb-4 ">
-        <div className="border-yellow-600 border-2 p-2 rounded w-fit ">
-          {periodLinks.map((p, pindex) => (
-            <Link
-              key={pindex}
-              href={`/?period=${p}&shoulder=${shoulder}`}
-              className={`no-underline p-2 text-2xl rounded ${
-                period === p
-                  ? "bg-yellow-600 text-white"
-                  : "bg-white text-yellow-600"
-              }`}
-            >
-              {p} {/* リンクのテキスト */}
-            </Link>
-          ))}
-        </div>
-        <div className="border-yellow-600 border-2 p-2 rounded w-fit ">
-          {shoulderLinks.map((s, sindex) => (
-            <Link
-              key={sindex}
-              href={`/?period=${period}&shoulder=${s}`}
-              className={`no-underline p-2 text-2xl rounded ${
-                shoulder === s
-                  ? "bg-yellow-600 text-white"
-                  : "bg-white text-yellow-600"
-              }`}
-            >
-              {s} {/* リンクのテキスト */}
-            </Link>
-          ))}
-        </div>
-      </div>
-
+      <ShoulderPeriodSwitch page={"/"} shoulder={shoulder} period={period} />
       <div className="space-y-2 ">
         {selectedPeriodData ? (
           <ChartWithRankings data={selectedPeriodData} />

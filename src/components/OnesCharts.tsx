@@ -9,7 +9,7 @@ export default async function OnesCharts({ data }: { data: tOnesPeriodData }) {
       <div className="grid h-full gap-6 grid-cols-1 space-y-4 md:grid-cols-2">
         {data.chartsRecords.map((r, index) => (
           <div key={index}>
-            <p className="text-center text-2xl font-bold">{r.type}</p>
+            <p className="text-center text-4xl font-bold">{r.type}</p>
             <BarGraph key={index} barChartData={r.barChartData} />
           </div>
         ))}

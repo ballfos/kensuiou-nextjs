@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 
-export default function DateRangeFilter({limit, shoulder, period, id}: {limit: string; shoulder: string; period: string; id: string}) {
+export default function DateRangeFilter({page, limit, shoulder, period, id}: {page: string; limit: string; shoulder: string; period: string; id?: string}) {
     const router = useRouter();
-    const [crntLimit, setCrntLimit] = useState<number>(Number(limit));
+    const [crntLimit, setCrntLimit] = useState<string>(limit);
 
     const periodMinAndMax: [number, number] =  (() => {
         switch (period) {
@@ -35,27 +35,44 @@ export default function DateRangeFilter({limit, shoulder, period, id}: {limit: s
         }
     })();
 
+    const handleChange = (val: string) => {
+
+        // 空文字は許可
+        if (val === "") {
+            setCrntLimit(val)
+            return
+        }
+
+        // 数字のみ許可(001などは無効)
+        if (val === "0" || /^[1-9][0-9]*$/.test(val)) {
+            setCrntLimit(val)
+        }
+        // それ以外の入力は無視
+    }
+
     const limitOnClick = () => {
-      if (["Day", "Week", "Month", "Total"].includes(period) && crntLimit >= periodMinAndMax[0] && crntLimit <= periodMinAndMax[1]) {
-        router.push(
-          `/members?shoulder=${shoulder}&period=${period}&id=${id}&limit=${crntLimit}`
-        )
-      }
+        const limitNumber = Number(crntLimit);
+
+        if (["Day", "Week", "Month", "Total"].includes(period) && limitNumber >= periodMinAndMax[0] && limitNumber <= periodMinAndMax[1]) {
+            router.push(
+            `/${page}?shoulder=${shoulder}&period=${period}&id=${id || ""}&limit=${crntLimit}`
+            )
+        }
   }
 
   return (
     <div className="flex items-center w-fit space-x-2">
         <Input
-            type="number"
+            type="text"
             min={periodMinAndMax[0]}
             max={periodMinAndMax[1]}
             value={crntLimit}
-            onChange={(e) => setCrntLimit(Number(e.target.value))}
+            onChange={(e) => handleChange(e.target.value)}
             className="w-16 h-12 border-yellow-600 text-yellow-600 !text-3xl
             [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
-        <p className="text-yellow-600 text-3xl">{`${periodLabel}`}前までデータを</p>
-        <Button onClick={limitOnClick} className="bg-yellow-600 text-2xl p-6">表示!!</Button>
+        <p className="text-yellow-600 text-3xl">{`${periodLabel}`}前までのデータを</p>
+        <Button onClick={limitOnClick} className="bg-yellow-600 text-2xl p-6 border-yellow-600 border-2 hover:text-yellow-600 hover:bg-white">表示!!</Button>
     </div>
   )
 }

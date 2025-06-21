@@ -35,7 +35,7 @@ export default function UserSelector({
         )
       }
     >
-      <SelectTrigger className="w-[280px] font-bold text-3xl border-yellow-600 text-yellow-600">
+      <SelectTrigger className="w-[280px] font-bold !text-4xl !h-12 border-yellow-600 text-yellow-600">
         <SelectValue placeholder="ユーザー名" />
       </SelectTrigger>
       <SelectContent>
@@ -44,7 +44,7 @@ export default function UserSelector({
             <SelectItem
               key={user.id}
               value={user.id}
-              className="font-bold text-3xl text-yellow-600 data-[highlighted]:bg-yellow-600 data-[highlighted]:text-white"
+              className="font-bold text-4xl text-yellow-600 data-[highlighted]:bg-yellow-600 data-[highlighted]:text-white"
             >
               {user.name}
             </SelectItem>

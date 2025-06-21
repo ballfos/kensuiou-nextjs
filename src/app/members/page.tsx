@@ -2,7 +2,7 @@ import { LineRawMemberData } from "@/lib/TypeDeclarations";
 import OnesCharts from "@/components/OnesCharts";
 import UserSelector from "@/components/UserSelector";
 import DateRangeFilter from "@/components/DateRangeFilter"
-import Link from "next/link";
+import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
 import { getDataFromDB } from "@/lib/db";
 import { transformLineDataToOnesData } from "@/lib/TransformData";
 export default async function Home({
@@ -256,54 +256,15 @@ export default async function Home({
   const periodData = shoulderData?.periods.find((d) => d.period === period);
 
   const users = data.map((ud) => ({ id: ud.id, name: ud.name }));
-
-  const shoulderLinks = ["Narrow", "Wide"];
-  const periodLinks = ["Day", "Week", "Total"];
   
   return (
     <>
-      <div className="flex items-center justify-center space-x-2 mb-4">
-        <div className="border-yellow-600 border-2 p-2 rounded w-fit">
-          {periodLinks.map((p, pindex) => (
-            <Link
-              key={pindex}
-              href={`/members?period=${p}&shoulder=${shoulder}&id=${id}`}
-              className={`no-underline p-2 text-2xl rounded ${
-                period === p
-                  ? "bg-yellow-600 text-white"
-                  : "bg-white text-yellow-600"
-              }`}
-            >
-              {p} {/* リンクのテキスト */}
-            </Link>
-          ))}
-        </div>
-        <div className="border-yellow-600 border-2 p-2 rounded w-fit">
-          {shoulderLinks.map((s, sindex) => (
-            <Link
-              key={sindex}
-              href={`/members?period=${period}&shoulder=${s}&id=${id}`}
-              className={`no-underline p-2 text-2xl rounded ${
-                shoulder === s
-                  ? "bg-yellow-600 text-white"
-                  : "bg-white text-yellow-600"
-              }`}
-            >
-              {s} {/* リンクのテキスト */}
-            </Link>
-          ))}
-        </div>
+      <ShoulderPeriodSwitch page={"/members"} shoulder={shoulder} period={period} />
+      <div className="w-fit mx-auto my-2">
+        <UserSelector users={users} id={id} shoulder={shoulder} period={period} />
       </div>
       <div className="w-fit mx-auto my-2">
-        <UserSelector
-          users={users}
-          id={id}
-          shoulder={shoulder}
-          period={period}
-        />
-      </div>
-      <div className="w-fit mx-auto my-2">
-        <DateRangeFilter limit={limit} shoulder={shoulder} period={period} id={id}/>
+        <DateRangeFilter page="members" limit={limit} shoulder={shoulder} period={period} id={id}/>
       </div>
       <div className="space-y-2">
         {periodData ? (

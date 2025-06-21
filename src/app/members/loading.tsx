@@ -20,7 +20,7 @@ export default function HomeLoading() {
 
     return (
         <div className="flex flex-col justify-center items-center h-screen" aria-label="Now Loading...">
-            <Image width={32} height={32} src="/chinups.gif" alt="Now Loading..." unoptimized />
+            <Image width={128} height={128} src="/chinups.gif" alt="Now Loading..." unoptimized />
             Now Loading...
         </div>
     );

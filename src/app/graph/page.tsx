@@ -1,8 +1,9 @@
 import { LineRawMemberData } from "@/lib/TypeDeclarations";
 import LineGraphs from "@/components/LineGraphs";
-import Link from "next/link";
+import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
 import { getDataFromDB } from "@/lib/db";
 import { transformToLineChartData } from "@/lib/TransformData";
+import DateRangeFilter from "@/components/DateRangeFilter";
 
 export default async function Home({
   searchParams,
@@ -13,10 +14,12 @@ export default async function Home({
     | "Narrow"
     | "Wide";
   const period = (await searchParams).period || "Week";
+  const limit = (await searchParams).limit || "8";
+
   const query = "SELECT * FROM weekly_aggregate_view";
   const rawdata: LineRawMemberData[] = await getDataFromDB(query);
 
-  const data = transformToLineChartData(rawdata, shoulder);
+  const data = transformToLineChartData(rawdata, shoulder, Number(limit), period);
   
   //   const data: tLineData[] = [
   //     {
@@ -46,42 +49,12 @@ export default async function Home({
 
   const periodData = data.find((d) => d.period === period);
 
-  const shoulderLinks = ["Narrow", "Wide"];
-  const periodLinks = ["Day", "Week", "Total"];
   //   return <span>{JSON.stringify(rawdata)}</span>;
   return (
     <>
-      <div className="flex justify-center space-x-2 mb-4">
-        <div className="border-yellow-600 border-2 p-2 rounded w-fit">
-          {periodLinks.map((p, pindex) => (
-            <Link
-              key={pindex}
-              href={`/graph?period=${p}&shoulder=${shoulder}`}
-              className={`no-underline p-2 text-2xl rounded ${
-                period === p
-                  ? "bg-yellow-600 text-white"
-                  : "bg-white text-yellow-600"
-              }`}
-            >
-              {p} {/* リンクのテキスト */}
-            </Link>
-          ))}
-        </div>
-        <div className="border-yellow-600 border-2 p-2 rounded w-fit">
-          {shoulderLinks.map((s, sindex) => (
-            <Link
-              key={sindex}
-              href={`/graph?period=${period}&shoulder=${s}`}
-              className={`no-underline p-2 text-2xl rounded ${
-                shoulder === s
-                  ? "bg-yellow-600 text-white"
-                  : "bg-white text-yellow-600"
-              }`}
-            >
-              {s} {/* リンクのテキスト */}
-            </Link>
-          ))}
-        </div>
+      <ShoulderPeriodSwitch page={"/graph"} shoulder={shoulder} period={period} />
+      <div className="w-fit mx-auto my-2">
+        <DateRangeFilter page="graph" limit={limit} shoulder={shoulder} period={period}/>
       </div>
       <div className="space-y-2">
         {periodData ? (
