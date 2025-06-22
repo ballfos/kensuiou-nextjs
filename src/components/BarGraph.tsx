@@ -43,7 +43,7 @@ export default function BarGraph({
         y={y + height / 2 - imageSize / 2}
         width={imageSize}
         height={imageSize}
-        href="choi_king.PNG"
+        href="choi_king.png"
       />
     );
   };
