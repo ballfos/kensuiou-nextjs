@@ -5,6 +5,8 @@ import DateRangeFilter from "@/components/DateRangeFilter"
 import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
 import { getDataFromDB } from "@/lib/db";
 import { transformLineDataToOnesData } from "@/lib/TransformData";
+import NoContents from "@/components/NoContents";
+
 export default async function Home({
   searchParams,
 }: {
@@ -270,11 +272,11 @@ export default async function Home({
         <DateRangeFilter page="/members" limit={limit} shoulder={shoulder} period={period} id={id}/>
       </div>
       <div className="space-y-2">
-        {periodData ? (
+        {periodData ?
           <OnesCharts data={periodData} />
-        ) : (
-          <p className="text-center text-3xl">表示できるデータがありません!!</p>
-        )}
+        :
+          <NoContents />
+        }
       </div>
     </div>
   );

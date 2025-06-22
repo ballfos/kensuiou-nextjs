@@ -15,7 +15,7 @@ export default function Ranking({
     <div className="flex items-center">
       <div className="flex-grow h-fit text-center space-y-2">
         <div>
-          <ul className="w-fit text-left mx-auto text-3xl md:text-6xl space-y-3">
+          <ul className="w-fit text-left mx-auto text-3xl lg:text-6xl space-y-3">
             {rankingData.map((rd, rdIndex) => {
               return (
                 <li

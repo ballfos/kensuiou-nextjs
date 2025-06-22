@@ -4,6 +4,7 @@ import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
 import { getDataFromDB } from "@/lib/db";
 import { transformToLineChartData } from "@/lib/TransformData";
 import DateRangeFilter from "@/components/DateRangeFilter";
+import NoContents from "@/components/NoContents";
 
 export default async function Home({
   searchParams,
@@ -57,11 +58,11 @@ export default async function Home({
         <DateRangeFilter page="/graph" limit={limit} shoulder={shoulder} period={period}/>
       </div>
       <div className="space-y-2">
-        {periodData ? (
+        {periodData ? 
           <LineGraphs lineData={periodData} />
-        ) : (
-          <p className="text-center text-3xl">表示できるデータがありません!!</p>
-        )}
+        :
+          <NoContents />
+        }
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import ChartWithRankings from "@/components/ChartWithRankings";
 import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
 import { getDataFromDB } from "@/lib/db";
 import { transformData } from "@/lib/TransformData";
+import NoContents from "@/components/NoContents";
 
 export default async function Home({
   searchParams,
@@ -112,11 +113,11 @@ export default async function Home({
     <>
       <ShoulderPeriodSwitch page="/" shoulder={shoulder} period={period} />
       <div className="space-y-2 ">
-        {selectedPeriodData ? (
+        {selectedPeriodData ? 
           <ChartWithRankings data={selectedPeriodData} />
-        ) : (
-          <p className="text-center text-3xl">表示できるデータがありません!!</p>
-        )}
+        :
+          <NoContents />
+        }
       </div>
     </>
   );

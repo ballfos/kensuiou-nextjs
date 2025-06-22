@@ -6,7 +6,7 @@ export default async function ShoulderPeriodSwitch({page, shoulder, period} : {p
     const periodLinks = ["Day", "Week", "Total"];
 
     return (
-      <div className="sm:flex sm:justify-center space-x-2 mb-4">
+      <div className="flex justify-center space-x-2 mt-15 mb-4">
         <div className="border-yellow-600 border-2 p-2 rounded w-fit space-x-2">
           {periodLinks.map((p, pindex) => (
           <div key={pindex} className="relative inline-block text-center">

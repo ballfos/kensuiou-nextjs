@@ -5,6 +5,7 @@ import "./globals.css";
 import { PiRankingLight } from "react-icons/pi";
 import { GoGraph } from "react-icons/go";
 import { FiFileText } from "react-icons/fi";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,8 +33,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased pb-30`}
       >
         {/* ロゴはまた後で決める */}
-        <h1 className="text-7xl text-yellow-500 font-bold m-2">
-          <Link href="/">KENSUIOU</Link>
+        <h1 className="text-7xl text-yellow-500 font-bold mx-2 flex">
+          <Link href="/">
+          KENSUIOU
+          <Image width={128} height={32} src="/title_aquatans.png" alt="" />
+          </Link>
         </h1>
         {children}
         <footer className="fixed bottom-0 w-full bg-yellow-600 p-2">
