@@ -267,8 +267,6 @@ export default async function Home({
       <div className="flex items-center w-fit mx-auto gap-x-2">
         <UserSelector users={users} id={id} shoulder={shoulder} period={period} />
         <p className="text-3xl text-yellow-600">さんの</p>
-      </div>
-      <div className="w-fit mx-auto">
         <DateRangeFilter page="/members" limit={limit} shoulder={shoulder} period={period} id={id}/>
       </div>
       <div className="space-y-2">

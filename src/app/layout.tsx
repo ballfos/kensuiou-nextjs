@@ -4,7 +4,7 @@ import Link from "next/link";
 import "./globals.css";
 import { PiRankingLight } from "react-icons/pi";
 import { GoGraph } from "react-icons/go";
-import { FiFileText } from "react-icons/fi";
+import { GoPerson } from "react-icons/go";
 import Image from "next/image";
 
 const geistSans = Geist({
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased pb-30`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased pb-18`}
       >
         {/* ロゴはまた後で決める */}
         <h1 className="text-7xl text-yellow-500 font-bold mx-2 flex">
@@ -40,18 +40,18 @@ export default function RootLayout({
           </Link>
         </h1>
         {children}
-        <footer className="fixed bottom-0 w-full bg-yellow-600 p-2">
+        <footer className="fixed bottom-0 w-full bg-yellow-600 px-2">
           <div className="flex justify-between md:w-2/3 mx-auto">
-            <Link className="no-underline text-white text-2xl flex flex-col items-center" href="/">
+            <Link className="no-underline text-white flex flex-col items-center" href="/">
               <PiRankingLight stroke="#ffffff" size="2em" />
               ランキング
             </Link>
-            <Link className="no-underline text-white text-2xl flex flex-col items-center" href="/graph">
+            <Link className="no-underline text-white flex flex-col items-center" href="/graph">
               <GoGraph stroke="#ffffff" size="2em" />
               グラフ
             </Link>
-            <Link className="no-underline text-white text-2xl flex flex-col items-center" href="/members">
-              <FiFileText stroke="#ffffff" size="2em" />
+            <Link className="no-underline text-white flex flex-col items-center" href="/members">
+              <GoPerson stroke="#ffffff" size="2em" />
               個人
             </Link>
           </div>

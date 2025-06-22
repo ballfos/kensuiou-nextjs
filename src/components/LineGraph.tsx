@@ -43,11 +43,11 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
             <LineChart
               accessibilityLayer
               data={lineChartData}
-              margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+              margin={{ top: 10, right: 50, left: 10, bottom: 10 }}
             >
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} fontSize={20} />
-              <YAxis fontSize={20} />
+              <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} fontSize={14} interval={0} />
+              <YAxis fontSize={14} />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}

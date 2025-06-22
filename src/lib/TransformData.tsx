@@ -345,7 +345,7 @@ export const transformLineDataToOnesData = (
           lineChartData: weeklyCumulativeData,
         });
         weekLineRecords.push({
-          type: "Max Streak",
+          type: "Cumulative Max",
           lineChartConfig: { [userId]: { label: nickname, color: userColor } },
           lineChartData: weeklyMaxConsecutiveData,
         });

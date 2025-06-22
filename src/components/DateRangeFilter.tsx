@@ -71,7 +71,7 @@ export default function DateRangeFilter({page, limit, shoulder, period, id}: {pa
             [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
         <p className="text-yellow-600 text-3xl">{`${periodLabel}`}分のデータを</p>
-        <Button onClick={limitOnClick} className="bg-yellow-600 text-2xl p-6 border-yellow-600 border-2 hover:text-yellow-600 hover:bg-white">表示!!</Button>
+        <Button onClick={limitOnClick} className="bg-yellow-600 text-2xl p-6 border-yellow-600 border-2 hover:text-yellow-600 hover:bg-white">表示</Button>
     </div>
   )
 }
