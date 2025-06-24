@@ -70,7 +70,7 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
         <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 w-full">
           {Object.entries(lineChartConfig).map(([key, config]) => (
             <li key={key} className="flex items-center text-sm">
-              <Link href={`/user/${key}`} className="flex items-center gap-1.5">
+              <Link href={`/members?id=${key}`} className="flex items-center gap-1.5">
                 <span
                   className="w-2.5 h-2.5 rounded-full"
                   style={{ backgroundColor: config.color }}
