@@ -15,7 +15,7 @@ import {
 
 import { schemeTableau10 } from "d3-scale-chromatic";
 
-export function transformData(rawData: RawMemberData[]): tData[] {
+export function transformData(rawData: RawMemberData[], loginID: string | undefined): tData[] {
   const periodInfo = [
     { name: "Day", prefix: "today" },
     { name: "Week", prefix: "this_week" },
@@ -41,6 +41,7 @@ export function transformData(rawData: RawMemberData[]): tData[] {
               id: member.member_id,
               name: member.nickname,
               counts: Number(member[dataKey]),
+              highlight: member.member_id === loginID
             }))
             .sort((a, b) => b.counts - a.counts),
         };
@@ -87,6 +88,7 @@ export function transformToLineChartData(
   shoulder: "Narrow" | "Wide",
   limit: number,
   period: string,
+  loginID: string | undefined,
 ): tLineData[] {
   // 全てのメンバーのユニークなニックネームを取得
   const allMembers = [...new Set(rawData.map((d) => d.member_id))];
@@ -107,6 +109,7 @@ export function transformToLineChartData(
       label: memberKey.label,
       // 参考コードに合わせてCSS変数を直接割り当てる
       color: colorPalette[index % colorPalette.length],
+      highlight: memberKey.id === loginID
     };
     return config;
   }, {} as tLineChartConfig);

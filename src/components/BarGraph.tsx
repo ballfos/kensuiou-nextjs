@@ -73,7 +73,7 @@ export default function BarGraph({
           transform="rotate(-45)" // テキストを-45度回転
           style={{
             fill:
-              barChartData[index]?.id === "bf8432fc-f4c3-48ec-8268-bbd26786fea1"
+              barChartData[index].highlight
                 ? "#ef4444"
                 : "#000000",
           }}
@@ -111,7 +111,7 @@ export default function BarGraph({
                 <Cell
                   key={`cell-${index}`}
                   fill={
-                    entry.id === "bf8432fc-f4c3-48ec-8268-bbd26786fea1"
+                    entry.highlight
                       ? "#ef4444"
                       : "var(--color-counts)"
                   }

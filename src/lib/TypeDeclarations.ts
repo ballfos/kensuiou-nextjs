@@ -3,6 +3,7 @@ export type tBarChartData = {
     id: string; // プレイヤーの情報をリンクづけるためにあるid
     name: string;
     counts: number;
+    highlight?: boolean;
 }
 
 export type tBarChartConfig = {
@@ -51,6 +52,7 @@ export type tLineChartConfig = {
     [key: string]: {
         label: string;
         color: string;
+        highlight?: boolean;
     }
 }
 

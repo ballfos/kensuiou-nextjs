@@ -20,6 +20,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import {
   ChartContainer,
   ChartTooltip,
@@ -57,7 +58,7 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
                   key={userID}
                   dataKey={userID}
                   stroke={config.color}
-                  strokeWidth={2}
+                  strokeWidth={config.highlight ? 10 : 2}
                   dot={false}
                 />
               ))}
@@ -66,16 +67,16 @@ export default function LineGraph({lineRecord}: {lineRecord: tLineRecord;}) {
         </ChartContainer>
       </CardContent>
       <CardFooter>
-        {/* 凡例をここに表示（独自実装の凡例） */}
+        {/* 個人の凡例 */}
         <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 w-full">
           {Object.entries(lineChartConfig).map(([key, config]) => (
-            <li key={key} className="flex items-center text-sm">
+            <li key={key} className={`flex items-center text-sm ${config.highlight && "border-2 border-yellow-600 p-2 rounded"}`}>
               <Link href={`/members?id=${key}`} className="flex items-center gap-1.5">
                 <span
                   className="w-2.5 h-2.5 rounded-full"
                   style={{ backgroundColor: config.color }}
                 ></span>
-                <span className="font-medium">{config.label}</span>
+                <span className={config.highlight ? "font-bold" : "font-medium"}>{config.label}</span>
               </Link>
             </li>
           ))}

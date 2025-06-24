@@ -5,6 +5,8 @@ import { getDataFromDB } from "@/lib/db";
 import { transformToLineChartData } from "@/lib/TransformData";
 import DateRangeFilter from "@/components/DateRangeFilter";
 import NoContents from "@/components/NoContents";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function Home({
   searchParams,
@@ -20,7 +22,10 @@ export default async function Home({
   const query = "SELECT * FROM weekly_aggregate_view";
   const rawdata: LineRawMemberData[] = await getDataFromDB(query);
 
-  const data = transformToLineChartData(rawdata, shoulder, Number(limit), period);
+  const session = await getServerSession(authOptions);
+  const loginID = session?.user?.id
+
+  const data = transformToLineChartData(rawdata, shoulder, Number(limit), period, loginID);
   
   //   const data: tLineData[] = [
   //     {

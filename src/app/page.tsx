@@ -5,6 +5,9 @@ import { getDataFromDB } from "@/lib/db";
 import { transformData } from "@/lib/TransformData";
 import NoContents from "@/components/NoContents";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 export default async function Home({
   searchParams,
 }: {
@@ -15,6 +18,9 @@ export default async function Home({
 
   const query = "SELECT * FROM aggregate_view";
   const rawdata: RawMemberData[] = await getDataFromDB(query);
+  
+  const session = await getServerSession(authOptions);
+  const loginID = session?.user?.id
 
   // const rawdata = [
   //   {
@@ -100,7 +106,7 @@ export default async function Home({
   // ];
   // 生データを新しいtData[]の型に変換
 
-  const data: tData[] = transformData(rawdata);
+  const data: tData[] = transformData(rawdata, loginID);
 
   // 1. shoulderに基づいてshoulderデータを選択
   const shoulderData = data.find((d) => d.shoulder === shoulder);
