@@ -3,14 +3,14 @@ import LineGraph from "@/components/LineGraph";
 // import OnesRankings from "@/components/OnesRankings"
 import { tOnesPeriodData } from "@/lib/TypeDeclarations";
 
-export default async function OnesCharts({ data }: { data: tOnesPeriodData }) {
+export default async function OnesCharts({ data, selectedUser }: { data: tOnesPeriodData, selectedUser: string | undefined }) {
   return (
     <div className="space-y-2">
       <div className="grid h-full gap-6 grid-cols-1 space-y-4 md:grid-cols-2">
         {data.chartsRecords.map((r, index) => (
           <div key={index}>
             <p className="text-center text-4xl font-bold">{r.type}</p>
-            <BarGraph key={index} barChartData={r.barChartData} />
+            <BarGraph key={index} barChartData={r.barChartData} selectedUser={selectedUser} />
           </div>
         ))}
       </div>

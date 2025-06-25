@@ -6,6 +6,8 @@ import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
 import { getDataFromDB } from "@/lib/db";
 import { transformLineDataToOnesData } from "@/lib/TransformData";
 import NoContents from "@/components/NoContents";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function Home({
   searchParams,
@@ -18,7 +20,11 @@ export default async function Home({
 
   const query_line = "SELECT * FROM weekly_aggregate_view";
   const rawdata_line: LineRawMemberData[] = await getDataFromDB(query_line);
-  const data = transformLineDataToOnesData(rawdata_line, Number(limit), period);
+
+  const session = await getServerSession(authOptions);
+  const loginID = session?.user?.id
+
+  const data = transformLineDataToOnesData(rawdata_line, Number(limit), period, loginID);
 
   //   const data: tOnesDataByUser[] = [
   //     {
@@ -252,14 +258,18 @@ export default async function Home({
   const id = (await searchParams).id || data[0].id;
 
   const selectedData = data.find((d) => d.id === id);
+  const selectedUser = selectedData?.name;
+
   const shoulderData = selectedData?.onesData.find(
     (sd) => sd.shoulder === shoulder
   );
+  const periodData = shoulderData?.periods.find(
+    (d) => d.period === period && (d.chartsRecords.length !== 0 || d.lineRecord.length !== 0)
+  );
 
-  // データの件数が0の時は「表示できるデータがりません!!」というメッセージを表示する
-  const periodData = shoulderData?.periods.find((d) => d.period === period && (d.chartsRecords.length !== 0 || d.lineRecord.length !== 0));
-
-  const users = data.map((ud) => ({ id: ud.id, name: ud.name }));
+  const users = data
+    .filter((ud) => ud.id !== loginID)
+    .map((ud) => ({ id: ud.id, name: ud.name }));
   
   return (
     <div className="space-y-4">
@@ -271,9 +281,7 @@ export default async function Home({
       </div>
       <div className="space-y-2">
         {periodData ?
-          <OnesCharts data={periodData} />
-        :
-          <NoContents />
+          <OnesCharts data={periodData} selectedUser={selectedUser}/> : <NoContents />
         }
       </div>
     </div>

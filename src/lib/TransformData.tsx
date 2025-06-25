@@ -193,23 +193,10 @@ export const transformLineDataToOnesData = (
   rawData: LineRawMemberData[],
   limit: number,
   period: string,
+  loginID: string | undefined,
 ): tOnesDataByUser[] => {
-  // 1. 全ユーザーの色設定 (変更なし)
-  const allUsers = Array.from(
-    new Map(
-      rawData.map((d) => [
-        d.member_id,
-        { id: d.member_id, nickname: d.nickname },
-      ])
-    ).values()
-  );
-  const colorPalette = schemeTableau10;
-  const userColorMap = new Map<string, string>();
-  allUsers.forEach((user, index) => {
-    userColorMap.set(user.id, colorPalette[index % colorPalette.length]);
-  });
 
-  // 2. ユーザーごとのデータグループ化 (変更なし)
+  // ユーザーごとのデータグループ化
   const dataByUser = new Map<string, LineRawMemberData[]>();
   for (const record of rawData) {
     if (!dataByUser.has(record.member_id)) {
@@ -220,15 +207,37 @@ export const transformLineDataToOnesData = (
 
   const result: tOnesDataByUser[] = [];
 
-  // 3. ユーザーごとにループ
-
+  // ユーザーごとにループ
   const now = new Date();
   const limitRange = new Date();
   limitRange.setDate(now.getDate() - calculateLimit(period, limit));
 
+  const loginData = loginID ? 
+    dataByUser.get(loginID)?.reduce((mine, record) => {
+      mine[record.week_start_date] = {
+        narrow_sum_counts: record.narrow_sum_counts,
+        narrow_max_counts: record.narrow_max_counts,
+        wide_sum_counts: record.wide_sum_counts,
+        wide_max_counts: record.wide_max_counts,
+        narrow_cumulative_sum_counts: record.narrow_cumulative_sum_counts,
+        narrow_cumulative_max_counts: record.narrow_cumulative_max_counts,
+        wide_cumulative_sum_counts: record.wide_cumulative_sum_counts,
+        wide_cumulative_max_counts: record.wide_cumulative_max_counts,
+      };
+      return mine;
+    }, {} as Record<string, {
+      narrow_sum_counts: number;
+      narrow_max_counts: number;
+      wide_sum_counts: number;
+      wide_max_counts: number;
+      narrow_cumulative_sum_counts: number;
+      narrow_cumulative_max_counts: number;
+      wide_cumulative_sum_counts: number;
+      wide_cumulative_max_counts: number;
+    }>): undefined;
+
   for (const [userId, userRecords] of dataByUser.entries()) {
     const nickname = userRecords[0]?.nickname || "Unknown";
-    const userColor = userColorMap.get(userId) || "#888888";
 
     const onesData: tOnesData[] = [];
     for (const shoulderType of ["Narrow", "Wide"] as const) {
@@ -240,7 +249,7 @@ export const transformLineDataToOnesData = (
       const weekLineRecords: tLineRecord[] = [];
 
       if (userRecords.length > 0) {
-        const sortedUserRecords = [...userRecords].sort(
+        const sortedUserRecords = userRecords.sort(
           (a, b) =>
             new Date(a.week_start_date).getTime() -
             new Date(b.week_start_date).getTime()
@@ -252,11 +261,11 @@ export const transformLineDataToOnesData = (
           .map((record) => {
             const startDate = new Date(record.week_start_date);
             const endDate = new Date(startDate);
-            endDate.setDate(startDate.getDate() + 6); // 週の終わり = 開始 + 6日
+            endDate.setDate(startDate.getDate() + 6);
 
             const name = `${startDate.getMonth() + 1}/${startDate.getDate()}~${endDate.getMonth() + 1}/${endDate.getDate()}`;
 
-            return {
+            const woMineData = {
               id: record.week_start_date,
               name,
               counts: Number(
@@ -265,6 +274,21 @@ export const transformLineDataToOnesData = (
                   : record.wide_max_counts
               ),
             };
+
+            const loginRecord = loginData?.[record.week_start_date]
+
+            if (loginRecord) {
+              return {
+                ...woMineData,
+                mine: Number(
+                  lowerShoulderType === "narrow"
+                    ? loginRecord.narrow_max_counts
+                    : loginRecord.wide_max_counts
+                ),
+              };
+            } else {
+              return woMineData;
+            }
           });
 
         // 棒グラフ②: 週ごとの合計回数（個人の推移） (変更なし)
@@ -277,7 +301,7 @@ export const transformLineDataToOnesData = (
 
             const name = `${startDate.getMonth() + 1}/${startDate.getDate()}~${endDate.getMonth() + 1}/${endDate.getDate()}`;
 
-            return {
+            const woMineData = {
               id: record.week_start_date,
               name,
               counts: Number(
@@ -286,6 +310,21 @@ export const transformLineDataToOnesData = (
                   : record.wide_sum_counts
               ),
             };
+
+            const loginRecord = loginData?.[record.week_start_date]
+
+            if (loginRecord) {
+              return {
+                ...woMineData,
+                mine: Number(
+                  lowerShoulderType === "narrow"
+                    ? loginRecord.narrow_sum_counts
+                    : loginRecord.wide_max_counts
+                ),
+              };
+            } else {
+              return woMineData;
+            }
           });
 
 
@@ -298,8 +337,6 @@ export const transformLineDataToOnesData = (
           barChartData: weeklySumCountsData,
         });
 
-        // --- ▼▼▼ ここからが修正箇所 ▼▼▼ ---
-
         // 折れ線グラフ: 累計回数
         const weeklyCumulativeData = sortedUserRecords
           .filter((d) => new Date(d.week_start_date) >= limitRange)
@@ -310,7 +347,7 @@ export const transformLineDataToOnesData = (
 
             const name = `${startDate.getMonth() + 1}/${startDate.getDate()}~${endDate.getMonth() + 1}/${endDate.getDate()}`;
 
-            return {
+            const woMineData = {
               name,
               [userId]: Number(
                 lowerShoulderType === "narrow"
@@ -318,6 +355,21 @@ export const transformLineDataToOnesData = (
                   : d.wide_cumulative_sum_counts
               ),
             };
+
+            const loginRecord = loginData?.[d.week_start_date]
+
+            if (loginID && loginRecord) {
+              return {
+                ...woMineData,
+                [loginID]: Number(
+                  lowerShoulderType === "narrow"
+                    ? loginRecord.narrow_cumulative_sum_counts
+                    : loginRecord.wide_cumulative_sum_counts
+                ),
+              };
+            } else {
+              return woMineData;
+            }
           });
 
         // 折れ線グラフ: 連続回数
@@ -330,7 +382,7 @@ export const transformLineDataToOnesData = (
 
             const name = `${startDate.getMonth() + 1}/${startDate.getDate()}~${endDate.getMonth() + 1}/${endDate.getDate()}`;
 
-            return {
+            const woMineData = {
               name,
               [userId]: Number(
                 lowerShoulderType === "narrow"
@@ -338,18 +390,37 @@ export const transformLineDataToOnesData = (
                   : d.wide_cumulative_max_counts
               ),
             };
+
+            const loginRecord = loginData?.[d.week_start_date]
+
+            if (loginID && loginRecord) {
+              return {
+                ...woMineData,
+                [loginID]: Number(
+                  lowerShoulderType === "narrow"
+                    ? loginRecord.narrow_cumulative_max_counts
+                    : loginRecord.wide_cumulative_max_counts
+                ),
+              };
+            } else {
+              return woMineData;
+            }
           });
 
         // --- ▲▲▲ ここまでが修正箇所 ▲▲▲ ---
 
+        const weekChartConfig = { [userId]: { label: nickname, color: "#facc15" } }
+        if (loginID) {
+          weekChartConfig[loginID] = { label: "YOU", color: "#ef4444"}
+        }
         weekLineRecords.push({
           type: "Cumulative Total",
-          lineChartConfig: { [userId]: { label: nickname, color: userColor } },
+          lineChartConfig: weekChartConfig,
           lineChartData: weeklyCumulativeData,
         });
         weekLineRecords.push({
           type: "Cumulative Max",
-          lineChartConfig: { [userId]: { label: nickname, color: userColor } },
+          lineChartConfig: weekChartConfig,
           lineChartData: weeklyMaxConsecutiveData,
         });
       }

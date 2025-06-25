@@ -3,13 +3,18 @@ export type tBarChartData = {
     id: string; // プレイヤーの情報をリンクづけるためにあるid
     name: string;
     counts: number;
+    mine?: number;
     highlight?: boolean;
 }
 
 export type tBarChartConfig = {
     counts: {
-        label?: string;
         color: string;
+        label?: string;
+    },
+    mine?: {
+        color: string;
+        label?: string;
     }
 }
 
@@ -111,8 +116,10 @@ export type LineRawMemberData = {
     member_id: string;
     nickname: string;
     week_start_date:string;
-    max_narrow_counts: number;
-    max_wide_counts: number;
+    narrow_sum_counts: number;
+    narrow_max_counts: number;
+    wide_sum_counts: number;
+    wide_max_counts: number;
     narrow_cumulative_sum_counts: number;
     narrow_cumulative_max_counts: number;
     wide_cumulative_sum_counts: number;

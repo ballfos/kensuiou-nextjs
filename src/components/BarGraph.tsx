@@ -12,10 +12,16 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function BarGraph({
   barChartData,
+  selectedUser,
 }: {
   barChartData: tBarChartData[];
+  selectedUser: string | undefined;
 }) {
   const maxValue = Math.max(...barChartData.map((d) => d.counts));
+
+  const login: boolean = barChartData?.[0]?.mine !== undefined;
+
+  const myMaxValue = login ? Math.max(...barChartData.map((d) => d.mine || 0)) : 0;
   const dataNumber = barChartData.length;
 
   interface CustomImageLabelProps {
@@ -34,6 +40,29 @@ export default function BarGraph({
   }: CustomImageLabelProps) => {
 
     if (value !== maxValue || maxValue === 0 || dataNumber <= 1) return null;
+
+    const imageSize = width * 2;
+
+    return (
+      <image
+        x={x + width / 2 - imageSize / 2}
+        y={y + height / 2 - imageSize / 2}
+        width={imageSize}
+        height={imageSize}
+        href="choi_king.png"
+      />
+    );
+  };
+
+  const CustomMyImageLabel = ({
+    x = 0,
+    y = 0,
+    width = 0,
+    height = 0,
+    value = 0
+  }: CustomImageLabelProps) => {
+
+    if (value !== myMaxValue || myMaxValue === 0 || dataNumber <= 1) return null;
 
     const imageSize = width * 2;
 
@@ -87,7 +116,12 @@ export default function BarGraph({
   const barChartConfig: tBarChartConfig = {
     counts: {
       color: "#facc15",
+      label: selectedUser || " "
     },
+    mine: {
+      color: "#ef4444",
+      label: "YOU"
+    }
   };
 
   return (
@@ -108,17 +142,18 @@ export default function BarGraph({
             <ChartTooltip content={<ChartTooltipContent />} />
             <Bar dataKey="counts">
               {barChartData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={
-                    entry.highlight
-                      ? "#ef4444"
-                      : "var(--color-counts)"
-                  }
-                />
+                <Cell key={`cell-${index}`} fill={ entry.highlight ? "#ef4444" : "var(--color-counts)" } />
               ))}
               <LabelList dataKey="counts" content={<CustomImageLabel />} />
             </Bar>
+            {login &&
+              <Bar dataKey="mine">
+                {barChartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={ entry.highlight ? "#ef4444" : "var(--color-mine)" } />
+                ))}
+                <LabelList dataKey="mine" content={<CustomMyImageLabel />} />
+              </Bar>
+            }
           </BarChart>
         </ChartContainer>
       </CardContent>
