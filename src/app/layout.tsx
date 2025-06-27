@@ -6,7 +6,7 @@ import { PiRankingLight } from "react-icons/pi";
 import { GoGraph } from "react-icons/go";
 import { GoPerson } from "react-icons/go";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { NextAuthProvider } from "@/lib/NextAuthProvider";
 import UserButtons from "@/components/UserButtons";
 import Image from "next/image";
@@ -36,28 +36,39 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased pb-18`}
+        className={`${geistSans.variable} ${geistMono.variable} pb-18 antialiased`}
       >
         {/* ロゴはまた後で決める */}
-        <h1 className="text-yellow-500 font-bold mx-2 flex justify-between items-center">
+        <h1 className="mx-2 flex items-center justify-between font-bold text-yellow-500">
           <Link href="/" className="text-7xl">
             KENSUIOU
             <Image width={128} height={32} src="/title_aquatans.png" alt="" />
           </Link>
-          <NextAuthProvider session={session}><UserButtons/></NextAuthProvider>
+          <NextAuthProvider session={session}>
+            <UserButtons />
+          </NextAuthProvider>
         </h1>
         {children}
         <footer className="fixed bottom-0 w-full bg-yellow-600 px-2">
-          <div className="flex justify-between md:w-2/3 mx-auto">
-            <Link className="no-underline text-white flex flex-col items-center" href="/">
+          <div className="mx-auto flex justify-between md:w-2/3">
+            <Link
+              className="flex flex-col items-center text-white no-underline"
+              href="/"
+            >
               <PiRankingLight stroke="#ffffff" size="2em" />
               ランキング
             </Link>
-            <Link className="no-underline text-white flex flex-col items-center" href="/graph">
+            <Link
+              className="flex flex-col items-center text-white no-underline"
+              href="/graph"
+            >
               <GoGraph stroke="#ffffff" size="2em" />
               グラフ
             </Link>
-            <Link className="no-underline text-white flex flex-col items-center" href="/members">
+            <Link
+              className="flex flex-col items-center text-white no-underline"
+              href="/members"
+            >
               <GoPerson stroke="#ffffff" size="2em" />
               個人
             </Link>

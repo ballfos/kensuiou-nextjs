@@ -1,13 +1,13 @@
 import { LineRawMemberData } from "@/lib/TypeDeclarations";
 import OnesCharts from "@/components/OnesCharts";
 import UserSelector from "@/components/UserSelector";
-import DateRangeFilter from "@/components/DateRangeFilter"
+import DateRangeFilter from "@/components/DateRangeFilter";
 import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
 import { getDataFromDB } from "@/lib/db";
 import { transformLineDataToOnesData } from "@/lib/TransformData";
 import NoContents from "@/components/NoContents";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 export default async function Home({
   searchParams,
@@ -22,9 +22,14 @@ export default async function Home({
   const rawdata_line: LineRawMemberData[] = await getDataFromDB(query_line);
 
   const session = await getServerSession(authOptions);
-  const loginID = session?.user?.id
+  const loginID = session?.user?.id;
 
-  const data = transformLineDataToOnesData(rawdata_line, Number(limit), period, loginID);
+  const data = transformLineDataToOnesData(
+    rawdata_line,
+    Number(limit),
+    period,
+    loginID,
+  );
 
   //   const data: tOnesDataByUser[] = [
   //     {
@@ -261,28 +266,47 @@ export default async function Home({
   const selectedUser = selectedData?.name;
 
   const shoulderData = selectedData?.onesData.find(
-    (sd) => sd.shoulder === shoulder
+    (sd) => sd.shoulder === shoulder,
   );
   const periodData = shoulderData?.periods.find(
-    (d) => d.period === period && (d.chartsRecords.length !== 0 || d.lineRecord.length !== 0)
+    (d) =>
+      d.period === period &&
+      (d.chartsRecords.length !== 0 || d.lineRecord.length !== 0),
   );
 
   const users = data
     .filter((ud) => ud.id !== loginID)
     .map((ud) => ({ id: ud.id, name: ud.name }));
-  
+
   return (
     <div className="space-y-4">
-      <ShoulderPeriodSwitch page="/members" shoulder={shoulder} period={period} />
-      <div className="flex items-center w-fit mx-auto gap-x-2">
-        <UserSelector users={users} id={id} shoulder={shoulder} period={period} />
+      <ShoulderPeriodSwitch
+        page="/members"
+        shoulder={shoulder}
+        period={period}
+      />
+      <div className="mx-auto flex w-fit items-center gap-x-2">
+        <UserSelector
+          users={users}
+          id={id}
+          shoulder={shoulder}
+          period={period}
+        />
         <p className="text-3xl text-yellow-600">さんの</p>
-        <DateRangeFilter page="/members" limit={limit} shoulder={shoulder} period={period} id={id}/>
+        <DateRangeFilter
+          page="/members"
+          limit={limit}
+          shoulder={shoulder}
+          period={period}
+          id={id}
+        />
       </div>
       <div className="space-y-2">
-        {periodData ?
-          <OnesCharts data={periodData} selectedUser={selectedUser}/> : <NoContents />
-        }
+        {periodData ? (
+          <OnesCharts data={periodData} selectedUser={selectedUser} />
+        ) : (
+          <NoContents />
+        )}
       </div>
     </div>
   );

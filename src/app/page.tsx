@@ -6,7 +6,7 @@ import { transformData } from "@/lib/TransformData";
 import NoContents from "@/components/NoContents";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 export default async function Home({
   searchParams,
@@ -18,9 +18,9 @@ export default async function Home({
 
   const query = "SELECT * FROM aggregate_view";
   const rawdata: RawMemberData[] = await getDataFromDB(query);
-  
+
   const session = await getServerSession(authOptions);
-  const loginID = session?.user?.id
+  const loginID = session?.user?.id;
 
   // const rawdata = [
   //   {
@@ -112,18 +112,18 @@ export default async function Home({
   const shoulderData = data.find((d) => d.shoulder === shoulder);
   // 2. sholderデータの中から、periodに基づいて表示するデータを選択
   const selectedPeriodData = shoulderData?.periods.find(
-    (p) => p.period === period
+    (p) => p.period === period,
   );
 
   return (
     <>
       <ShoulderPeriodSwitch page="/" shoulder={shoulder} period={period} />
-      <div className="space-y-2 ">
-        {selectedPeriodData ? 
+      <div className="space-y-2">
+        {selectedPeriodData ? (
           <ChartWithRankings data={selectedPeriodData} />
-        :
+        ) : (
           <NoContents />
-        }
+        )}
       </div>
     </>
   );
