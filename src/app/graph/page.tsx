@@ -1,7 +1,6 @@
 import DateRangeFilter from "@/components/DateRangeFilter";
 import LineGraphs from "@/components/LineGraphs";
 import NoContents from "@/components/NoContents";
-import PeriodWideSwitch from "@/components/PeriodWideSwitch";
 import { authOptions } from "@/lib/auth";
 import { getDataFromDB } from "@/lib/db";
 import { transformToLineChartData } from "@/lib/TransformData";
@@ -63,7 +62,6 @@ export default async function Home({
   //   return <span>{JSON.stringify(rawdata)}</span>;
   return (
     <>
-      <PeriodWideSwitch page="/graph" shoulder={shoulder} period={period} />
       <div className="mx-auto my-2 w-fit">
         <DateRangeFilter
           page="/graph"
