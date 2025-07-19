@@ -1,13 +1,13 @@
-import { LineRawMemberData } from "@/lib/TypeDeclarations";
-import OnesCharts from "@/components/OnesCharts";
-import UserSelector from "@/components/UserSelector";
 import DateRangeFilter from "@/components/DateRangeFilter";
-import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
+import NoContents from "@/components/NoContents";
+import OnesCharts from "@/components/OnesCharts";
+import PeriodWideSwitch from "@/components/PeriodWideSwitch";
+import UserSelector from "@/components/UserSelector";
+import { authOptions } from "@/lib/auth";
 import { getDataFromDB } from "@/lib/db";
 import { transformLineDataToOnesData } from "@/lib/TransformData";
-import NoContents from "@/components/NoContents";
+import { LineRawMemberData } from "@/lib/TypeDeclarations";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 export default async function Home({
   searchParams,
@@ -280,11 +280,7 @@ export default async function Home({
 
   return (
     <div className="space-y-4">
-      <ShoulderPeriodSwitch
-        page="/members"
-        shoulder={shoulder}
-        period={period}
-      />
+      <PeriodWideSwitch page="/members" shoulder={shoulder} period={period} />
       <div className="mx-auto flex w-fit items-center gap-x-2">
         <UserSelector
           users={users}

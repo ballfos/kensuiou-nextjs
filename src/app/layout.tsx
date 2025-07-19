@@ -48,7 +48,13 @@ export default async function RootLayout({
               </NextAuthProvider>
             </h1>
           </div>
-          <Image width={128} height={32} src="/title_aquatans.png" alt="" />
+          <Image
+            width={128}
+            height={32}
+            src="/title_aquatans.png"
+            alt=""
+            className="h-8"
+          />
         </header>
         {children}
         <BottomNav />

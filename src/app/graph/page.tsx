@@ -1,12 +1,12 @@
-import { LineRawMemberData } from "@/lib/TypeDeclarations";
+import DateRangeFilter from "@/components/DateRangeFilter";
 import LineGraphs from "@/components/LineGraphs";
-import ShoulderPeriodSwitch from "@/components/ShoulderPeriodSwitch";
+import NoContents from "@/components/NoContents";
+import PeriodWideSwitch from "@/components/PeriodWideSwitch";
+import { authOptions } from "@/lib/auth";
 import { getDataFromDB } from "@/lib/db";
 import { transformToLineChartData } from "@/lib/TransformData";
-import DateRangeFilter from "@/components/DateRangeFilter";
-import NoContents from "@/components/NoContents";
+import { LineRawMemberData } from "@/lib/TypeDeclarations";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 export default async function Home({
   searchParams,
@@ -23,9 +23,15 @@ export default async function Home({
   const rawdata: LineRawMemberData[] = await getDataFromDB(query);
 
   const session = await getServerSession(authOptions);
-  const loginID = session?.user?.id
+  const loginID = session?.user?.id;
 
-  const data = transformToLineChartData(rawdata, shoulder, Number(limit), period, loginID);
+  const data = transformToLineChartData(
+    rawdata,
+    shoulder,
+    Number(limit),
+    period,
+    loginID,
+  );
   //   const data: tLineData[] = [
   //     {
   //       period: "Week",
@@ -57,16 +63,17 @@ export default async function Home({
   //   return <span>{JSON.stringify(rawdata)}</span>;
   return (
     <>
-      <ShoulderPeriodSwitch page="/graph" shoulder={shoulder} period={period} />
-      <div className="w-fit mx-auto my-2">
-        <DateRangeFilter page="/graph" limit={limit} shoulder={shoulder} period={period} />
+      <PeriodWideSwitch page="/graph" shoulder={shoulder} period={period} />
+      <div className="mx-auto my-2 w-fit">
+        <DateRangeFilter
+          page="/graph"
+          limit={limit}
+          shoulder={shoulder}
+          period={period}
+        />
       </div>
       <div className="space-y-2">
-        {periodData ?
-          <LineGraphs lineData={periodData} />
-          :
-          <NoContents />
-        }
+        {periodData ? <LineGraphs lineData={periodData} /> : <NoContents />}
       </div>
     </>
   );
