@@ -29,7 +29,9 @@ postgre sqlの接続とデータの取得
 ![IMAGE ALT TEXT](README_imgs/chinups.gif)
 
 折れ線グラフとランキングの表示
-![IMAGE ALT TEXT](README_imgs/chinup_king_movie.gif)
+![IMAGE ALT TEXT](README_imgs/graph_1.png)
+![IMAGE ALT TEXT](README_imgs/graph_3.png)
+![IMAGE ALT TEXT](README_imgs/graph_4.png)
 
 ## 将来可能にしたいこと
 全ての条件でデータを取得(全期間×wide等、一部の組み合わせが表示できていない)
